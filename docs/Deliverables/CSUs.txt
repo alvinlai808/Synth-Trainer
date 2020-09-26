@@ -1,5 +1,5 @@
 List of CSC's
-    1.1 GUI Client 
+    1.1 GUI Client - Will use react to build GUI
         1.1.1 Login/Register Screen module - This is what the user will see when starting the application
             1.1.1.1 Register/Login button module - A simple button to inout the data into the database from the fields module
             1.1.1.2 Register/Login fields module - A field to allow the user to input ones login information
