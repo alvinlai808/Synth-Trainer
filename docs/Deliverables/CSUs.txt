@@ -38,7 +38,7 @@ List of CSC's
                 5.1.5.1.5 Keyboard - Consists of a typical keyboard layout with 24 keys, as well as an octave controller.
             5.1.5.2 Match/Module Mode - This will consist of a list of multiple difficulty modules.
                 5.1.5.2.n Module n - This module will consist of appropriate conceptual exercises based on the module's difficulty.
-                    5.1.5.2.n.n Sy
+                    5.1.5.2.n.n Module n Synth Interface - The synth interface will only display parameters related to the current module.
 
         
     5.2 Server
@@ -74,9 +74,9 @@ List of CSC's
 
 Section 6
     6.1 Subsystem divisions
-        The Synth Trainer is divided into three subsystems. The first section is the graphical user interface secion which controls what the user views. This section 
-        will be built using react. The second section is the server section which handles sending and retrieving data. The third section is the database secton. This 
-        section will store all the information for the users and modules. We will be using firebase as our database.  
+      The Synth Trainer is divided into three subsystems. The first section is the graphical user interface secion which controls what the user views. This section 
+      will be built using react. The second section is the server section which handles sending and retrieving data. The third section is the database secton. This 
+      section will store all the information for the users and modules. We will be using firebase as our database.  
     6.2 Graphical User Interface Section
       6.2.1 The subsystem shall be displayed in a web page
       6.2.2 This section shall be a mixture of JavaScript and Hypertext Markup Language compiled by React.
@@ -85,9 +85,19 @@ Section 6
         This page will be known as the Main Page.
       6.2.5 The Main Page shall display instructions for proper use of the web application.
       6.2.5 The Main Page shall provide buttons which allow the user to navigate the application.
-      6.2.6 A second subsection will allow the user to input their information to login/register for the web application
+      6.2.6 A second subsection shall allow the user to input their information to login/register for the web application
         This page will be known as the login page.
-      6.2.7 
+      6.2.7 The subsection shall make use of our database and HTML
+      6.2.8 A third subsection shall list the available modules the user can attempt
+        This page will be known as the modules page 
+      6.2.9 The modules page shall be governed by react and our server division 
+      6.2.10 A fourth subsection shall present the user with a full synth
+        This page will be known as the sandbox page
+      6.2.11 A fifth subsection shall present the user with their account information
+        This page will be known as the profile page
+      6.2.12 The profile page shall list account information and a progress bar which informs the user how many modules he/she has completed.
+      6.2.13 The profile page shall be goverened by react, firebase, and our server 
+
     6.3 Server section
       6.3.1 This section shall utilize JavaScript libraries to process and return data.
       6.3.2 This section shall examine user textboxes to ensure valid data.
@@ -95,7 +105,7 @@ Section 6
       6.3.4 This section shall transition users to corresponding webpages based on the button pressed.
       6.3.5 This section shall package and submit all entered data to the Database Section.
       6.3.6 This section shall query the database and return needed data.
-      6.3.7 This section shall produce tones that the user can header.
+      6.3.7 This section shall produce tones that the user can hear.
       6.3.8 This section shall evaluate the correctness of a user submission. 
     6.4 Database Section
       6.4.1 This section shall store application information.
