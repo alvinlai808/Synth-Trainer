@@ -1,49 +1,106 @@
 List of CSC's
-    1.1 GUI Client - Will use react to build GUI
-        1.1.1 Login/Register Screen module - This is what the user will see when starting the application
-            1.1.1.1 Register/Login button module - A simple button to inout the data into the database from the fields module
-            1.1.1.2 Register/Login fields module - A field to allow the user to input ones login information
-        1.1.2 Main Menu - This acts as a homepage for the user to navigate the application
-            1.1.2.1 Modules button module - A button that takes the user to list of modules 
-            1.1.2.2 Sandbox button module - A button that takes the user to the sanbox CSU
-            1.1.2.3 Profile button module - A button that takes the user to the profile page
-        1.1.3 Header - This is a fixes header that the user can use to navigate the application once the user is no longer on the main menue
-            1.1.3.1 Homepage button module - A button that will navigate the user back to the main menu
-            1.1.3.2 Logout button module - A button that will log the user out of the application 
-            1.1.3.3 Profile button module - A button that will navigate the user to the profile page 
-        1.1.4 Modules - This is a list of modules that the user can choose from and click on
-            1.1.4.1 Button for each module - There will be a list of module buttons that the user can click on that will navigate the user to the specific module 
-            1.1.4.2 Synth components module - displays needed synth components
-        1.1.5 Synth Interface - This is how the synth will appear to the user. It will have two 
+    5.1 GUI Client - Will use react to build GUI
+        5.1.1 Login/Register Screen module - This is what the user will see when starting the application
+            5.1.1.1 Register/Login button module - A simple button to inout the data into the database from the fields module
+            5.1.1.2 Register/Login fields module - A field to allow the user to input ones login information
+        5.1.2 Main Menu - This acts as a homepage for the user to navigate the application
+            5.1.2.1 Modules button module - A button that takes the user to list of modules 
+            5.1.2.2 Sandbox button module - A button that takes the user to the sanbox CSU
+            5.1.2.3 Profile button module - A button that takes the user to the profile page
+        5.1.3 Header - This is a fixes header that the user can use to navigate the application once the user is no longer on the main menue
+            5.1.3.1 Homepage button module - A button that will navigate the user back to the main menu
+            5.1.3.2 Logout button module - A button that will log the user out of the application 
+            5.1.3.3 Profile button module - A button that will navigate the user to the profile page 
+        5.1.4 Modules - This is a list of modules that the user can choose from and click on
+            5.1.4.1 Button for each module - There will be a list of module buttons that the user can click on that will navigate the user to the specific module 
+            5.1.4.2 Synth components module - displays needed synth components
+        5.1.5 Synth Interface - This is how the synth will appear to the user. It will have two 
               different appearances: one for Match/Module Mode, and one for Sandbox Mode.
-            1.1.5.1 Sandbox Mode - 
-            1.1.5.2 Match/Module Mode -
+            5.1.5.1 Sandbox Mode - This will consist of the synth interface, as well as a drop down menu for selecting saved sound presets.
+                5.1.5.1.1 Synth VCO Module - Voltage Control Oscillator. A panel consisting of a table with three seperate Waveform Modules.
+                    5.1.5.1.1 Waveform Module 1/2/3 - Each Waveform Module will consist of Pitch Control, Wave Type, and Gain Control.
+                        5.1.5.1.1.1 Pitch Control - This will consist of a semicircle with a draggable tick in the middle.
+                        5.1.5.1.1.2 Wave Type - Consists of three wavetypes to select from: a sine wave, a square wave, and a saw wave.
+                        5.1.5.1.1.3 Gain Control - This will consist of a bar with a draggable tick in the middle.
+                5.1.5.1.2 Synth ADSR Module - This will contain the various parameters needed to modify the amplitude envelope. The module will display a visual representation of the envelope
+                    5.1.5.1.2.1 Attack Knob - A knob that modifies the attack of the soundwave measured in milliseconds.
+                    5.1.5.1.2.2 Decay Knob - A knob that modifies the decay of the soundwave measured in milliseconds.
+                    5.1.5.1.2.3 Sustain Knob - A knob that modifies the sustain of the soundwave measured in milliseconds.
+                    5.1.5.1.2.4 Release Knob - A knob that modifies the release of the soundwave measured in milliseconds.
+                5.1.5.1.3 Synth LFO - Low Frequency Oscillator. This will consist of a table with multiple LFO envelope shapes.
+                    5.1.5.1.3.1 LFO Shapes Panel - A panel that displays the three available LFO shapes: Sine, Sawtooth, Square.
+                        5.1.5.1.3.1.1 Sine Button - A button that selects a Sine shape LFO.
+                        5.1.5.1.3.1.2 Sawtooth Button - A button that selects a Sawtooth shape LFO.
+                        5.1.5.1.3.1.3 Square Button - A button that selects any Square shape LFO.
+                5.1.5.1.4 Synth Filter - A panel containing a Cutoff Frequency and Resonance Peak Frequency.
+                    5.1.5.1.4.1 Cutoff Frequency - Consists of a vertical bar with a draggable tick in the middle.
+                    5.1.5.1.4.2 Resonance Peak Frequency - Consists of a vertical bar with a draggable tick in the middle.
+                5.1.5.1.5 Keyboard - Consists of a typical keyboard layout with 24 keys, as well as an octave controller.
+            5.1.5.2 Match/Module Mode - This will consist of a list of multiple difficulty modules.
+                5.1.5.2.n Module n - This module will consist of appropriate conceptual exercises based on the module's difficulty.
+                    5.1.5.2.n.n Sy
 
         
-    1.2 Server
-        1.2.1 Login/Register module - takes data from fields ands sends to database
-        1.2.2 Profile module - retrieves user data from database
-        1.2.3. Modules module
-          1.2.3.1 Information - pulls data from database pertaining to current module
-          1.2.3.2 Synth - controls necessary synth components depending on module
-          1.2.3.3 Checker - evaluates the correctness of the user submission
-          1.2.3.4 Submit - logs the user progress into database
+    5.2 Server
+        5.2.1 Login/Register module - This handles creating and verifying a user
+          5.2.1.1 Datachecking - makes sure data in textboxes is valid
+          5.2.1.2 Submission - takes data from fields ands sends to database
+        5.2.2 Profile module - This handles manipulating the user data
+          5.2.2.1 Retrieval module - retrieves user data from database
+          5.2.2.2 Send module - sends user data to database
+        5.2.3. Modules module - This handles displaying and evaluating modules
+          5.2.3.1 Information - pulls data from database pertaining to current module
+          5.2.3.2 Synth - controls necessary synth components depending on module
+          5.2.3.3 Checker - evaluates the correctness of the user submission
+          5.2.3.4 Submit - logs the user progress into database
          
-    1.3 Database - this will store all the information for the users and modules
-      1.3.1 Profile table - stores data on users (ie username, password, email, etc.)
-        1.3.1.0 Primary key
-        1.3.1.1 Username - user inputted username
-        1.3.1.2 Password - user hashed password
-        1.3.1.3 Email - user inputted primary email address
-        1.3.1.4 Full name - user inputed full name
-        1.3.1.5 Completed modules - JSON object with references to primary keys of modules
-      1.3.2 Modules table - stores list of all available modules
-        1.3.2.0 Primary key
-        1.3.2.1 Module name - name of module
-        1.3.2.2 Description of module - string of what the module accomplishes
-        1.3.2.3 Components - JSON object of all the components needed
-        1.3.2.4 Scores - passing values for module 
-        1.3.2.5 Instructions - JSON object of series of instructions to be displayed to users
+    5.3 Database - this will store all the information for the users and modules
+      5.3.1 Profile table - stores data on users (ie username, password, email, etc.)
+        5.3.1.0 Primary key
+        5.3.1.1 Username - user inputted username
+        5.3.1.2 Password - user hashed password
+        5.3.1.3 Email - user inputted primary email address
+        5.3.1.4 Full name - user inputed full name
+        5.3.1.5 Completed modules - JSON object with references to primary keys of modules
+      5.3.2 Modules table - stores list of all available modules
+        5.3.2.0 Primary key
+        5.3.2.1 Module name - name of module
+        5.3.2.2 Description of module - string of what the module accomplishes
+        5.3.2.3 Components - JSON object of all the components needed
+        5.3.2.4 Scores - passing values for module 
+        5.3.2.5 Instructions - JSON object of series of instructions to be displayed to users
 
 
 
+Section 6
+    6.1 Subsystem divisions
+        The Synth Trainer is divided into three subsystems. The first section is the graphical user interface secion which controls what the user views. This section 
+        will be built using react. The second section is the server section which handles sending and retrieving data. The third section is the database secton. This 
+        section will store all the information for the users and modules. We will be using firebase as our database.  
+    6.2 Graphical User Interface Section
+      6.2.1 The subsystem shall be displayed in a web page
+      6.2.2 This section shall be a mixture of JavaScript and Hypertext Markup Language compiled by React.
+      6.2.3 The subsystem shall consist of five separate pages.
+      6.2.4 One subsystem page shall contain the main information the user has to navigate the web application
+        This page will be known as the Main Page.
+      6.2.5 The Main Page shall display instructions for proper use of the web application.
+      6.2.5 The Main Page shall provide buttons which allow the user to navigate the application.
+      6.2.6 A second subsection will allow the user to input their information to login/register for the web application
+        This page will be known as the login page.
+      6.2.7 
+    6.3 Server section
+      6.3.1 This section shall utilize JavaScript libraries to process and return data.
+      6.3.2 This section shall examine user textboxes to ensure valid data.
+      6.3.3 This section shall notify the user if incorrect data is input.
+      6.3.4 This section shall transition users to corresponding webpages based on the button pressed.
+      6.3.5 This section shall package and submit all entered data to the Database Section.
+      6.3.6 This section shall query the database and return needed data.
+      6.3.7 This section shall produce tones that the user can header.
+      6.3.8 This section shall evaluate the correctness of a user submission. 
+    6.4 Database Section
+      6.4.1 This section shall store application information.
+      6.4.2 This section shall consist of two subsections.
+      6.4.3 The first subsections shall hold all needed user data.
+        This will be known as the User table.
+      6.4.4 The second subsection shall hold all needed module data.
+        This will be known as the Module table.
