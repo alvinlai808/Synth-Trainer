@@ -1,0 +1,49 @@
+List of CSC's
+    1.1 GUI Client 
+        1.1.1 Login/Register Screen module - This is what the user will see when starting the application
+            1.1.1.1 Register/Login button module - A simple button to inout the data into the database from the fields module
+            1.1.1.2 Register/Login fields module - A field to allow the user to input ones login information
+        1.1.2 Main Menu - This acts as a homepage for the user to navigate the application
+            1.1.2.1 Modules button module - A button that takes the user to list of modules 
+            1.1.2.2 Sandbox button module - A button that takes the user to the sanbox CSU
+            1.1.2.3 Profile button module - A button that takes the user to the profile page
+        1.1.3 Header - This is a fixes header that the user can use to navigate the application once the user is no longer on the main menue
+            1.1.3.1 Homepage button module - A button that will navigate the user back to the main menu
+            1.1.3.2 Logout button module - A button that will log the user out of the application 
+            1.1.3.3 Profile button module - A button that will navigate the user to the profile page 
+        1.1.4 Modules - This is a list of modules that the user can choose from and click on
+            1.1.4.1 Button for each module - There will be a list of module buttons that the user can click on that will navigate the user to the specific module 
+            1.1.4.2 Synth components module - displays needed synth components
+        1.1.5 Synth Interface - This is how the synth will appear to the user. It will have two 
+              different appearances: one for Match/Module Mode, and one for Sandbox Mode.
+            1.1.5.1 Sandbox Mode - 
+            1.1.5.2 Match/Module Mode -
+
+        
+    1.2 Server
+        1.2.1 Login/Register module - takes data from fields ands sends to database
+        1.2.2 Profile module - retrieves user data from database
+        1.2.3. Modules module
+          1.2.3.1 Information - pulls data from database pertaining to current module
+          1.2.3.2 Synth - controls necessary synth components depending on module
+          1.2.3.3 Checker - evaluates the correctness of the user submission
+          1.2.3.4 Submit - logs the user progress into database
+         
+    1.3 Database - this will store all the information for the users and modules
+      1.3.1 Profile table - stores data on users (ie username, password, email, etc.)
+        1.3.1.0 Primary key
+        1.3.1.1 Username - user inputted username
+        1.3.1.2 Password - user hashed password
+        1.3.1.3 Email - user inputted primary email address
+        1.3.1.4 Full name - user inputed full name
+        1.3.1.5 Completed modules - JSON object with references to primary keys of modules
+      1.3.2 Modules table - stores list of all available modules
+        1.3.2.0 Primary key
+        1.3.2.1 Module name - name of module
+        1.3.2.2 Description of module - string of what the module accomplishes
+        1.3.2.3 Components - JSON object of all the components needed
+        1.3.2.4 Scores - passing values for module 
+        1.3.2.5 Instructions - JSON object of series of instructions to be displayed to users
+
+
+
