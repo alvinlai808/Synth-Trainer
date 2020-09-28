@@ -15,9 +15,6 @@ Dedicated ear training applications exist for things like equalization and audio
 
 [Jump to Top](#50---requirements-specification)
 
-// TODO: fix numbering scheme.
-//       delete low level breakdown items (move to 5.3 if anything)
-//       remove implementation specifics (use React, use <database>, etc.)
 ## **5.2** - CSCI Component Breakdown
  
 ### **5.2.1** - GUI Client CSC - This will handle displaying all needed compnents and providing a system for the user to navigate.
