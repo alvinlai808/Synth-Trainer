@@ -65,6 +65,13 @@ Please refer to our GANTT chart [here](GANTT_Chart.xlsx).
 
 ### **4.4.2** - Task / Resource Table
 
+| Name            | Role                    |
+|-----------------|-------------------------|
+| Alvin Lai       | Back End Audio Engineer |
+| Jeremy Goldberg | Database Administrator  |
+| Andrey Varakin  | Back End Audio Engineer |
+| David Sackler   | Front End Engineer      |
+
 ### **4.4.3** - Class Schedule
 Please refer to our class schedule [here](http://bjohnson.lmu.build/cmsi401web/classnotes.html).
 
