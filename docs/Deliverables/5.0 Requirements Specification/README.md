@@ -16,7 +16,7 @@ Dedicated ear training applications exist for things like equalization and audio
 [Jump to Top](#50---requirements-specification)
 
 ## **5.2** - CSCI Component Breakdown
- 
+
 ### **5.2.1** - GUI Client CSC - This will handle displaying all needed compnents and providing a system for the user to navigate.
 **5.2.1.1** - Login/Register Screen CSU - This is what the user will see when starting the application.
 
@@ -26,28 +26,28 @@ Dedicated ear training applications exist for things like equalization and audio
 
 **5.2.1.4** - Modules CSU- This page will be comprised of a list of modules that the user can choose to attempt, as well as the specific synth components that will be taught in each respective module.
 
-**5.2.1.5** - Synth Interface CSU - This is how the synth will appear to the user. It will have two 
-different appearances: one for Match/Module Mode, and one for Sandbox Mode.
+**5.2.1.5** - Synth Interface CSU - This is how the synth will appear to the user. It will have two different appearances: one for Match/Module Mode, and one for Sandbox Mode.
 
 **5.2.1.6** - Sandbox Mode CSU - This will consist of the synth interface, as well as a drop down menu for selecting saved sound presets.
 
-### **5.2.2** - Server CSC - This will handle the interactions between the GUI and the database
+### **5.2.2** - Server CSC - This will handle the interactions between the GUI and the database.
+
 **5.2.2.1** - Login/Register CSU - This handles creating and verifying a user.
 
 **5.2.2.2** - Profile CSU - Handles manipulating the user data.
 
 **5.2.2.3** - Modules CSU - Handles displaying and evaluating modules.
 
-**5.2.2.4** - Synth CSU - This CSU produces and modifies synth sounds
+**5.2.2.4** - Synth CSU - This CSU produces and modifies synth sounds.
 
 ### **5.2.3** - Database CSC - This will store all the information for the users and modules.
-**5.2.3.1** - Profile Table - Stores data on users (i.e. username, password, email, etc.)
+
+**5.2.3.1** - Profile Table - Stores data on users (i.e. username, password, email, etc.).
  
 **5.2.3.2** - Modules Table - Stores list of all available modules (i.e. name, needed components, instructions).
         
 [Jump to Top](#50---requirements-specification)
 
-// TODO: remove implementation specifics (use React, use <database>, etc.)
 ## **5.3** - Functional Requirements by CSC
 
 ### **5.3.1** - Subsystem Divisions
@@ -55,32 +55,59 @@ different appearances: one for Match/Module Mode, and one for Sandbox Mode.
 The Synth Trainer is divided into three subsystems. The first section is the graphical user interface secion which controls what the user views. The second section is the server section which handles sending and retrieving data. The third section is the database secton. This section will store all the information for the users and modules.
 
 ### **5.3.2** - Graphical User Interface (GUI) Section
-**5.3.2.1** - The GUI subsystem shall be displayed in a web page
+**5.3.2.1** - The GUI subsystem shall be displayed in a web page.
 
 **5.3.2.2** - The GUI subsystem shall consist of five separate pages.
 
-**5.3.2.3** - One GUI subsystem page shall contain the main information the user has to navigate the web application<br>
+**5.3.2.3** - One GUI subsystem page shall contain the main information the user has to navigate the web application.<br>
 This page will be known as the Main Page.
 
 **5.3.2.4** - The Main Page shall display instructions for proper use of the web application.
       
 **5.3.2.5** - The Main Page shall provide buttons which allow the user to navigate the application.
-      
-**5.3.2.6** - A second GUI subsection shall allow the user to input their information to login/register for the web application<br>
-This page will be known as the login page.
-      
-**5.3.2.7** - A third GUI subsection shall list the available modules the user can attempt<br>
-This page will be known as the modules page 
 
-**5.3.2.8** - A fourth GUI subsection shall present the user with a full synth<br>
-This page will be known as the sandbox page
-      
-**5.3.2.9** - A fifth GUI subsection shall present the user with their account information<br>
-This page will be known as the profile page
+**5.3.2.6** - A second GUI subsection shall allow the user to input their information to login/register for the web application.<br>
+This page will be known as the Login Page.
 
-**5.3.2.10** - The profile page shall list account information and a progress bar which informs the user how many modules he/she has completed. 
+**5.3.2.6.1** - The Login Page shall provide text input fields for login/registration purposes.
+
+**5.3.2.6.2** - The Login Page shall provide buttons to submit login/registration information.
+     
+**5.3.2.7** - A third GUI subsection shall list the available modules the user can attempt.<br>
+This page will be known as the Modules Page. 
+
+**5.3.2.8** - A fourth GUI subsection shall present the user with a full synthesizer.<br>
+This page will be known as the Sandbox Page.
+
+**5.3.2.8.1** - The Sandbox Page shall provide waveform oscillators.
+
+**5.3.2.8.1.1** - The Sandbox Page shall provide a knob to select between various waveforms.
+
+**5.3.2.8.1.2** - The Sandbox Page shall provide a button to mute the oscillator.
+
+**5.3.2.8.2** - The Sandbox Page shall provide an amplitude envelope.
+
+**5.3.2.8.2.1** - The Sandbox Page shall provide a knob to modify the attack time.
+
+**5.3.2.8.2.2** - The Sandbox Page shall provide a knob to modify the decay time.
+
+**5.3.2.8.2.3** - The Sandbox Page shall provide a knob to modify the sustain time.
+
+**5.3.2.8.2.4** - The Sandbox Page shall provide a knob to modify the release time.
+  
+**5.3.2.8.3** - The Sandbox Page shall provide a 22 key keyboard.
+      
+**5.3.2.9** - A fifth GUI subsection shall present the user with their account information.<br>
+This page will be known as the Profile Page.
+
+**5.3.2.9.1** - The Profile Page shall list account information.
+
+**5.3.2.9.2** - The Profile Page shall display a progress bar which informs the user how many modules he/she has completed.
+
+**5.3.2.9.3** - The Profile Page shall display a list of the user's achievements.
 
 ### **5.3.3** - Server section
+
 **5.3.3.1** - The server section shall examine user textboxes to ensure valid data.
 
 **5.3.3.2** - The server section shall notify the user if incorrect data is input.
@@ -108,10 +135,6 @@ This will be known as the Module table.
 
 [Jump to Top](#50---requirements-specification)
 
-- Synth
-- GUI
-- Server
-- Database
 ## 5.4 - Performance Requirements by CSC
   **5.4.1** The synth shall be able to randomly generate sounds within 3 seconds.
   
@@ -123,8 +146,8 @@ This will be known as the Module table.
   
   **5.4.5** The GUI shall respond to mouse scrolls within 1 second.
   
-  **5.4.6** The GUI shall error-check user text inputs within 3 seconds.
-            The GUI will provide input feedback if an error occurs.
+  **5.4.6** The GUI shall error-check user text inputs within 3 seconds.<br>
+The GUI will provide input feedback if an error occurs.
   
   **5.4.7** The database shall store users login credentials within 5 seconds.
 
