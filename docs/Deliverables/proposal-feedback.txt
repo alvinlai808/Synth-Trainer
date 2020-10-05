@@ -1,0 +1,25 @@
+
+
+Evaluation and Feedback
+CMSI 401 project ~~ Fall 2020
+Jeremy Goldberg, Alvin Lai, David Sackler, Andrey Varakin
+Synth Trainer project
+=================================
+Presentation:
+   a lovely job on the presentation!  you all knew your parts and you spoke
+   authoritatively about your project and what it can do.  ADSR envelopes are
+   a great way to train your ear to recognize different sounds.  I've played
+   with MiniMoog, Korg, and Arp synthesizers, and they have SO MUCH sonic
+   capacity ~ you can make any sound with them!  the graphics in the slides
+   were great, and show ADSR functionality quite clearly.  you also gave us
+   a good idea of what you have planned and included extensions.  you did a
+   great job on this.
+
+Proposal Document:
+   your proposal document is well-executed and very clear.  I'm really looking
+   forward to this project's successful completion and demonstration!
+
+=============================================================================
+Great work on this presentation and proposal!
+
+your score:  5% out of 5% which is an A-plus
