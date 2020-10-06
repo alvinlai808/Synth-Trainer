@@ -4,6 +4,7 @@ function Login() {
   return (
     <div>
       <p>Testing</p>
+      <button onClick={handleLogin("test", "test")}>Testing</button>
     </div>
   );
 }
@@ -27,6 +28,7 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 function handleLogin(email, password) {
+  console.log("Test output");
   firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
