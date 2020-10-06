@@ -1,0 +1,36 @@
+
+
+Group 13: [4 souls] *
+   Jeremy Goldberg, Alvin Lai, David Sackler, Andrey Varakin
+      synopsis:   Synth Trainer ~ digital synthesizer based on Moog/Arp [web app]
+========================================================================================
+This is very nice!  You guys obviously put some effort into this, not only
+for the document and information, but also to get it to look good in GitHub
+markdown!  GREAT!
+
+Your functional requirements are wonderful!  The different subsections have
+about the right amount of requirements for each part.
+
+One area that could be expanded is the Server section, where a *little* more
+could be added.  For example:
+
+5.3.3.1 - The server section shall examine user textboxes to ensure valid data.
+
+what is meant by "valid" data?  How many textboxes exist?  Is the requirement
+saying that the server will examine ANY text box?  How will it know which of
+the data are correct for which text box?
+
+You can see what I mean.....
+
+The performance and environment requirements sections are perfect!  Good job!
+
+Re-visit this document during the semester a couple of times and fill out a
+little more "stuff" for the functional requirements and you'll have the full
+credit for both submissions!
+
+
+
+Evaluation score:
+
+    9% out of 10% for this deliverable:  A-minus
+
