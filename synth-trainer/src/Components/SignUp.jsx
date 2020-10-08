@@ -1,27 +1,43 @@
 import React, { useState } from "react";
 import { Link } from "@reach/router";
-import { auth, generateUserDocument } from '../firebase';
+import { auth, generateUserDocument } from "../firebase";
+import {
+  Button,
+  Card,
+  Col,
+  Form,
+  FormControl,
+  FormGroup,
+  InputGroup,
+  Row,
+} from "react-bootstrap";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [error, setError] = useState(null);
-  const createUserWithEmailAndPasswordHandler = async (event, email, password) => {
+  const createUserWithEmailAndPasswordHandler = async (
+    event,
+    email,
+    password
+  ) => {
     event.preventDefault();
-    try{
-      const {user} = await auth.createUserWithEmailAndPassword(email, password);
-      generateUserDocument(user, {displayName});
+    try {
+      const { user } = await auth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
+      generateUserDocument(user, { displayName });
+    } catch (error) {
+      setError("Error Signing up with email and password");
     }
-    catch(error){
-      setError('Error Signing up with email and password');
-    }
-  
+
     setEmail("");
     setPassword("");
     setDisplayName("");
   };
-  const onChangeHandler = event => {
+  const onChangeHandler = (event) => {
     const { name, value } = event.currentTarget;
     if (name === "userEmail") {
       setEmail(value);
@@ -40,58 +56,56 @@ const SignUp = () => {
             {error}
           </div>
         )}
-        <form className="">
-          <label htmlFor="displayName" className="block">
-            Display Name:
-          </label>
-          <input
-            type="text"
-            className="my-1 p-1 w-full "
-            name="displayName"
-            value={displayName}
-            placeholder="E.g: Faruq"
-            id="displayName"
-            onChange={event => onChangeHandler(event)}
-          />
-          <label htmlFor="userEmail" className="block">
-            Email:
-          </label>
-          <input
-            type="email"
-            className="my-1 p-1 w-full"
-            name="userEmail"
-            value={email}
-            placeholder="E.g: faruq123@gmail.com"
-            id="userEmail"
-            onChange={event => onChangeHandler(event)}
-          />
-          <label htmlFor="userPassword" className="block">
-            Password:
-          </label>
-          <input
-            type="password"
-            className="mt-1 mb-3 p-1 w-full"
-            name="userPassword"
-            value={password}
-            placeholder="Your Password"
-            id="userPassword"
-            onChange={event => onChangeHandler(event)}
-          />
-          <button
+        <Form>
+          <InputGroup className="mb-3">
+            <InputGroup.Prepend>
+              <InputGroup.Text id="inputGroup-sizing-default">
+                Display Name
+              </InputGroup.Text>
+            </InputGroup.Prepend>
+            <FormControl
+              aria-label="Default"
+              aria-describedby="inputGroup-sizing-default"
+            />
+          </InputGroup>
+          <Form.Group controlId="formBasicEmail">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="Enter email"
+              value={email}
+              onChange={(event) => onChangeHandler(event)}
+            />
+            <Form.Text className="text-muted">
+              We'll never share your email with anyone else.
+            </Form.Text>
+          </Form.Group>
+          <Form.Group controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(event) => onChangeHandler(event)}
+            />
+          </Form.Group>
+          <Button
+            variant="primary"
             className="bg-green-400 hover:bg-green-500 w-full py-2 text-white"
-            onClick={event => {
+            onClick={(event) => {
               createUserWithEmailAndPasswordHandler(event, email, password);
             }}
           >
             Sign up
-          </button>
-        </form>
+          </Button>{" "}
+        </Form>
         <p className="text-center my-3">or</p>
-        <button
+        <Button
+          variant="primary"
           className="bg-red-500 hover:bg-red-600 w-full py-2 text-white"
         >
           Sign In with Google
-        </button>
+        </Button>{" "}
         <p className="text-center my-3">
           Already have an account?{" "}
           <Link to="/" className="text-blue-500 hover:text-blue-600">
