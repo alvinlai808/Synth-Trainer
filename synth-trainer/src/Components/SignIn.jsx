@@ -54,7 +54,7 @@ const SignIn = () => {
   return (
     <div>
       <div>
-        <Alert show={isError} variant='danger' align>{error}</Alert>
+        <Alert show={isError} variant='danger' className='text-center'>{error}</Alert>
         <div id="whole-page" class="row">
           <div class="col-sm-12 my-auto">
             <Card id="sign-in-card" className="text-center w-50">
