@@ -11,10 +11,10 @@ import {
 const NavigationBar = () => {
   return (
     <Navbar bg="dark" expand="lg" variant="dark">
-      <Navbar.Brand href="/">Synth-Trainer</Navbar.Brand>
+      <Navbar.Brand href="/">Synth Trainer</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="mr-auto">
+        <Nav className="ml-auto">
           <Nav.Link href="#profile">Profile</Nav.Link>
           <Nav.Link href="#settings">Settings</Nav.Link>
           <NavDropdown title="Dropdown" id="basic-nav-dropdown">
@@ -29,10 +29,10 @@ const NavigationBar = () => {
             </NavDropdown.Item>
           </NavDropdown>
         </Nav>
-        <Form inline>
+        {/* <Form inline>
           <FormControl type="text" placeholder="Search" className="mr-sm-2" />
           <Button variant="outline-info">Search</Button>
-        </Form>
+        </Form> */}
       </Navbar.Collapse>
     </Navbar>
   );
