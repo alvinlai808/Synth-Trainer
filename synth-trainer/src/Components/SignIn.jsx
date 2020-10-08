@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "@reach/router";
 import { auth } from "../firebase";
 import {
+  Alert,
   Button,
   Card,
   Col,
@@ -18,13 +19,20 @@ const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-  const [isValidEmail, setIsValidEmail] = useState(true);
-  const emailRegExp = new RegExp('[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}', 'i');
+  const [isError, setIsError] = useState(false);
+  const [isValidEmail, setIsValidEmail] = useState(false);
+  const emailRegExp = /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i;
 
   const signInWithEmailAndPasswordHandler = (event, email, password) => {
     event.preventDefault();
+    if (!isValidEmail) {
+      setError("Invalid Email");
+      setIsError(true);
+      return;
+    }
     auth.signInWithEmailAndPassword(email, password).catch((error) => {
       setError("Error signing in with password and email!");
+      setIsError(true);
       console.error("Error signing in with password and email", error);
     });
   };
@@ -33,17 +41,20 @@ const SignIn = () => {
     const { name, value } = event.currentTarget;
 
     if (name === "userEmail") {
-      emailRegExp.test(value) ? setEmail(value) && setIsValidEmail(true) : setIsValidEmail(false);
       setEmail(value);
     } else if (name === "userPassword") {
       setPassword(value);
     }
   };
 
+  useEffect(() => {
+    setIsValidEmail(emailRegExp.test(email));
+  })
+
   return (
     <div>
       <div>
-        {error !== null && <div>{error}</div>}
+        <Alert show={isError} variant='danger' align>{error}</Alert>
         <div id="whole-page" class="row">
           <div class="col-sm-12 my-auto">
             <Card id="sign-in-card" className="text-center w-50">
@@ -58,6 +69,7 @@ const SignIn = () => {
                     placeholder="E.g: faruq123@gmail.com"
                     id="userEmail"
                     isInvalid={!isValidEmail}
+                    isValid={isValidEmail}
                     onChange={(event) => onChangeHandler(event)}
                   />
                 </Form.Group>
