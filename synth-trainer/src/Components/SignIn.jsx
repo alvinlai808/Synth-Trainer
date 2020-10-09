@@ -112,6 +112,14 @@ const SignIn = () => {
                   Sign up here
                 </Button>
               </Form.Group>
+              
+              <Form.Group>
+                Go to main page since alvin doesnt know how to route shit{" "}
+                <Button id="mainPage-button" href="MainPage">
+                  Main Page
+                </Button>
+              </Form.Group>
+              
               <FormGroup>
                 <Button href="passwordReset">Forgot Password?</Button>
               </FormGroup>

@@ -5,6 +5,7 @@ import SignUp from "./SignUp";
 import ProfilePage from "./ProfilePage";
 import PasswordReset from "./PasswordReset";
 import NavBar from "./NavBar";
+import MainPage from "./MainPage";
 
 function Application() {
   const user = null;
@@ -23,6 +24,7 @@ function Application() {
           <SignUp path="signUp" />
           <SignIn path="/" />
           <PasswordReset path = "passwordReset" />
+          <MainPage path ="MainPage" />
         </Router>
       </div>
     )
