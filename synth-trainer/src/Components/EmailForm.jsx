@@ -37,12 +37,12 @@ const EmailForm = () => {
 
   return (
     <div>
-      <InputGroup controlId="formBasicEmail">
+      <InputGroup className="mb-3" controlId="formBasicEmail">
         <InputGroup.Prepend>
           <InputGroup.Text>Email address</InputGroup.Text>
         </InputGroup.Prepend>
         <OverlayTrigger
-          placement="bottom-start"
+          placement="auto-start"
           delay={{ show: 250, hide: 400 }}
           trigger={"hover"}
           overlay={renderInvalidEmailMessage}
