@@ -23,8 +23,8 @@ function Application() {
         <Router>
           <SignUp path="signUp" />
           <SignIn path="/" />
-          <PasswordReset path = "passwordReset" />
-          <MainPage path ="MainPage" />
+          <PasswordReset path="passwordReset" />
+          <MainPage path="MainPage" />
         </Router>
       </div>
     )
