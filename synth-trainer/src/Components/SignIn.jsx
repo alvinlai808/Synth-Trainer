@@ -14,6 +14,7 @@ import {
 } from "react-bootstrap";
 import "./SignIn.css";
 import { useEffect } from "react";
+import EmailForm from './EmailForm'
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -60,20 +61,7 @@ const SignIn = () => {
             <Card id="sign-in-card" className="text-center w-50">
               <Card.Title id="sign-in-label">Sign In</Card.Title>
               <Form>
-                <Form.Group controlId="formBasicEmail">
-                  <Form.Label>Email address</Form.Label>
-                  <FormControl
-                    type="email"
-                    name="userEmail"
-                    value={email}
-                    placeholder="E.g: faruq123@gmail.com"
-                    id="userEmail"
-                    isInvalid={!isValidEmail}
-                    isValid={isValidEmail}
-                    onChange={(event) => onChangeHandler(event)}
-                  />
-                </Form.Group>
-
+                <EmailForm />
                 <Form.Group controlId="formBasicPassword">
                   <Form.Label>Password</Form.Label>
                   <Row>

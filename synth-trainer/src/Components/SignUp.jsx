@@ -12,6 +12,8 @@ import {
   Row,
 } from "react-bootstrap";
 
+import EmailForm from './EmailForm'
+
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -68,18 +70,7 @@ const SignUp = () => {
               aria-describedby="inputGroup-sizing-default"
             />
           </InputGroup>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Enter email"
-              value={email}
-              onChange={(event) => onChangeHandler(event)}
-            />
-            <Form.Text className="text-muted">
-              We'll never share your email with anyone else.
-            </Form.Text>
-          </Form.Group>
+          <EmailForm />
           <Form.Group controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
             <Form.Control
