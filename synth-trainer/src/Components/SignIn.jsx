@@ -14,7 +14,7 @@ import {
 } from "react-bootstrap";
 import "./SignIn.css";
 import { useEffect } from "react";
-import EmailForm from './EmailForm'
+import EmailForm from "./EmailForm";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -50,36 +50,36 @@ const SignIn = () => {
 
   useEffect(() => {
     setIsValidEmail(emailRegExp.test(email));
-  })
+  });
 
   return (
     <div>
       <div>
-        <Alert show={isError} variant='danger' className='text-center'>{error}</Alert>
+        <Alert show={isError} variant="danger" className="text-center">
+          {error}
+        </Alert>
         <div id="whole-page" class="row">
           <div class="col-sm-12 my-auto">
             <Card id="sign-in-card" className="text-center w-50">
               <Card.Title id="sign-in-label">Sign In</Card.Title>
               <Form>
                 <EmailForm />
-                <Form.Group controlId="formBasicPassword">
-                  <Form.Label>Password</Form.Label>
-                  <Row>
-                    <Col xs={8}>
-                      <FormControl
-                        type="password"
-                        name="userPassword"
-                        value={password}
-                        placeholder="Your Password"
-                        id="userPassword"
-                        onChange={(event) => onChangeHandler(event)}
-                      />
-                    </Col>
-                    <Col>
-                      <Button href="passwordReset">Forgot Password?</Button>
-                    </Col>
-                  </Row>
-                </Form.Group>
+                <InputGroup className="mb-3" controlId="formBasicPassword">
+                  <InputGroup.Prepend>
+                    <InputGroup.Text>Password</InputGroup.Text>
+                  </InputGroup.Prepend>
+                  <FormControl
+                    type="password"
+                    name="userPassword"
+                    value={password}
+                    placeholder="Your Password"
+                    id="userPassword"
+                    onChange={(event) => onChangeHandler(event)}
+                  />
+                  <InputGroup.Append>
+                    <Button href="passwordReset">Forgot Password?</Button>
+                  </InputGroup.Append>
+                </InputGroup>
                 <Form.Group>
                   <Button
                     onClick={(event) => {
