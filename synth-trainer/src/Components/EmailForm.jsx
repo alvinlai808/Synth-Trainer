@@ -3,6 +3,8 @@ import {
   Form,
   FormControl,
   InputGroup,
+  OverlayTrigger,
+  Tooltip,
 } from "react-bootstrap";
 import "./SignIn.css";
 import { useEffect } from "react";
@@ -17,6 +19,18 @@ const EmailForm = () => {
     setEmail(value);
   };
 
+  const renderInvalidEmailMessage = (props) => {
+    if (isValidEmail) {
+      return (<div></div>)
+    } else {
+      return(
+        <Tooltip id="invalid-email-message" show={!isValidEmail} {...props}>
+          Please Enter a Valid Email
+        </Tooltip>
+      );
+    }
+  };
+
   useEffect(() => {
     setIsValidEmail(emailRegExp.test(email));
   });
@@ -27,16 +41,23 @@ const EmailForm = () => {
         <InputGroup.Prepend>
           <InputGroup.Text>Email address</InputGroup.Text>
         </InputGroup.Prepend>
-        <FormControl
-          type="email"
-          name="userEmail"
-          value={email}
-          placeholder="E.g: faruq123@gmail.com"
-          id="userEmail"
-          isInvalid={!isValidEmail}
-          isValid={isValidEmail}
-          onChange={(event) => onChangeHandler(event)}
-        />
+        <OverlayTrigger
+          placement="bottom-start"
+          delay={{ show: 250, hide: 400 }}
+          trigger={"hover"}
+          overlay={renderInvalidEmailMessage}
+        >
+          <FormControl
+            type="email"
+            name="userEmail"
+            value={email}
+            placeholder="E.g: faruq123@gmail.com"
+            id="userEmail"
+            isInvalid={!isValidEmail}
+            isValid={isValidEmail}
+            onChange={(event) => onChangeHandler(event)}
+          />
+        </OverlayTrigger>
       </InputGroup>
     </div>
   );
