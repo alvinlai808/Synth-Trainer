@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {
   Form,
   FormControl,
+  InputGroup,
 } from "react-bootstrap";
 import "./SignIn.css";
 import { useEffect } from "react";
@@ -22,8 +23,10 @@ const EmailForm = () => {
 
   return (
     <div>
-      <Form.Group controlId="formBasicEmail">
-        <Form.Label>Email address</Form.Label>
+      <InputGroup controlId="formBasicEmail">
+        <InputGroup.Prepend>
+          <InputGroup.Text>Email address</InputGroup.Text>
+        </InputGroup.Prepend>
         <FormControl
           type="email"
           name="userEmail"
@@ -34,7 +37,7 @@ const EmailForm = () => {
           isValid={isValidEmail}
           onChange={(event) => onChangeHandler(event)}
         />
-      </Form.Group>
+      </InputGroup>
     </div>
   );
 };
