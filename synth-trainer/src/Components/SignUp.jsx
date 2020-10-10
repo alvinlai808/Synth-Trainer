@@ -12,13 +12,18 @@ import {
   Row,
 } from "react-bootstrap";
 
-import EmailForm from './EmailForm'
+import EmailForm from "./EmailForm";
+import { useEffect } from "react";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [secondPassword, setSecondPassword] = useState("");
+  const [passwordsMatch, setPasswordsMatch] = useState();
   const [displayName, setDisplayName] = useState("");
   const [error, setError] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+
   const createUserWithEmailAndPasswordHandler = async (
     event,
     email,
@@ -47,8 +52,20 @@ const SignUp = () => {
       setPassword(value);
     } else if (name === "displayName") {
       setDisplayName(value);
+    } else if (name === "userSecondPassword") {
+      setSecondPassword(value);
     }
   };
+
+  const toggleShow = () => {
+    setShowPassword(!showPassword);
+  };
+
+
+  useEffect(() => {
+    setPasswordsMatch(password === secondPassword);
+  })
+
   return (
     <div className="mt-8">
       <h1 className="text-3xl mb-2 text-center font-bold">Sign Up</h1>
@@ -70,16 +87,44 @@ const SignUp = () => {
               aria-describedby="inputGroup-sizing-default"
             />
           </InputGroup>
+
           <EmailForm />
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
+
+          <InputGroup className="mb-3" controlId="formBasicPassword">
+            <InputGroup.Prepend>
+              <InputGroup.Text>Password</InputGroup.Text>
+            </InputGroup.Prepend>
+              <Form.Control
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                value={password}
+                name="userPassword"
+                onChange={(event) => onChangeHandler(event)}
+              />
+            <InputGroup.Append>
+              <InputGroup.Text>Show Password</InputGroup.Text>
+              <InputGroup.Checkbox
+                aria-label="Show Password"
+                onChange={toggleShow}
+              />
+            </InputGroup.Append>
+          </InputGroup>
+
+          <InputGroup className="mb-3" controlId="formBasicReEnterPassword">
+            <InputGroup.Prepend>
+            <InputGroup.Text>Re-enter Password</InputGroup.Text>
+            </InputGroup.Prepend>
             <Form.Control
-              type="password"
+              name="userSecondPassword"
+              type={showPassword ? "text" : "password"}
               placeholder="Password"
-              value={password}
+              value={secondPassword}
+              isInvalid={!passwordsMatch}
+              isValid={passwordsMatch}
               onChange={(event) => onChangeHandler(event)}
             />
-          </Form.Group>
+          </InputGroup>
+
           <Button
             variant="primary"
             className="bg-green-400 hover:bg-green-500 w-full py-2 text-white"
