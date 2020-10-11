@@ -5,7 +5,8 @@ import {
   Container
 } from "react-bootstrap";
 
-const img_url = `https://images.unsplash.com/photo-1557683311-eac922347aa1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80`;
+const jumbotronBackground = `https://images.unsplash.com/photo-1557683311-eac922347aa1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80`;
+const img_url = jumbotronBackground;
 
 const MainPage = () => {
   return (
@@ -38,7 +39,7 @@ const MainPage = () => {
               <h3>Sandbox</h3>
               <p>Experiment with an advanced synthesizer to discover new sounds</p>
               <p>
-                <a href="#" class="btn btn-primary">Sandbox</a>
+                <Button id="sandbox-button" href="Sandbox">Sandbox</Button>
               </p>
           </div>
         </div>
@@ -47,4 +48,3 @@ const MainPage = () => {
   );
 };
 export default MainPage;
-

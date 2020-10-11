@@ -6,6 +6,7 @@ import ProfilePage from "./ProfilePage";
 import PasswordReset from "./PasswordReset";
 import NavBar from "./NavBar";
 import MainPage from "./MainPage";
+import Sandbox from "./Sandbox";
 
 function Application() {
   const user = null;
@@ -25,6 +26,7 @@ function Application() {
           <SignIn path="/" />
           <PasswordReset path="passwordReset" />
           <MainPage path="MainPage" />
+          <Sandbox path="Sandbox" />
         </Router>
       </div>
     )
