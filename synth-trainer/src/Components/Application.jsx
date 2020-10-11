@@ -31,17 +31,5 @@ function Application() {
       </div>
     )
   }
-  // return (
-  //   <NavBar />
-  //       user ?
-  //       <ProfilePage />
-  //     :
-  //       <Router>
-  //         <SignUp path="signUp" />
-  //         <SignIn path="/" />
-  //         <PasswordReset path = "passwordReset" />
-  //       </Router>
-
-  // );
 }
 export default Application;
