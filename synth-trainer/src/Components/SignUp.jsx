@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "@reach/router";
 import { auth, generateUserDocument } from "../firebase";
 import {
+  Alert,
   Button,
   Card,
   Col,
@@ -22,6 +23,7 @@ const SignUp = () => {
   const [passwordsMatch, setPasswordsMatch] = useState();
   const [displayName, setDisplayName] = useState("");
   const [error, setError] = useState(null);
+  const [isError, setIsError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const createUserWithEmailAndPasswordHandler = async (
@@ -31,6 +33,8 @@ const SignUp = () => {
   ) => {
     event.preventDefault();
     try {
+      if (!passwordsMatch) { setError("Passwords don't match") }
+      if (error !== "") { setIsError(true); return null;}
       const { user } = await auth.createUserWithEmailAndPassword(
         email,
         password
@@ -42,6 +46,7 @@ const SignUp = () => {
 
     setEmail("");
     setPassword("");
+    setSecondPassword("");
     setDisplayName("");
   };
   const onChangeHandler = (event) => {
@@ -57,7 +62,7 @@ const SignUp = () => {
     }
   };
 
-  const toggleShow = () => {
+  const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
@@ -70,11 +75,14 @@ const SignUp = () => {
     <div className="mt-8">
       <h1 className="text-3xl mb-2 text-center font-bold">Sign Up</h1>
       <div className="border border-blue-400 mx-auto w-11/12 md:w-2/4 rounded py-8 px-4 md:px-8">
-        {error !== null && (
+        {/* {error !== null && (
           <div className="py-4 bg-red-600 w-full text-white text-center mb-3">
             {error}
           </div>
-        )}
+        )} */}
+        <Alert show={isError} variant="danger" className="text-center">
+          {error}
+        </Alert>
         <Form>
           <InputGroup className="mb-3">
             <InputGroup.Prepend>
@@ -105,7 +113,7 @@ const SignUp = () => {
               <InputGroup.Text>Show Password</InputGroup.Text>
               <InputGroup.Checkbox
                 aria-label="Show Password"
-                onChange={toggleShow}
+                onChange={toggleShowPassword}
               />
             </InputGroup.Append>
           </InputGroup>
