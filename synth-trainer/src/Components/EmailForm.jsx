@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  Form,
   FormControl,
   InputGroup,
   OverlayTrigger,
@@ -9,9 +8,7 @@ import {
 import "./SignIn.css";
 import { useEffect } from "react";
 
-const EmailForm = () => {
-  const [email, setEmail] = useState("");
-  const [isValidEmail, setIsValidEmail] = useState(false);
+const EmailForm = ({email, isValidEmail, setEmail, setIsValidEmail}) => {
   const emailRegExp = /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i;
 
   const onChangeHandler = (event) => {
@@ -21,7 +18,7 @@ const EmailForm = () => {
 
   const renderInvalidEmailMessage = (props) => {
     if (isValidEmail) {
-      return (<div></div>)
+      return (<div></div>);
     } else {
       return(
         <Tooltip id="invalid-email-message" show={!isValidEmail} {...props}>
@@ -32,8 +29,8 @@ const EmailForm = () => {
   };
 
   useEffect(() => {
-    setIsValidEmail(emailRegExp.test(email));
-  });
+    setIsValidEmail(emailRegExp.test(email))
+  })
 
   return (
     <div>
@@ -56,6 +53,7 @@ const EmailForm = () => {
             isInvalid={!isValidEmail}
             isValid={isValidEmail}
             onChange={(event) => onChangeHandler(event)}
+            //onChange={() => setEmailProps(email, isValidEmail)}
           />
         </OverlayTrigger>
       </InputGroup>

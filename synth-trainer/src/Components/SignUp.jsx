@@ -4,13 +4,9 @@ import { auth, generateUserDocument } from "../firebase";
 import {
   Alert,
   Button,
-  Card,
-  Col,
   Form,
   FormControl,
-  FormGroup,
   InputGroup,
-  Row,
 } from "react-bootstrap";
 
 import EmailForm from "./EmailForm";
@@ -18,6 +14,7 @@ import { useEffect } from "react";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
+  const [isValidEmail, setIsValidEmail] = useState(false);
   const [password, setPassword] = useState("");
   const [secondPassword, setSecondPassword] = useState("");
   const [passwordsMatch, setPasswordsMatch] = useState();
@@ -33,8 +30,19 @@ const SignUp = () => {
   ) => {
     event.preventDefault();
     try {
-      if (!passwordsMatch) { setError("Passwords don't match") }
-      if (error !== "") { setIsError(true); return null;}
+      if (!passwordsMatch) { 
+        setError("Passwords don't match")
+        setIsError(true);
+      }
+      if (!isValidEmail) {
+        if (isError) {
+          setError(error.toString() + "/n" + "Invalid Email");
+        } else {
+          setError("Invalid Email");
+          setIsError(true);
+        }
+      }
+      if (isError) { return null; }
       const { user } = await auth.createUserWithEmailAndPassword(
         email,
         password
@@ -51,9 +59,7 @@ const SignUp = () => {
   };
   const onChangeHandler = (event) => {
     const { name, value } = event.currentTarget;
-    if (name === "userEmail") {
-      setEmail(value);
-    } else if (name === "userPassword") {
+    if (name === "userPassword") {
       setPassword(value);
     } else if (name === "displayName") {
       setDisplayName(value);
@@ -66,7 +72,6 @@ const SignUp = () => {
     setShowPassword(!showPassword);
   };
 
-
   useEffect(() => {
     setPasswordsMatch(password === secondPassword);
   })
@@ -75,11 +80,6 @@ const SignUp = () => {
     <div className="mt-8">
       <h1 className="text-3xl mb-2 text-center font-bold">Sign Up</h1>
       <div className="border border-blue-400 mx-auto w-11/12 md:w-2/4 rounded py-8 px-4 md:px-8">
-        {/* {error !== null && (
-          <div className="py-4 bg-red-600 w-full text-white text-center mb-3">
-            {error}
-          </div>
-        )} */}
         <Alert show={isError} variant="danger" className="text-center">
           {error}
         </Alert>
@@ -96,7 +96,7 @@ const SignUp = () => {
             />
           </InputGroup>
 
-          <EmailForm />
+          <EmailForm email={email} isValidEmail={isValidEmail} setEmail={setEmail} setIsValidEmail={setIsValidEmail}/>
 
           <InputGroup className="mb-3" controlId="formBasicPassword">
             <InputGroup.Prepend>
