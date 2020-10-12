@@ -11,6 +11,7 @@ import {
 } from "react-bootstrap";
 
 import EmailForm from "./EmailForm";
+import "./SignUp.css";
 import { useEffect } from "react";
 
 const SignUp = () => {
@@ -80,14 +81,16 @@ const SignUp = () => {
   });
 
   return (
-    <div className="mt-8">
-      <h1 className="text-3xl mb-2 text-center font-bold">Sign Up</h1>
-      <div className="border border-blue-400 mx-auto w-11/12 md:w-2/4 rounded py-8 px-4 md:px-8">
+    <div className="mt-8 bg-secondary">
+      <h1 className="text-3xl mb-2 bg-secondary text-center font-bold">
+        Sign Up
+      </h1>
+      <div className="border border-blue-400 bg-secondary mx-auto w-11/12 md:w-2/4 rounded py-8 px-4 md:px-8">
         <Alert show={isError} variant="danger" className="text-center">
           {error}
         </Alert>
-        <Card id="sign-in-card" className="text-center w-50">
-          <Card.Title id="sign-in-label">Sign In</Card.Title>
+        <Card id="sign-up-card" className="text-center w-50">
+          <Card.Title id="sign-in-label">Please provide your:</Card.Title>
           <Form>
             <InputGroup className="mb-3">
               <InputGroup.Prepend>

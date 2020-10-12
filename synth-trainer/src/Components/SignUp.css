@@ -1,0 +1,13 @@
+#sign-up-card {
+  margin: 0 auto;
+  float: none;
+  margin-bottom: 10px;
+  margin-top: 10%;
+}
+
+html {
+  height: 100vh;
+}
+body {
+  min-height: 100vh;
+}
