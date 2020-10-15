@@ -17,6 +17,19 @@ firebase.initializeApp(firebaseConfig);
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
+// Configure FirebaseUI.
+export const uiConfig = {
+  // Popup signin flow rather than redirect flow.
+  signInFlow: "popup",
+  // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
+  signInSuccessUrl: "/profilePage",
+  // We will display Google and Facebook as auth providers.
+  signInOptions: [
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+  ],
+};
+
 const provider = new firebase.auth.GoogleAuthProvider();
 
 export const signInWithGoogle = () => {
@@ -25,7 +38,7 @@ export const signInWithGoogle = () => {
 
 export const signOut = () => {
   auth.signOut();
-}
+};
 
 export const generateUserDocument = async (user, additionalData) => {
   if (!user) return;
@@ -38,7 +51,7 @@ export const generateUserDocument = async (user, additionalData) => {
         displayName,
         email,
         photoURL,
-        ...additionalData
+        ...additionalData,
       });
     } catch (error) {
       console.error("Error creating user document", error);
@@ -47,13 +60,13 @@ export const generateUserDocument = async (user, additionalData) => {
   return getUserDocument(user.uid);
 };
 
-const getUserDocument = async uid => {
+const getUserDocument = async (uid) => {
   if (!uid) return null;
   try {
     const userDocument = await firestore.doc(`users/${uid}`).get();
     return {
       uid,
-      ...userDocument.data()
+      ...userDocument.data(),
     };
   } catch (error) {
     console.error("Error fetching user", error);
