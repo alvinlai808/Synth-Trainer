@@ -16,6 +16,7 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
+export const usernames = firestore.collection("usernames");
 
 // Configure FirebaseUI.
 export const uiConfig = {
@@ -61,6 +62,36 @@ const getUserDocument = async (uid) => {
     const userDocument = await firestore.doc(`users/${uid}`).get();
     return {
       uid,
+      ...userDocument.data(),
+    };
+  } catch (error) {
+    console.error("Error fetching user", error);
+  }
+};
+
+export const generateUsernameDocument = async (user, displayName) => {
+  if (!user) return;
+  const usernameRef = firestore.doc(`usernames/${displayName}`);
+  const snapshot = await usernameRef.get();
+  if (!snapshot.exists) {
+    const { uid } = user;
+    try {
+      await usernameRef.set({
+        uid,
+      });
+    } catch (error) {
+      console.error("Error creating user document", error);
+    }
+  }
+  return getUsernameDocument(user.displayName);
+};
+
+const getUsernameDocument = async (displayName) => {
+  if (!displayName) return null;
+  try {
+    const userDocument = await firestore.doc(`usernames/${displayName}`).get();
+    return {
+      displayName,
       ...userDocument.data(),
     };
   } catch (error) {
