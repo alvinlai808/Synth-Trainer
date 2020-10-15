@@ -22,10 +22,12 @@ function Application() {
         <Router>
           <SignUp path="signUp" />
           <SignIn path="/" />
-          <PasswordReset path = "passwordReset" />
+          {/* <Settings path="settings" /> */}
+          <PasswordReset path="passwordReset" />
+          <ProfilePage path="profilePage" />
         </Router>
       </div>
-    )
+    );
   }
   // return (
   //   <NavBar />

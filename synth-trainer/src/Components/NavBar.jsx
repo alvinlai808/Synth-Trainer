@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  Navbar,
-  Nav,
-  NavDropdown,
-} from "react-bootstrap";
+import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 
 const NavigationBar = () => {
   return (
@@ -23,7 +19,7 @@ const NavigationBar = () => {
               Separated link{" "}
             </NavDropdown.Item>
           </NavDropdown>
-          <Nav.Link href="#profile">Profile</Nav.Link>
+          <Nav.Link href="profilePage">Profile</Nav.Link>
           <Nav.Link href="#settings">Settings</Nav.Link>
         </Nav>
         {/* <Form inline>
