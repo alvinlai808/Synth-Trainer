@@ -6,14 +6,19 @@ import ProfilePage from "./ProfilePage";
 import PasswordReset from "./PasswordReset";
 import NavBar from "./NavBar";
 import { UserContext } from "../providers/UserProvider";
+import { NotFound } from "./NotFound";
 
 function Application() {
   const user = React.useContext(UserContext);
   if (user) {
     return (
       <div>
-        <NavBar />
-        <ProfilePage />
+        <Router>
+          <NavBar />
+          <ProfilePage />
+
+          <NotFound default />
+        </Router>
       </div>
     );
   } else {
@@ -25,7 +30,8 @@ function Application() {
           <SignIn path="/" />
           {/* <Settings path="settings" /> */}
           <PasswordReset path="passwordReset" />
-          <ProfilePage path="profilePage" />
+
+          <NotFound default />
         </Router>
       </div>
     );
