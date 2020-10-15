@@ -14,10 +14,10 @@ const MainPage = () => {
       <Jumbotron style={{ backgroundImage: `url(${img_url})`, backgroundSize: 'cover' }}>
         <h1>Welcome to Synth Trainer</h1>
         <p>
-          Having trouble navigating the application? Click below to enable Tool Tips.
+          Having trouble navigating the application? GG.
         </p>
         <p>
-        <Button variant="primary">Tool Tips</Button>
+          <Button variant="primary">I do nothing</Button>
         </p>
       </Jumbotron>
 
