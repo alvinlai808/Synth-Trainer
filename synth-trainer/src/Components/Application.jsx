@@ -13,9 +13,9 @@ function Application() {
   if (user) {
     return (
       <div>
+        <NavBar />
         <Router>
-          <NavBar />
-          <ProfilePage />
+          <ProfilePage path="/"/>
 
           <NotFound default />
         </Router>
@@ -30,7 +30,6 @@ function Application() {
           <SignIn path="/" />
           {/* <Settings path="settings" /> */}
           <PasswordReset path="passwordReset" />
-
           <NotFound default />
         </Router>
       </div>
