@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { auth } from "../firebase";
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import { auth, uiConfig } from "../firebase";
 import {
   Alert,
   Button,
@@ -19,7 +20,7 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [isError, setIsError] = useState(false);
-
+  
   const signInWithEmailAndPasswordHandler = (event, email, password) => {
     event.preventDefault();
     if (!isValidEmail) {
@@ -78,7 +79,7 @@ const SignIn = () => {
             </Form.Group>
 
             <Form.Group>
-              <Button variant="primary">Sign in with Google</Button>
+              <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />
             </Form.Group>
           </Form>
           <Form.Group>
