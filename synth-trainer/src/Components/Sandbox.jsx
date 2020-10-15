@@ -8,21 +8,33 @@ import {
   InputGroup
 } from "react-bootstrap";
 
-const playTone = () => {
-  const synth = new Tone.MonoSynth({
-    oscillator: {
-      type: "square"
-    },
-    envelope: {
-      attack: 0.1,
-      decay: 1,
-      release: 1
-    }
-  }).toDestination();
-  synth.triggerAttackRelease("C4", "8n");
-}
 
 const Sandbox = () => {
+  const [attackEnvelope, setAttackEnvelope] = useState(0.0);
+
+
+  const playTone = () => {
+    const synth = new Tone.MonoSynth({
+      oscillator: {
+        type: "square"
+      },
+      envelope: {
+        attack: attackEnvelope,
+        decay: 1,
+        release: 1
+      }
+    }).toDestination();
+    synth.triggerAttackRelease("C4", "8n");
+  }
+
+  const buttonClickHandler = (event) => {
+    const { name } = event.currentTarget;
+    if (name === "attackButton") {
+      setAttackEnvelope(attackEnvelope + 1);
+    }
+  }
+
+
   return (
     <div className="col-sm-12 my-auto">
       <h1 className="text-3xl mb-2 text-center font-bold">Sandbox</h1>
@@ -32,6 +44,7 @@ const Sandbox = () => {
           <Button onClick={(event) => {playTone();}}>
             Hello, Tone!
           </Button>
+          <Button name="attackButton" onClick={(event) => buttonClickHandler(event)}>Change Attack</Button>
         </Form>
       </Card>
     </div>
