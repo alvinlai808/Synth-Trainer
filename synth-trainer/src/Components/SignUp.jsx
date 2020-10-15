@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "@reach/router";
-import { auth, generateUserDocument } from "../firebase";
+import { auth, generateUserDocument, generateUsernameDocument, usernames } from "../firebase";
 import {
   Alert,
   Button,
@@ -48,11 +48,20 @@ const SignUp = () => {
       return null;
     }
     try {
-      const { user } = await auth.createUserWithEmailAndPassword(
-        email,
-        password
-      );
-      generateUserDocument(user, { displayName });
+      var docRef = usernames.doc(displayName);
+      docRef.get().then(async function(doc) {
+        if (doc.exists) {
+          setError("Display name already taken");
+          setIsError(true);
+        } else {
+          const { user } = await auth.createUserWithEmailAndPassword(
+            email,
+            password
+          );
+          generateUserDocument(user, { displayName });
+          generateUsernameDocument(user, displayName);
+        }
+      })
     } catch (error) {
       setError(error.message);
       setIsError(true)
