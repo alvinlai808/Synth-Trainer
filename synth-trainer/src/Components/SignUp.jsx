@@ -21,7 +21,7 @@ const SignUp = () => {
   const [secondPassword, setSecondPassword] = useState("");
   const [passwordsMatch, setPasswordsMatch] = useState();
   const [displayName, setDisplayName] = useState("");
-  const [error, setError] = useState(null);
+  const [error, setError] = useState([]);
   const [isError, setIsError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -33,16 +33,12 @@ const SignUp = () => {
   ) => {
     event.preventDefault();
     if (!passwordsMatch) {
-      setError("Passwords don't match");
+      setError(error.concat("Passwords don't match"));
       setIsError(true);
     }
     if (!isValidEmail) {
-      if (isError) {
-        setError(error.toString() + "\n" + "Invalid Email");
-      } else {
-        setError("Invalid Email");
+        setError(error.concat("Invalid Email"));
         setIsError(true);
-      }
     }
     if (isError) {
       return null;
@@ -51,7 +47,7 @@ const SignUp = () => {
       var docRef = usernames.doc(displayName);
       docRef.get().then(async function(doc) {
         if (doc.exists) {
-          setError("Display name already taken");
+          setError(error.concat("Display name already taken"));
           setIsError(true);
         } else {
           const { user } = await auth.createUserWithEmailAndPassword(
@@ -63,7 +59,7 @@ const SignUp = () => {
         }
       })
     } catch (error) {
-      setError(error.message);
+      setError([error.message]);
       setIsError(true)
     }
 
@@ -87,6 +83,12 @@ const SignUp = () => {
     setShowPassword(!showPassword);
   };
 
+  const displayError = (error) => {
+    error.foreach(errorMsg => {
+      return <p>{errorMsg}</p>
+    })
+  }
+
   useEffect(() => {
     setPasswordsMatch(password === secondPassword);
   });
@@ -98,7 +100,9 @@ const SignUp = () => {
       </h1>
       <div className="border border-blue-400 bg-secondary mx-auto w-11/12 md:w-2/4 rounded py-8 px-4 md:px-8">
         <Alert show={isError} variant="danger" className="text-center">
-          {error}
+        {error.map((errorMsg) => (
+        <p>{errorMsg}</p>
+      ))}
         </Alert>
         <Card id="sign-up-card" className="text-center w-50">
           <Card.Title id="sign-in-label">Please provide your:</Card.Title>
