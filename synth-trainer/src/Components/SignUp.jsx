@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "@reach/router";
-import { auth, generateUserDocument, generateUsernameDocument, usernames } from "../firebase";
+import {
+  auth,
+  generateUserDocument,
+  generateUsernameDocument,
+  usernames,
+} from "../firebase";
 import {
   Alert,
   Button,
@@ -19,7 +24,7 @@ const SignUp = () => {
   const [isValidEmail, setIsValidEmail] = useState(false);
   const [password, setPassword] = useState("");
   const [secondPassword, setSecondPassword] = useState("");
-  const [passwordsMatch, setPasswordsMatch] = useState();
+  const [passwordsMatch, setPasswordsMatch] = useState(false);
   const [displayName, setDisplayName] = useState("");
   const [error, setError] = useState([]);
   const [isError, setIsError] = useState(false);
@@ -33,41 +38,40 @@ const SignUp = () => {
   ) => {
     event.preventDefault();
     if (!passwordsMatch) {
-      setError(error.concat("Passwords don't match"));
+      setError((error) => [...error, "Passwords don't match"]);
       setIsError(true);
     }
     if (!isValidEmail) {
-        setError(error.concat("Invalid Email"));
-        setIsError(true);
+      setError((error) => [...error, "Invalid Email"]);
+      setIsError(true);
     }
-    if (isError) {
-      return null;
-    }
-    try {
-      var docRef = usernames.doc(displayName);
-      docRef.get().then(async function(doc) {
-        if (doc.exists) {
-          setError(error.concat("Display name already taken"));
-          setIsError(true);
-        } else {
-          const { user } = await auth.createUserWithEmailAndPassword(
-            email,
-            password
-          );
-          generateUserDocument(user, { displayName });
-          generateUsernameDocument(user, displayName);
-        }
-      })
-    } catch (error) {
-      setError([error.message]);
-      setIsError(true)
-    }
-
-    setEmail("");
-    setPassword("");
-    setSecondPassword("");
-    setDisplayName("");
   };
+  //   try {
+  //     var docRef = usernames.doc(displayName);
+  //     docRef.get().then(async function (doc) {
+  //       if (doc.exists) {
+  //         setError(error.concat("Display name already taken"));
+  //         setIsError(true);
+  //       } else {
+  //         const { user } = await auth.createUserWithEmailAndPassword(
+  //           email,
+  //           password
+  //         );
+  //         generateUserDocument(user, { displayName });
+  //         generateUsernameDocument(user, displayName);
+  //       }
+  //     });
+  //   } catch (caughtError) {
+  //     setError(error.concat(caughtError.message));
+  //     setIsError(true);
+  //   }
+
+  //   setEmail("");
+  //   setPassword("");
+  //   setSecondPassword("");
+  //   setDisplayName("");
+  // };
+
   const onChangeHandler = (event) => {
     const { name, value } = event.currentTarget;
     if (name === "userPassword") {
@@ -83,15 +87,9 @@ const SignUp = () => {
     setShowPassword(!showPassword);
   };
 
-  const displayError = (error) => {
-    error.foreach(errorMsg => {
-      return <p>{errorMsg}</p>
-    })
-  }
-
   useEffect(() => {
     setPasswordsMatch(password === secondPassword);
-  });
+  }, [password, secondPassword, error]);
 
   return (
     <div className="mt-8 bg-secondary">
@@ -100,9 +98,9 @@ const SignUp = () => {
       </h1>
       <div className="border border-blue-400 bg-secondary mx-auto w-11/12 md:w-2/4 rounded py-8 px-4 md:px-8">
         <Alert show={isError} variant="danger" className="text-center">
-        {error.map((errorMsg) => (
-        <p>{errorMsg}</p>
-      ))}
+          {error.map((msg) => (
+            <p>{msg}</p>
+          ))}
         </Alert>
         <Card id="sign-up-card" className="text-center w-50">
           <Card.Title id="sign-in-label">Please provide your:</Card.Title>
@@ -164,19 +162,17 @@ const SignUp = () => {
               variant="primary"
               className="bg-green-400 hover:bg-green-500 w-full py-2 text-white"
               onClick={(event) => {
-                createUserWithEmailAndPasswordHandler(event, email, password, displayName);
+                createUserWithEmailAndPasswordHandler(
+                  event,
+                  email,
+                  password,
+                  displayName
+                );
               }}
             >
               Sign up
             </Button>{" "}
           </Form>
-          <p className="text-center my-3">or</p>
-          <Button
-            variant="primary"
-            className="bg-red-500 hover:bg-red-600 w-full py-2 text-white"
-          >
-            Sign In with Google
-          </Button>{" "}
           <p className="text-center my-3">
             Already have an account?{" "}
             <Link to="/" className="text-blue-500 hover:text-blue-600">
