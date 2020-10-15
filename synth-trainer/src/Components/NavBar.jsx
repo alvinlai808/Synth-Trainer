@@ -1,5 +1,19 @@
+import { auth } from "firebase";
 import React from "react";
-import { Navbar, Nav, NavDropdown } from "react-bootstrap";
+import { Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
+import { signOut } from "../firebase";
+
+const onClickHandler = (event) => {
+  const { name } = event.currentTarget
+  if (name == "logOut") {
+    try {
+      signOut();
+      window.location = "/"
+    } catch (error) {
+      console.error(error);
+    }
+  }
+}
 
 const NavigationBar = () => {
   return (
@@ -21,6 +35,7 @@ const NavigationBar = () => {
           </NavDropdown>
           <Nav.Link href="profilePage">Profile</Nav.Link>
           <Nav.Link href="#settings">Settings</Nav.Link>
+          <Button name="logOut" onClick={event => onClickHandler(event)}>Log Out</Button>
         </Nav>
         {/* <Form inline>
           <FormControl type="text" placeholder="Search" className="mr-sm-2" />
