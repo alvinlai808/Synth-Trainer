@@ -5,9 +5,10 @@ import SignUp from "./SignUp";
 import ProfilePage from "./ProfilePage";
 import PasswordReset from "./PasswordReset";
 import NavBar from "./NavBar";
+import { UserContext } from "../providers/UserProvider";
 
 function Application() {
-  const user = null;
+  const user = React.useContext(UserContext);
   if (user) {
     return (
       <div>
