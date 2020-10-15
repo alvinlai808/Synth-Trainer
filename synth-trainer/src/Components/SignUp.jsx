@@ -45,32 +45,31 @@ const SignUp = () => {
       setError((error) => [...error, "Invalid Email"]);
       setIsError(true);
     }
-  };
-  //   try {
-  //     var docRef = usernames.doc(displayName);
-  //     docRef.get().then(async function (doc) {
-  //       if (doc.exists) {
-  //         setError(error.concat("Display name already taken"));
-  //         setIsError(true);
-  //       } else {
-  //         const { user } = await auth.createUserWithEmailAndPassword(
-  //           email,
-  //           password
-  //         );
-  //         generateUserDocument(user, { displayName });
-  //         generateUsernameDocument(user, displayName);
-  //       }
-  //     });
-  //   } catch (caughtError) {
-  //     setError(error.concat(caughtError.message));
-  //     setIsError(true);
-  //   }
+    try {
+      var docRef = usernames.doc(displayName);
+      docRef.get().then(async function (doc) {
+        if (doc.exists) {
+          setError(error.concat("Display name already taken"));
+          setIsError(true);
+        } else {
+          const { user } = await auth.createUserWithEmailAndPassword(
+            email,
+            password
+          );
+          generateUserDocument(user, { displayName });
+          generateUsernameDocument(user, displayName);
+        }
+      });
+    } catch (caughtError) {
+      setError(error.concat(caughtError.message));
+      setIsError(true);
+    }
 
-  //   setEmail("");
-  //   setPassword("");
-  //   setSecondPassword("");
-  //   setDisplayName("");
-  // };
+    setEmail("");
+    setPassword("");
+    setSecondPassword("");
+    setDisplayName("");
+  };
 
   const onChangeHandler = (event) => {
     const { name, value } = event.currentTarget;
