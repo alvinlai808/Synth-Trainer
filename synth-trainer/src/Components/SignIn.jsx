@@ -12,6 +12,7 @@ import {
 import "./SignIn.css";
 import EmailForm from "./EmailForm";
 
+
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(false);
@@ -27,9 +28,8 @@ const SignIn = () => {
       return;
     }
     auth.signInWithEmailAndPassword(email, password).catch((error) => {
-      setError("Error signing in with password and email!");
+      setError(error.message);
       setIsError(true);
-      console.error("Error signing in with password and email", error);
     });
   };
 
