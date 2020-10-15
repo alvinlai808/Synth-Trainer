@@ -23,6 +23,10 @@ export const signInWithGoogle = () => {
   auth.signInWithPopup(provider);
 };
 
+export const signOut = () => {
+  auth.signOut();
+}
+
 export const generateUserDocument = async (user, additionalData) => {
   if (!user) return;
   const userRef = firestore.doc(`users/${user.uid}`);
