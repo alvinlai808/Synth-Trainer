@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import { auth, uiConfig } from "../firebase";
 import {
   Alert,
@@ -12,7 +12,7 @@ import {
 } from "react-bootstrap";
 import "./SignIn.css";
 import EmailForm from "./EmailForm";
-
+import { navigate } from "@reach/router";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -20,7 +20,7 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [isError, setIsError] = useState(false);
-  
+
   const signInWithEmailAndPasswordHandler = (event, email, password) => {
     event.preventDefault();
     if (!isValidEmail) {
@@ -31,6 +31,11 @@ const SignIn = () => {
     auth.signInWithEmailAndPassword(email, password).catch((error) => {
       setError(error.message);
       setIsError(true);
+    });
+    auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        navigate("/profilePage");
+      }
     });
   };
 
@@ -51,7 +56,12 @@ const SignIn = () => {
         <Card id="sign-in-card" className="text-center w-50">
           <Card.Title id="sign-in-label">Sign In</Card.Title>
           <Form>
-            <EmailForm email={email} isValidEmail={isValidEmail} setEmail={setEmail} setIsValidEmail={setIsValidEmail}/>
+            <EmailForm
+              email={email}
+              isValidEmail={isValidEmail}
+              setEmail={setEmail}
+              setIsValidEmail={setIsValidEmail}
+            />
             <InputGroup className="mb-3" controlId="formBasicPassword">
               <InputGroup.Prepend>
                 <InputGroup.Text>Password</InputGroup.Text>

@@ -15,7 +15,7 @@ function Application() {
       <div>
         <NavBar />
         <Router>
-          <ProfilePage path="/"/>
+          <ProfilePage path="/profilePage" />
 
           <NotFound default />
         </Router>
@@ -27,10 +27,9 @@ function Application() {
         <NavBar />
         <Router>
           <SignUp path="signUp" />
-          <SignIn path="/" />
+          <SignIn path="/" default />
           {/* <Settings path="settings" /> */}
           <PasswordReset path="passwordReset" />
-          <NotFound default />
         </Router>
       </div>
     );
