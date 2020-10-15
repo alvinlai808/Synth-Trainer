@@ -28,32 +28,34 @@ const SignUp = () => {
   const createUserWithEmailAndPasswordHandler = async (
     event,
     email,
-    password
+    password,
+    displayName
   ) => {
     event.preventDefault();
-    try {
-      if (!passwordsMatch) {
-        setError("Passwords don't match");
+    if (!passwordsMatch) {
+      setError("Passwords don't match");
+      setIsError(true);
+    }
+    if (!isValidEmail) {
+      if (isError) {
+        setError(error.toString() + "\n" + "Invalid Email");
+      } else {
+        setError("Invalid Email");
         setIsError(true);
       }
-      if (!isValidEmail) {
-        if (isError) {
-          setError(error.toString() + "/n" + "Invalid Email");
-        } else {
-          setError("Invalid Email");
-          setIsError(true);
-        }
-      }
-      if (isError) {
-        return null;
-      }
+    }
+    if (isError) {
+      return null;
+    }
+    try {
       const { user } = await auth.createUserWithEmailAndPassword(
         email,
         password
       );
       generateUserDocument(user, { displayName });
     } catch (error) {
-      setError("Error Signing up with email and password");
+      setError(error.message);
+      setIsError(true)
     }
 
     setEmail("");
@@ -101,6 +103,9 @@ const SignUp = () => {
               <FormControl
                 aria-label="Default"
                 aria-describedby="inputGroup-sizing-default"
+                name="displayName"
+                value={displayName}
+                onChange={(event) => onChangeHandler(event)}
               />
             </InputGroup>
             <EmailForm
@@ -146,7 +151,7 @@ const SignUp = () => {
               variant="primary"
               className="bg-green-400 hover:bg-green-500 w-full py-2 text-white"
               onClick={(event) => {
-                createUserWithEmailAndPasswordHandler(event, email, password);
+                createUserWithEmailAndPasswordHandler(event, email, password, displayName);
               }}
             >
               Sign up
