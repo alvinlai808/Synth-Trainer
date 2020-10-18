@@ -5,35 +5,50 @@ import {
   Card,
   Form,
   FormControl,
-  InputGroup
+  InputGroup,
 } from "react-bootstrap";
+import Knob from "react-simple-knob";
 
 
 const Sandbox = () => {
-  const [attackEnvelope, setAttackEnvelope] = useState(0.0);
+  const [waveform, setWaveform] = useState("sawtooth")
+  const [attackValue, setAttackValue] = useState(0.01);
+  const [decayValue, setDecayValue] = useState(1.0);
+  const [sustainValue, setSustainValue] = useState(1.0);
+  const [releaseValue, setReleaseValue] = useState(1.0);
 
 
   const playTone = () => {
     const synth = new Tone.MonoSynth({
       oscillator: {
-        type: "square"
+        type: waveform
       },
       envelope: {
-        attack: attackEnvelope,
-        decay: 1,
-        release: 1
+        attack: attackValue,
+        decay: decayValue,
+        sustain: sustainValue,
+        release: releaseValue
       }
     }).toDestination();
-    synth.triggerAttackRelease("C4", "8n");
+    synth.triggerAttackRelease("C4", "2n");
   }
 
   const buttonClickHandler = (event) => {
     const { name } = event.currentTarget;
-    if (name === "attackButton") {
-      setAttackEnvelope(attackEnvelope + 1);
+    if (name === "squareButton") {
+      setWaveform("square");
+    }    
+    if (name === "sawtoothButton") {
+      setWaveform("sawtooth");
     }
   }
 
+  const style = {
+    margin: "0.05%",
+    height: "65px",
+    fontFamily: "Arial",
+    color: "black" // Sets font color of value and knob name
+  };
 
   return (
     <div className="col-sm-12 my-auto">
@@ -41,85 +56,72 @@ const Sandbox = () => {
       <Card id="sandbox-card" className="text-center w-center">
         <Card.Title id="sandbox-label">*Insert Synth Type*</Card.Title>
         <Form>
-          <Button onClick={(event) => {playTone();}}>
-            Hello, Tone!
-          </Button>
-          <Button name="attackButton" onClick={(event) => buttonClickHandler(event)}>Change Attack</Button>
+          <Button onClick={(event) => {playTone();}}>Hello, Tone!</Button>
+          <Button name="squareButton" onClick={(event) => buttonClickHandler(event)}>Square</Button>
+          <Button name="sawtoothButton" onClick={(event) => buttonClickHandler(event)}>Saw</Button>
+        </Form>
+      </Card>
+      <Card id="envelope-card" className="text-center w-center">
+        <Card.Title id="envelope-lable">Amplitude Envelope</Card.Title>
+        <Form>
+          <Knob
+            name="Volume"
+            unit="dB"
+            defaultPercentage={0.7}
+            onChange={console.log}
+            bg="gray"
+            fg="white"
+            mouseSpeed={5}
+            transform={p => parseInt(p * 50, 10) - 50}
+            style={style} 
+          />
+          <Knob
+            name="Attack"
+            unit="ms"
+            defaultPercentage={0.7}
+            onChange={console.log}
+            bg="gray"
+            fg="white"
+            mouseSpeed={5}
+            transform={p => parseInt(p * 50, 10) - 50}
+            style={style} 
+          />
+          <Knob
+            name="Decay"
+            unit="ms"
+            defaultPercentage={0.7}
+            onChange={console.log}
+            bg="gray"
+            fg="white"
+            mouseSpeed={5}
+            transform={p => parseInt(p * 50, 10) - 50}
+            style={style} 
+          />
+          <Knob
+            name="Sustain"
+            unit="ms"
+            defaultPercentage={0.7}
+            onChange={console.log}
+            bg="gray"
+            fg="white"
+            mouseSpeed={5}
+            transform={p => parseInt(p * 50, 10) - 50}
+            style={style} 
+          />
+          <Knob
+            name="Release"
+            unit="ms"
+            defaultPercentage={0.7}
+            onChange={console.log}
+            bg="gray"
+            fg="white"
+            mouseSpeed={5}
+            transform={p => parseInt(p * 50, 10) - 50}
+            style={style} 
+          />
         </Form>
       </Card>
     </div>
   );
 }
 export default Sandbox;
-
-// const Sandbox = () => {
-//   // const [isLoaded, setLoaded] = useState(false);
-//   const synth = useRef(null);
-//   const [attack, setAttack] = useState(0.1);
-//   const [decay, setDecay] = useState(1);
-//   const [release, setRelease] = useState(1);
-
-//   useEffect(() => {
-//     synth.current = new Tone.MonoSynth({
-//       oscillator: {
-//         type: "square"
-//       },
-//       envelope: {
-//         attack: {attack},
-//         decay: 1,
-//         release: 1
-//       }
-//     }).toDestination();
-//   }, []);
-
-//   const userSubmittedAttack = (event, attack) => {
-//     setAttack(attack);
-//   }
-
-//   const attackHandler = (event) => {
-//     const {value} = event.currentTarget;
-//     // synth.envelope.attack = setAttack(value);
-//   }
-
-//   const decayHandler = (event) => {
-//     const {decay, value} = event.currentTarget;
-//     setDecay(value);
-//   }
-
-//   const releaseHandler = (event) => {
-//     const {attack, value} = event.currentTarget;
-//     setRelease(value);
-//   }
-
-//   const handleClick = () => synth.current.triggerAttackRelease("C4", "8n");
-
-//   return (
-//     <div>
-//       <Button onClick={handleClick}>
-//         start
-//       </Button>
-//       {/* <Form attack={attack} setAttack={setAttack}/> */}
-//       <InputGroup className="mb-3" controlId="formAttack">
-//         <InputGroup.Prepend>
-//           <InputGroup.Text>Attack</InputGroup.Text>
-//         </InputGroup.Prepend>
-//         <FormControl 
-//           type="attack"
-//           name="synthAttack"
-//           value={attack}
-//           placeholder="Attack Time (ms)"
-//           id="synthAttack"
-//           onChange={(event) => attackHandler(event)}
-//         />
-//       </InputGroup>
-//       <Button
-//         onClick={(event) => {
-//           userSubmittedAttack(event, attack)
-//         }}
-//       >
-//         Submit Attack Value
-//       </Button>
-//     </div>
-//   )
-// }
-// export default Sandbox;
