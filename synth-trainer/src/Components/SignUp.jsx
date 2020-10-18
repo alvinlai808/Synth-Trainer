@@ -91,11 +91,11 @@ const SignUp = () => {
   }, [password, secondPassword, error]);
 
   return (
-    <div className="mt-8 bg-secondary">
+    <div>
       <h1 className="text-3xl mb-2 bg-secondary text-center font-bold">
         Sign Up
       </h1>
-      <div className="border border-blue-400 bg-secondary mx-auto w-11/12 md:w-2/4 rounded py-8 px-4 md:px-8">
+      <div>
         <Alert show={isError} variant="danger" className="text-center">
           {error.map((msg) => (
             <p>{msg}</p>

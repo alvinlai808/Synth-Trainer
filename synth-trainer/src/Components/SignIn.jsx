@@ -11,6 +11,7 @@ import {
   InputGroup,
 } from "react-bootstrap";
 import "./SignIn.css";
+import Backgroundpic from "../Images/SynthBackgroundPic.jpg";
 import EmailForm from "./EmailForm";
 import { navigate } from "@reach/router";
 
@@ -52,7 +53,7 @@ const SignIn = () => {
       <Alert show={isError} variant="danger" className="text-center">
         {error}
       </Alert>
-      <div className="col-sm-12 my-auto">
+      <div>
         <Card id="sign-in-card" className="text-center w-50">
           <Card.Title id="sign-in-label">Sign In</Card.Title>
           <Form>

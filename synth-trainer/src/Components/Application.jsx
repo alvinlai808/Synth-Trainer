@@ -30,6 +30,7 @@ function Application() {
           <SignIn path="/" default />
           {/* <Settings path="settings" /> */}
           <PasswordReset path="passwordReset" />
+          <ProfilePage path="profilePage" />
         </Router>
       </div>
     );

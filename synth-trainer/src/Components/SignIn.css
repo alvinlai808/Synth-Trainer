@@ -5,5 +5,9 @@
   margin-top: 10%;
 }
 
-#signup-button{
+#signup-button {
+}
+
+body {
+  background-image: url("../Images/SynthBackgroundPic.jpg");
 }
