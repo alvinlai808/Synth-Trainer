@@ -1,13 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import * as Tone from 'tone'
-import {
-  Button, 
-  Card,
-  Form,
-  FormControl,
-  InputGroup,
-} from "react-bootstrap";
-import { Knob } from "react-rotary-knob";
+import { Button, Card, Form } from "react-bootstrap";
+import LimitedKnob from "./LimitedKnob"
+import { Piano, KeyboardShortcuts, MidiNumbers } from 'react-piano';
+import 'react-piano/dist/styles.css';
+import './Keyboard.css';
 
 
 const Sandbox = () => {
@@ -27,7 +24,7 @@ const Sandbox = () => {
   // const [sustainValue, setSustainValue] = useState(1.0);
   // const [releaseValue, setReleaseValue] = useState(1.0);
 
-  const playTone = () => {
+  const playTone = (noteFrequency) => {
     const synth = new Tone.MonoSynth({
       oscillator: {
         type: waveform
@@ -39,7 +36,7 @@ const Sandbox = () => {
         release: releaseValue
       }
     }).toDestination();
-    synth.triggerAttackRelease("C4", "2n");
+    synth.triggerAttackRelease(noteFrequency, "2n");
   }
 
   const buttonClickHandler = (event) => {
@@ -49,6 +46,9 @@ const Sandbox = () => {
     }    
     if (name === "sawtoothButton") {
       setWaveform("sawtooth");
+    }
+    if (name === "sineButton") {
+      setWaveform("sine");
     }
   }
 
@@ -68,40 +68,17 @@ const Sandbox = () => {
     }
   }
 
-  class LimitedKnob extends React.Component {
-    constructor() {
-      super();
-      this.state = {
-        value: 0
-      };
-      this.handleOnChange = this.handleOnChange.bind(this);
-    }
-  
-    handleOnChange(val) {
-      //ignore change if distance is greater than defined
-      //here we use a distance of 200 because our max value is 1000
-      //change if needed
-      const maxDistance = 200;
-      let distance = Math.abs(val - this.state.value);
-      if (distance > maxDistance) {
-        return;
-      } else {
-        this.setState({ value: val });
-      }
-      
-    }
-    render() {
-      let { value, ...rest } = this.props;
-      return (
-        <div>
-          {this.state.value.toFixed(0)} ms
-          <div>
-            <Knob value={this.state.value} onChange={this.handleOnChange} {...rest} />
-          </div>
-        </div>
-      );
-    }
-  }
+  //Keyboard Properties:
+  //(ugly and needs to be turned into a component, 
+  //but I still dont understand how to do that properly) -Andrey
+  const keyboardWidth = 1000;
+  const firstNote = MidiNumbers.fromNote('c3');
+  const lastNote = MidiNumbers.fromNote('f4');
+  const keyboardShortcuts = KeyboardShortcuts.create({
+    firstNote: firstNote,
+    lastNote: lastNote,
+    keyboardConfig: KeyboardShortcuts.HOME_ROW,
+  });
 
   return (
     <div className="col-sm-12 my-auto">
@@ -109,9 +86,9 @@ const Sandbox = () => {
       <Card id="sandbox-card" className="text-center w-center" bg="light">
         <Card.Title id="sandbox-label">*Insert Synth Type*</Card.Title>
         <Form>
-          <Button onClick={(event) => {playTone();}}>Hello, Tone!</Button>
           <Button name="squareButton" onClick={(event) => buttonClickHandler(event)}>Square</Button>
           <Button name="sawtoothButton" onClick={(event) => buttonClickHandler(event)}>Saw</Button>
+          <Button name="sineButton" onClick={(event) => buttonClickHandler(event)}>Sine</Button>
         </Form>
       </Card>
       <div class="mx-auto" style={{width: "290px"}}>
@@ -183,6 +160,24 @@ const Sandbox = () => {
         </Form>
       </Card>
       </div>
+      {/* Needs to be centered, which sounds simple, but I still can't figure it out... I hate HTML/CSS/JS */}
+      <Card id="keyboard-card" className="text-center w-center" bg="info" style={{ width: keyboardWidth }}>
+        <Card.Title id="envelope-label">Keyboard</Card.Title>
+        <Form>
+          <Piano className="PianoDarkTheme"
+          noteRange={{ first: firstNote, last: lastNote }}
+          width={keyboardWidth}
+          keyboardShortcuts={keyboardShortcuts}
+          playNote={(midiNumber) => {
+            playTone(Tone.Midi(midiNumber).toFrequency())
+          }}
+          stopNote={(midiNumber) => {
+            // Function used to stop a note (might be useful for noise gating).
+            // Not using it atm, but it has to be defined -Andrey 
+          }}
+          />
+        </Form>
+      </Card>
     </div>
   );
 }
