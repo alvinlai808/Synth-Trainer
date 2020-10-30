@@ -1,3 +1,4 @@
+//We'll probably want to refactor most of this sooner or later
 import React, { useState } from "react";
 import * as Tone from 'tone'
 import { Button, Card, Form } from "react-bootstrap";
@@ -5,7 +6,6 @@ import LimitedKnob from "./LimitedKnob"
 import { Piano, KeyboardShortcuts, MidiNumbers } from 'react-piano';
 import 'react-piano/dist/styles.css';
 import './Keyboard.css';
-
 
 const Sandbox = () => {
   const [waveform, setWaveform] = useState("sawtooth")
@@ -16,9 +16,7 @@ const Sandbox = () => {
 
   //This is how we'd do it with hooks, but it seems like using 
   //hooks inside of class components is not great practice and
-  //requires a work-around using HOC wrappers. I spent a LOT
-  //of time trying to get that to work with no luck...
-  //give it a shot if you want, I can try helping if needed -Andrey
+  //requires a work-around using HOC wrappers -Andrey
   // const [attackValue, setAttackValue] = useState(0.01);
   // const [decayValue, setDecayValue] = useState(1.0);
   // const [sustainValue, setSustainValue] = useState(1.0);
@@ -69,8 +67,7 @@ const Sandbox = () => {
   }
 
   //Keyboard Properties:
-  //(ugly and needs to be turned into a component, 
-  //but I still dont understand how to do that properly) -Andrey
+  //(ugly and needs to be turned into a component) -Andrey
   const keyboardWidth = 1000;
   const firstNote = MidiNumbers.fromNote('c3');
   const lastNote = MidiNumbers.fromNote('f4');
@@ -159,8 +156,8 @@ const Sandbox = () => {
           </div>
         </Form>
       </Card>
-      </div>
-      {/* Needs to be centered, which sounds simple, but I still can't figure it out... I hate HTML/CSS/JS */}
+      </div >
+      {/* Still needs to be centered */}
       <Card id="keyboard-card" className="text-center w-center" bg="info" style={{ width: keyboardWidth }}>
         <Card.Title id="envelope-label">Keyboard</Card.Title>
         <Form>
