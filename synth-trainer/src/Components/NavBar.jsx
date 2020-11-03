@@ -32,6 +32,7 @@ const NavigationBar = () => {
             </NavDropdown.Item>
           </NavDropdown>
           <Nav.Link href="profilePage">Profile</Nav.Link>
+          <Nav.Link href="sandbox">Sandbox</Nav.Link>
           <Nav.Link href="#settings">Settings</Nav.Link>
           <Button name="logOut" onClick={event => onClickHandler(event)}>Log Out</Button>
         </Nav>
