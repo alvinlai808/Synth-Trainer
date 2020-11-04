@@ -5,6 +5,7 @@ import SignUp from "./SignUp";
 import ProfilePage from "./ProfilePage";
 import PasswordReset from "./PasswordReset";
 import NavBar from "./NavBar";
+import Sandbox from "./Sandbox";
 import { UserContext } from "../providers/UserProvider";
 import { NotFound } from "./NotFound";
 
@@ -26,6 +27,7 @@ function Application() {
       <div>
         <NavBar />
         <Router>
+          <Sandbox path="sandbox" />
           <SignUp path="signUp" />
           <SignIn path="/" default />
           {/* <Settings path="settings" /> */}
