@@ -15,16 +15,18 @@ const useStyles = makeStyles({
   },
 });
 
-export default function VolumeControl() {
+export default function VolumeControl({volume, setVolume}) {
   const classes = useStyles();
-  const [value, setValue] = React.useState(30);
+  const [value, setValue] = React.useState(volume);
 
   const handleSliderChange = (event, newValue) => {
     setValue(newValue);
+    setVolume(newValue)
   };
 
   const handleInputChange = (event) => {
     setValue(event.target.value === '' ? '' : Number(event.target.value));
+    setVolume(event.target.value / 2)
   };
 
   const handleBlur = () => {

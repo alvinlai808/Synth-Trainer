@@ -11,6 +11,7 @@ import VolumeControl from "./VolumeControl";
 
 const Sandbox = () => {
   const [waveform, setWaveform] = useState("sawtooth");
+  const [volume, setVolume] = useState(100);
   let attackValue = 0.01;
   let decayValue = 1.0;
   let sustainValue = 1.0;
@@ -35,6 +36,7 @@ const Sandbox = () => {
         sustain: sustainValue,
         release: releaseValue,
       },
+      volume: volume - 50,
     }).toDestination();
     synth.triggerAttackRelease(noteFrequency, "2n");
   };
@@ -196,7 +198,10 @@ const Sandbox = () => {
           </Grid>
           <Grid item xs={4}>
             <Card id="volumeControlCard" bg="info">
-              <VolumeControl />
+              <VolumeControl 
+                volume={volume}
+                setVolume={setVolume}
+              />
             </Card>
           </Grid>
         </Grid>
