@@ -6,6 +6,7 @@ import LimitedKnob from "./LimitedKnob"
 import { Piano, KeyboardShortcuts, MidiNumbers } from 'react-piano';
 import 'react-piano/dist/styles.css';
 import './Keyboard.css';
+import VolumeControl from "./VolumeControl";
 
 const Sandbox = () => {
   const [waveform, setWaveform] = useState("sawtooth")
