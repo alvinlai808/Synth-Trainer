@@ -36,7 +36,7 @@ The human interfaces include the user's computer, keyboard, mouse, and audio sys
     The GUI Client CSC is composed of the following CSUs:
     - Login/Register Screen CSU - This is what the user will see when starting the application.
     - Main Menu CSU - This acts as a homepage for the user to navigate the application. The main menu will consist of Modules, Sandbox, Profile, and Settings buttons.
-    - Header CSU - This is a fixed header that the user can use to navigate the application once the user is no longer on the Main Menu. The header will consist of a Homepage,       Profile and Logout button.
+    - Header CSU - This is a fixed header that the user can use to navigate the application once the user is no longer on the Main Menu. The header will consist of a Homepage, Profile and Logout button.
     - Modules CSU - This page will be comprised of a list of modules that the user can choose to attempt, as well as the specific synth components that will be taught in each respective module.
     - Synth Interface CSU - This is how the synth will appear to the user. It will have two different appearances: one for Match/Module Mode, and one for Sandbox Mode.
     - Sandbox Mode CSU - This will consist of the synth interface, as well as a drop down menu for selecting saved sound presets.
@@ -68,6 +68,12 @@ The following section specifies interactions between the different interfaces of
 Interaction between the user and the application is handled through our React code. We have onChange handles that deal with any changes that the user might make. Specifically, we have onChange handlers for our Synth sliders and knobs, sign-in an sign-up sections, and various buttons throughout the application. Higher level components pass down handlers to lower level components through the use of react props.
 
 The React code also has multiple functions that call functions from the `firebase` library. These functions allow for users to create accounts, sign in, and save their progress. Similarly, the functions can also recall this data in order to display it to the user.
+
+#### 6.2.2.1.1 GUI Module
+[GUI Module Diagram](img/GUI%20Module.pdf)
+
+#### 6.2.2.1.2 Database and Server Module
+[Database and Server Diagram](img/GUI%20Module.pdf)
 
 #### 6.2.2.2 Project Interactions
 The synth trainer application stores user data in a Firebase hosted database. When the user intailly loads the page, a script is run that creates an active connection to the database. There is then functions called from within the firebase module to handle sending and retrieving data.
