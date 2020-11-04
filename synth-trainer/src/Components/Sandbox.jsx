@@ -6,6 +6,7 @@ import LimitedKnob from "./LimitedKnob"
 import { Piano, KeyboardShortcuts, MidiNumbers } from 'react-piano';
 import 'react-piano/dist/styles.css';
 import './Keyboard.css';
+import Grid from '@material-ui/core/Grid';
 import VolumeControl from "./VolumeControl";
 
 const Sandbox = () => {
@@ -92,70 +93,68 @@ const Sandbox = () => {
       <div class="mx-auto" style={{width: "290px"}}>
       <Card id="envelope-card" className="text-center w-center" bg="info" style={{ width: '18rem' }}>
         <Card.Title id="envelope-label">ADSR Envelope</Card.Title>
-        <Form>
-          <div class="row">
-            <div class="col">
-            <h3 className="text-3xl mb-2 text-center font-bold">Attack</h3>
-            <LimitedKnob
-              name="Attack"
-              value={100}
-              style={{ display: "inline-block" }}
-              min={0}
-              max={1000}
-              unlockDistance={0}
-              preciseMode={false}
-              onEnd={knobHandler}
-              width={200}
-              height={200}
-            />
-            </div>
-            <div class="col">
-            <h3 className="text-3xl mb-2 text-center font-bold">Decay</h3>
-            <LimitedKnob
-              name="Decay"
-              value={100}
-              style={{ display: "inline-block" }}
-              min={0}
-              max={1000}
-              unlockDistance={0}
-              preciseMode={false}
-              onEnd={knobHandler}
-              width={200}
-              height={200}
-            />
-            </div>
-            <div class="col">
-            <h3 className="text-3xl mb-2 text-center font-bold">Sustain</h3>
-            <LimitedKnob
-              name="Sustain"
-              value={100}
-              style={{ display: "inline-block" }}
-              min={0}
-              max={1000}
-              unlockDistance={0}
-              preciseMode={false}
-              onEnd={knobHandler}
-              width={200}
-              height={200}
-            />
-            </div>
-            <div class="col">
-            <h3 className="text-3xl mb-2 text-center font-bold">Release</h3>
-            <LimitedKnob
-              name="Release"
-              value={100}
-              style={{ display: "inline-block" }}
-              min={0}
-              max={1000}
-              unlockDistance={0}
-              preciseMode={false}
-              onEnd={knobHandler}
-              width={200}
-              height={200}
-            />
-            </div>
-          </div>
-        </Form>
+        <Grid container spacing={2} alignItems="center">
+            <Grid item xs={6}>
+              <h3 className="text-3xl mb-2 text-center font-bold">Attack</h3>
+              <LimitedKnob
+                name="Attack"
+                value={100}
+                style={{ display: "inline-block" }}
+                min={0}
+                max={1000}
+                unlockDistance={0}
+                preciseMode={false}
+                onEnd={knobHandler}
+                width={200}
+                height={200}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <h3 className="text-3xl mb-2 text-center font-bold">Decay</h3>
+              <LimitedKnob
+                name="Decay"
+                value={100}
+                style={{ display: "inline-block" }}
+                min={0}
+                max={1000}
+                unlockDistance={0}
+                preciseMode={false}
+                onEnd={knobHandler}
+                width={200}
+                height={200}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <h3 className="text-3xl mb-2 text-center font-bold">Sustain</h3>
+              <LimitedKnob
+                name="Sustain"
+                value={100}
+                style={{ display: "inline-block" }}
+                min={0}
+                max={1000}
+                unlockDistance={0}
+                preciseMode={false}
+                onEnd={knobHandler}
+                width={200}
+                height={200}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <h3 className="text-3xl mb-2 text-center font-bold">Release</h3>
+              <LimitedKnob
+                name="Release"
+                value={100}
+                style={{ display: "inline-block" }}
+                min={0}
+                max={1000}
+                unlockDistance={0}
+                preciseMode={false}
+                onEnd={knobHandler}
+                width={200}
+                height={200}
+              />
+            </Grid>
+        </Grid>
       </Card>
       </div >
       {/* Still needs to be centered */}
