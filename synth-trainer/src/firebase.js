@@ -16,7 +16,6 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
-export const usernames = firestore.collection("usernames");
 
 // Configure FirebaseUI.
 export const uiConfig = {
@@ -98,3 +97,33 @@ const getUsernameDocument = async (displayName) => {
     console.error("Error fetching user", error);
   }
 };
+
+export const changeEmail = async (uid, email) => {
+  if (!uid) return;
+  const userRef = firestore.doc(`users/${uid}`);
+  const snapshot = await userRef.get();
+  if (snapshot.exists) {
+    try {
+      await userRef.update({
+        email: email
+      }) 
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+
+export const changeDisplayName = async (uid, newDisplayName) => {
+  if (!uid || !newDisplayName) return;
+  const userRef = firestore.doc(`users/${uid}`)
+  const snapshot = await userRef.get()
+  if (snapshot.exists) {
+    try {
+      await userRef.update({
+        displayName: newDisplayName
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}

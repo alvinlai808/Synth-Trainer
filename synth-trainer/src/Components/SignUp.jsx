@@ -3,8 +3,6 @@ import { Link } from "@reach/router";
 import {
   auth,
   generateUserDocument,
-  generateUsernameDocument,
-  usernames,
 } from "../firebase";
 import {
   Alert,
@@ -46,20 +44,11 @@ const SignUp = () => {
       setIsError(true);
     }
     try {
-      var docRef = usernames.doc(displayName);
-      docRef.get().then(async function (doc) {
-        if (doc.exists) {
-          setError(error.concat("Display name already taken"));
-          setIsError(true);
-        } else {
-          const { user } = await auth.createUserWithEmailAndPassword(
-            email,
-            password
-          );
-          generateUserDocument(user, { displayName });
-          generateUsernameDocument(user, displayName);
-        }
-      });
+      const { user } = await auth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
+      generateUserDocument(user, { displayName });
     } catch (caughtError) {
       setError(error.concat(caughtError.message));
       setIsError(true);

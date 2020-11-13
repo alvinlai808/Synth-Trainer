@@ -1,28 +1,165 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { UserContext } from "../providers/UserProvider";
+import Grid from "@material-ui/core/Grid";
+import Card from "@material-ui/core/Card";
+import Button from "@material-ui/core/Button";
+import { makeStyles } from "@material-ui/core/styles";
+import {
+  CardActionArea,
+  CardMedia,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+} from "@material-ui/core";
+import default_picture from "../Images/default_profile_picture.png";
+import EmailForm from "./EmailForm";
+import { auth, changeEmail, changeDisplayName } from "../firebase";
+import { Form } from "react-bootstrap";
+
 const ProfilePage = () => {
   const user = useContext(UserContext);
   const { photoURL, displayName, email } = user;
+  const [emailDialogOpen, setEmailDialogOpen] = useState(false);
+  const [displayNameDialogOpen, setDisplayNameDialogOpen] = useState(false);
+  const [profilePicDialogOpen, setProfilePicDialogOpen] = useState(false);
+  const [newEmail, setNewEmail] = useState("");
+  const [isValidEmail, setIsValidEmail] = useState(false);
+  const [currentEmail, setCurrentEmail] = useState(email);
+  const [newUsername, setNewUsername] = useState("");
+  const [currentUsername, setCurrentUsername] = useState(displayName);
+
+  const useStyles = makeStyles({
+    root: {
+      maxWidth: 345,
+    },
+    media: {
+      height: 140,
+      width: 140,
+    },
+  });
+
+  const classes = useStyles();
+
+  const handleForm = (event) => {
+    const { name, value } = event.currentTarget;
+    if (name === "username") {
+      setNewUsername(value)
+    }
+  }
+  
+  const handleButton = (event) => {
+    const { name, value } = event.currentTarget;
+    if (name === "changeEmailButton") {
+      setEmailDialogOpen(true);
+    }
+    if (name === "changeUsernameButton") {
+      setDisplayNameDialogOpen(true);
+    }
+    if (name === "changeProfilePicButton") {
+      setProfilePicDialogOpen(true);
+    }
+    if (name === "cancel") {
+      setEmailDialogOpen(false);
+      setDisplayNameDialogOpen(false);
+      setProfilePicDialogOpen(false);
+    }
+    if (name === "emailSubmit") {
+      changeEmail(auth.currentUser.uid, newEmail);
+      setEmailDialogOpen(false);
+      setCurrentEmail(newEmail);
+    }
+    if (name === "displayNameSubmit") {
+      changeDisplayName(auth.currentUser.uid, newUsername);
+      setDisplayNameDialogOpen(false);
+      setCurrentUsername(newUsername);
+    }
+  };
+
   return (
-    <div className="mx-auto w-11/12 md:w-2/4 py-8 px-4 md:px-8">
-      <div className="flex border flex-col items-center md:flex-row md:items-start border-blue-400 px-3 py-4">
-        <div
-          style={{
-            background: `url(${
-              photoURL ||
-              "https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png"
-            })  no-repeat center center`,
-            backgroundSize: "cover",
-            height: "200px",
-            width: "200px",
-          }}
-          className="border border-blue-300"
-        ></div>
-        <div className="md:pl-4">
-          <h2 className="text-2xl font-semibold">{displayName}</h2>
-          <h3 className="italic">{email}</h3>
-        </div>
-      </div>
+    <div>
+      <Card bg="info">
+        <Grid container>
+          <Grid item xs>
+            <CardMedia
+              className={classes.media}
+              image={photoURL || default_picture}
+              title="Default Profile Picture"
+            />
+            <Button name="changeProfilePicButton" onClick={handleButton}>
+              Change Profile Picture
+            </Button>
+          </Grid>
+          <Grid item xs>
+            <h2>{currentUsername}</h2>
+            <Button name="changeUsernameButton" onClick={handleButton}>
+              Change Username
+            </Button>
+          </Grid>
+          <Grid item xs>
+            <h2>{currentEmail}</h2>
+            <Button name="changeEmailButton" onClick={handleButton}>
+              Change Email
+            </Button>
+          </Grid>
+        </Grid>
+      </Card>
+      <Dialog open={profilePicDialogOpen}>
+        <DialogTitle>Change Profile Picture</DialogTitle>
+        <DialogContent>
+          <h2>UNDER DEVELOPMENT</h2>
+        </DialogContent>
+        <DialogActions>
+          <Button name="cancel" onClick={handleButton}>
+            Cancel
+          </Button>
+          <Button name="profilePicSubmit" onClick={handleButton}>
+            Submit
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog open={displayNameDialogOpen}>
+        <DialogTitle>Change Username</DialogTitle>
+        <DialogContent>
+          <Form>
+            <Form.Control
+              name="username"
+              type="username"
+              placeholder="Enter Username"
+              value={newUsername}
+              onChange={handleForm}
+            />
+          </Form>
+        </DialogContent>
+        <DialogActions>
+          <Button name="cancel" onClick={handleButton}>
+            Cancel
+          </Button>
+          <Button name="displayNameSubmit" onClick={handleButton}>
+            Submit
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog open={emailDialogOpen}>
+        <DialogTitle>Change Email</DialogTitle>
+        <DialogContent>
+          <EmailForm
+            email={newEmail}
+            isValidEmail={isValidEmail}
+            setEmail={setNewEmail}
+            setIsValidEmail={setIsValidEmail}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button name="cancel" onClick={handleButton}>
+            Cancel
+          </Button>
+          <Button name="emailSubmit" onClick={handleButton}>
+            Submit
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
