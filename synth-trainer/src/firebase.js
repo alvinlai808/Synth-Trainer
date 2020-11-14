@@ -20,9 +20,10 @@ export const firestore = firebase.firestore();
 // Configure FirebaseUI.
 export const uiConfig = {
   // Popup signin flow rather than redirect flow.
-  signnInFlow: "popup",
+  signInFlow: "popup",
   // We will display Google and Facebook as auth providers.
   signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
+  signInSuccessUrl: "/profilePage",
 };
 
 const provider = new firebase.auth.GoogleAuthProvider();

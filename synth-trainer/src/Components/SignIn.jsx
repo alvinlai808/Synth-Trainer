@@ -11,9 +11,9 @@ import {
   InputGroup,
 } from "react-bootstrap";
 import "./SignIn.css";
-import Backgroundpic from "../Images/SynthBackgroundPic.jpg";
 import EmailForm from "./EmailForm";
 import { navigate } from "@reach/router";
+import { useHistory } from "react-router-dom";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -21,6 +21,7 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [isError, setIsError] = useState(false);
+  const history = useHistory()
 
   const signInWithEmailAndPasswordHandler = (event, email, password) => {
     event.preventDefault();
@@ -35,7 +36,7 @@ const SignIn = () => {
     });
     auth.onAuthStateChanged(async (user) => {
       if (user) {
-        navigate("/profilePage");
+        history.push("/profilePage")
       }
     });
   };

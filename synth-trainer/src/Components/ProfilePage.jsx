@@ -5,13 +5,11 @@ import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import {
-  CardActionArea,
   CardMedia,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  TextField,
 } from "@material-ui/core";
 import default_picture from "../Images/default_profile_picture.png";
 import EmailForm from "./EmailForm";
@@ -50,7 +48,7 @@ const ProfilePage = () => {
   }
   
   const handleButton = (event) => {
-    const { name, value } = event.currentTarget;
+    const { name } = event.currentTarget;
     if (name === "changeEmailButton") {
       setEmailDialogOpen(true);
     }

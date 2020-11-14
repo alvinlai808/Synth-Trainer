@@ -1,11 +1,10 @@
-import { auth } from "firebase";
 import React from "react";
 import { Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
 import { signOut } from "../firebase";
 
 const onClickHandler = (event) => {
   const { name } = event.currentTarget
-  if (name == "logOut") {
+  if (name === "logOut") {
     try {
       signOut();
       window.location = "/"
