@@ -26,6 +26,7 @@ const Sandbox = () => {
   // const [releaseValue, setReleaseValue] = useState(1.0);
 
   const playTone = (noteFrequency) => {
+    console.log(volume)
     const synth = new Tone.MonoSynth({
       oscillator: {
         type: waveform,
@@ -36,7 +37,7 @@ const Sandbox = () => {
         sustain: sustainValue,
         release: releaseValue,
       },
-      volume: volume - 50,
+      volume: volume - 100,
     }).toDestination();
     synth.triggerAttackRelease(noteFrequency, "2n");
   };

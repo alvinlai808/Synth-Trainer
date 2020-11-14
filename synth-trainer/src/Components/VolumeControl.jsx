@@ -26,7 +26,7 @@ export default function VolumeControl({volume, setVolume}) {
 
   const handleInputChange = (event) => {
     setValue(event.target.value === '' ? '' : Number(event.target.value));
-    setVolume(event.target.value / 2)
+    setVolume(event.target.value)
   };
 
   const handleBlur = () => {
