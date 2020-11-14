@@ -7,7 +7,7 @@ import Input from '@material-ui/core/Input';
 import VolumeUp from '@material-ui/icons/VolumeUp';
 import VolumeOff from '@material-ui/icons/VolumeOff';
 import { Button } from '@material-ui/core';
-import { valueOf } from 'react-rotary-knob';
+import { useEffect } from 'react';
 
 const useStyles = makeStyles({
   root: {
@@ -32,18 +32,23 @@ export default function VolumeControl({volume, setVolume}) {
     }
   }
 
+  const toggleMute = () => {
+    console.log(isMuted)
+    if (isMuted) {
+      setValue(previousValue)
+      setVolume(previousValue)
+    } else {
+      setPreviousValue(value)
+      setValue(0)
+      setVolume(0)
+    }
+    setIsMuted(!isMuted)
+  }
+
   const handleButton = (event) => {
     const { name } = event.currentTarget;
     if (name === "muteButton") {
-      if (isMuted) {
-        setValue(previousValue)
-        setVolume(previousValue)
-      } else {
-        setPreviousValue(value)
-        setValue(0)
-        setVolume(0)
-      }
-      setIsMuted(!isMuted)
+      toggleMute()
     }
   }
 
@@ -62,10 +67,28 @@ export default function VolumeControl({volume, setVolume}) {
   const handleBlur = () => {
     if (value < 0) {
       setValue(0);
+      setVolume(0);
+      checkIfMuted();
     } else if (value > 100) {
       setValue(100);
+      setVolume(100);
+      checkIfMuted();
     }
   };
+
+  const downHandler = ({ key }) => {
+    if (key === 'm') {
+      toggleMute()
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener('keydown', downHandler);
+    return () => {
+      window.removeEventListener('keydown', downHandler);
+    };
+  });
+  
 
   return (
     <div className={classes.root}>
@@ -74,7 +97,7 @@ export default function VolumeControl({volume, setVolume}) {
       </Typography>
       <Grid container spacing={2} alignItems="center">
         <Grid item>
-          <Button name="muteButton" onClick={handleButton}>
+          <Button name="muteButton" onClick={handleButton} outlined="true">
             {isMuted ? <VolumeOff /> : <VolumeUp />}
           </Button>
         </Grid>
