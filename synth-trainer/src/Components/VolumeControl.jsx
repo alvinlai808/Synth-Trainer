@@ -33,7 +33,6 @@ export default function VolumeControl({volume, setVolume}) {
   }
 
   const toggleMute = () => {
-    console.log(isMuted)
     if (isMuted) {
       setValue(previousValue)
       setVolume(previousValue)
