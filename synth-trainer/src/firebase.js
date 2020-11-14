@@ -27,6 +27,7 @@ export const uiConfig = {
 };
 
 const provider = new firebase.auth.GoogleAuthProvider();
+provider.addScope('email')
 
 export const signInWithGoogle = () => {
   auth.signInWithPopup(provider);
