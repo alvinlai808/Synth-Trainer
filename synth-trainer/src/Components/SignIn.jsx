@@ -34,7 +34,7 @@ const SignIn = () => {
     });
     auth.onAuthStateChanged(async (user) => {
       if (user) {
-        navigate("/home");
+        navigate("/");
       }
     });
   };
@@ -83,6 +83,7 @@ const SignIn = () => {
                 onClick={(event) => {
                   signInWithEmailAndPasswordHandler(event, email, password);
                 }}
+                type='submit'
               >
                 Sign in
               </Button>
