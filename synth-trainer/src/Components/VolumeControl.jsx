@@ -5,6 +5,8 @@ import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 import Input from '@material-ui/core/Input';
 import VolumeUp from '@material-ui/icons/VolumeUp';
+import VolumeOff from '@material-ui/icons/VolumeOff';
+import { Button } from '@material-ui/core';
 
 const useStyles = makeStyles({
   root: {
@@ -18,15 +20,40 @@ const useStyles = makeStyles({
 export default function VolumeControl({volume, setVolume}) {
   const classes = useStyles();
   const [value, setValue] = React.useState(volume);
+  const [isMuted, setIsMuted] = React.useState(false)
+
+  const checkIfMuted = () => {
+    if (value === 0) {
+      setIsMuted(true); 
+    } else {
+      setIsMuted(false);
+    }
+  }
+
+  const handleButton = (event) => {
+    const { name } = event.currentTarget;
+    if (name === "muteButton") {
+      if (isMuted) {
+        setValue(10)
+        setVolume(10)
+      } else {
+        setValue(0)
+        setVolume(0)
+      }
+      setIsMuted(!isMuted)
+    }
+  }
 
   const handleSliderChange = (event, newValue) => {
     setValue(newValue);
-    setVolume(newValue)
+    setVolume(newValue);
+    checkIfMuted();
   };
 
   const handleInputChange = (event) => {
     setValue(event.target.value === '' ? '' : Number(event.target.value));
     setVolume(event.target.value)
+    checkIfMuted();
   };
 
   const handleBlur = () => {
@@ -44,7 +71,9 @@ export default function VolumeControl({volume, setVolume}) {
       </Typography>
       <Grid container spacing={2} alignItems="center">
         <Grid item>
-          <VolumeUp />
+          <Button name="muteButton" onClick={handleButton}>
+            {isMuted ? <VolumeOff /> : <VolumeUp />}
+          </Button>
         </Grid>
         <Grid item xs>
           <Slider
