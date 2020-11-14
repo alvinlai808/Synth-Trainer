@@ -128,3 +128,12 @@ export const changeDisplayName = async (uid, newDisplayName) => {
     }
   }
 }
+
+export const changeUserEmail = async (newEmail) => {
+  try { 
+    await auth.currentUser.updateEmail(newEmail);
+  } catch (error) {
+    return error.code
+  }
+  
+}

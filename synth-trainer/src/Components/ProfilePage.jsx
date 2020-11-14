@@ -13,8 +13,9 @@ import {
 } from "@material-ui/core";
 import default_picture from "../Images/default_profile_picture.png";
 import EmailForm from "./EmailForm";
-import { auth, changeEmail, changeDisplayName } from "../firebase";
+import { auth, changeEmail, changeDisplayName, changeUserEmail, signOut } from "../firebase";
 import { Form } from "react-bootstrap";
+import { navigate } from "@reach/router";
 
 const ProfilePage = () => {
   const user = useContext(UserContext);
@@ -47,7 +48,7 @@ const ProfilePage = () => {
     }
   }
   
-  const handleButton = (event) => {
+  const handleButton = async (event) => {
     const { name } = event.currentTarget;
     if (name === "changeEmailButton") {
       setEmailDialogOpen(true);
@@ -64,6 +65,10 @@ const ProfilePage = () => {
       setProfilePicDialogOpen(false);
     }
     if (name === "emailSubmit") {
+      if (await changeUserEmail(newEmail) === "auth/requires-recent-login") {
+        signOut();
+        navigate("/")
+      }
       changeEmail(auth.currentUser.uid, newEmail);
       setEmailDialogOpen(false);
       setCurrentEmail(newEmail);

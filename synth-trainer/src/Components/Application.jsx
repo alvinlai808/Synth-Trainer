@@ -8,6 +8,7 @@ import NavBar from "./NavBar";
 import Sandbox from "./Sandbox";
 import { UserContext } from "../providers/UserProvider";
 import { NotFound } from "./NotFound";
+import HomePage from "./HomePage";
 
 function Application() {
   const user = React.useContext(UserContext);
@@ -17,7 +18,8 @@ function Application() {
         <NavBar />
         <Router>
           <ProfilePage path="profilePage" />
-
+          <HomePage path="/" />
+          <Sandbox path="sandbox" />
           <NotFound default />
         </Router>
       </div>
