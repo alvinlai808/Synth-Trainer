@@ -7,6 +7,7 @@ import Input from '@material-ui/core/Input';
 import VolumeUp from '@material-ui/icons/VolumeUp';
 import VolumeOff from '@material-ui/icons/VolumeOff';
 import { Button } from '@material-ui/core';
+import { valueOf } from 'react-rotary-knob';
 
 const useStyles = makeStyles({
   root: {
@@ -20,6 +21,7 @@ const useStyles = makeStyles({
 export default function VolumeControl({volume, setVolume}) {
   const classes = useStyles();
   const [value, setValue] = React.useState(volume);
+  const [previousValue, setPreviousValue] = React.useState(volume);
   const [isMuted, setIsMuted] = React.useState(false)
 
   const checkIfMuted = () => {
@@ -34,9 +36,10 @@ export default function VolumeControl({volume, setVolume}) {
     const { name } = event.currentTarget;
     if (name === "muteButton") {
       if (isMuted) {
-        setValue(10)
-        setVolume(10)
+        setValue(previousValue)
+        setVolume(previousValue)
       } else {
+        setPreviousValue(value)
         setValue(0)
         setVolume(0)
       }
