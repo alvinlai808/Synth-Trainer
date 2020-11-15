@@ -1,0 +1,29 @@
+
+
+Group 13: [4 souls] *
+   Jeremy Goldberg, Alvin Lai, David Sackler, Andrey Varakin
+      synopsis:   Synth Trainer ~ digital synthesizer based on Moog/Arp [web app]
+========================================================================================
+Excellent work on this deliverable!  I like the way you have presented the
+project description, and the interfaces are described well from the users'
+perspective.
+
+One thing to consider is, in section 6.1.2.2 there are other interfaces in
+this section besides just the user interfaces.  For example, HOW does the
+software communicate with the database; what are the API interface data
+structures like for the "tone.js" library?  At the architecture level, you
+don't need to describe the details of e.g., the fields of a JSON object, but
+you should at least say it will use JSON objects.
+
+I noticed that both your diagram links go to the same drawing image... not a
+problem when I can just go to the img directory and bring it up, but it's a
+good lesson to let you know ~ always verify that links work properly before
+you release the work product!  *grin*
+
+The user manual is great
+
+
+Evaluation score:
+
+    10% out of 10% for this deliverable:  A-plus
+
