@@ -12,22 +12,13 @@ import VolumeControl from "./VolumeControl";
 const Sandbox = () => {
   const [waveform, setWaveform] = useState("sawtooth");
   const [volume, setVolume] = useState(100);
-  let attackValue = 0.01;
+  let attackValue = 0;
   let decayValue = 1.0;
   let sustainValue = 1.0;
   let releaseValue = 1.0;
 
-  //This is how we'd do it with hooks, but it seems like using
-  //hooks inside of class components is not great practice and
-  //requires a work-around using HOC wrappers -Andrey
-  // const [attackValue, setAttackValue] = useState(0.01);
-  // const [decayValue, setDecayValue] = useState(1.0);
-  // const [sustainValue, setSustainValue] = useState(1.0);
-  // const [releaseValue, setReleaseValue] = useState(1.0);
-
   const playTone = (noteFrequency) => {
-    console.log(volume)
-    const synth = new Tone.MonoSynth({
+    const synth = new Tone.AMSynth({
       oscillator: {
         type: waveform,
       },
@@ -39,7 +30,8 @@ const Sandbox = () => {
       },
       volume: volume - 100,
     }).toDestination();
-    synth.triggerAttackRelease(noteFrequency, "2n");
+    console.log(synth)
+    synth.triggerAttackRelease(noteFrequency, attackValue);
   };
 
   const buttonClickHandler = (event) => {
@@ -103,7 +95,7 @@ const Sandbox = () => {
               className="text-center"
               bg="info"
             >
-              <Card.Title id="sandbox-label">*Insert Synth Type*</Card.Title>
+              <Card.Title id="sandbox-label">Oscillator</Card.Title>
               <Form>
                 <Button
                   name="squareButton"
@@ -194,6 +186,7 @@ const Sandbox = () => {
                     height={200}
                   />
                 </Grid>
+                
               </Grid>
             </Card>
           </Grid>
@@ -207,7 +200,7 @@ const Sandbox = () => {
           </Grid>
         </Grid>
       </Grid>
-      {/* Still needs to be centered */}
+      {/*Keyboard*/}
       <Grid item>
         <Grid container alignItems="center">
           <Grid item xs={12}>
