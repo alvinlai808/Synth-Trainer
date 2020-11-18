@@ -18,7 +18,7 @@ const Sandbox = () => {
   let releaseValue = 1.0;
 
   const playTone = (noteFrequency) => {
-    const synth = new Tone.AMSynth({
+    const synthSettings = {
       oscillator: {
         type: waveform,
       },
@@ -29,9 +29,9 @@ const Sandbox = () => {
         release: releaseValue,
       },
       volume: volume - 100,
-    }).toDestination();
-    console.log(synth)
-    synth.triggerAttackRelease(noteFrequency, attackValue);
+    }
+    const polySynth = new Tone.PolySynth(Tone.AMSynth, synthSettings).toDestination();
+    polySynth.triggerAttackRelease(noteFrequency, attackValue + 0.01);
   };
 
   const buttonClickHandler = (event) => {
