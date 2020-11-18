@@ -73,7 +73,7 @@ The React code also has multiple functions that call functions from the `firebas
 [GUI Module Diagram](img/GUI%20Module.pdf)
 
 #### 6.2.2.1.2 Database and Server Module
-[Database and Server Diagram](img/GUI%20Module.pdf)
+[Database and Server Diagram](img/database%20module.pdf)
 
 #### 6.2.2.2 Project Interactions
 The synth trainer application stores user data in a Firebase hosted database. When the user intailly loads the page, a script is run that creates an active connection to the database. There is then functions called from within the firebase module to handle sending and retrieving data.
