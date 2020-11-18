@@ -107,3 +107,17 @@ Once you have entered the module follow the instructions provided to you to trai
 **Sandbox**
 
 On this page, the full synth is available to you. You can try to create whatever sound you would like. The sliders and buttons are available to you so that you can tailor certain sounds to your liking.
+
+## 6.4 Database Design and Description
+The database consists of two collections, the users collection and the modules collection. The database is accessed by creating a connection using firebase's library. As long as the user has a valid, sign in, they can access and modify their personal data. If the user has been logged in for too long, the application will sign the user out effectively sereving the connection to the database. The Firebase API can be found [here](https://firebase.google.com/docs/reference).
+
+### Users Collection
+  - username (string)
+  - UID (Auto Gnereated)
+  - Profile Picture URL (String)
+  - Modules (Array of Module IDs, and portion completed)
+
+### Modules Collection
+  - ID (auto generated)
+  - Synth parts used (array of strings)
+  - Instructions (array of strings)
