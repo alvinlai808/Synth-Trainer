@@ -1,6 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
+import "firebase/storage";
 
 var firebaseConfig = {
   apiKey: "AIzaSyDaVxaWeNQ8drV4aoG1igtrZWPRb9Dk5p0",
@@ -16,6 +17,8 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
+export const storage = firebase.storage()
+export const storageRef = storage.ref();
 
 // Configure FirebaseUI.
 export const uiConfig = {
@@ -136,6 +139,22 @@ export const changeUserEmail = async (newEmail) => {
   } catch (error) {
     return error.code
   }
+}
+
+export const changeProfilePic = async (imageUrl) => {
+  if (!imageUrl) return;
+  const userRef = firestore.doc(`users/${auth.currentUser.uid}`)
+  const snapshot = await userRef.get()
+  if (snapshot.exists) {
+    try {
+      await userRef.update({
+        photoURL: imageUrl
+      })
+    } catch (error) {
+      console.error(error + "DSADSADSADASDASDAS")
+    }
+  }
+  
 }
 
 export const getInProgressModules = async (user) => {

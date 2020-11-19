@@ -10,10 +10,11 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  Input,
 } from "@material-ui/core";
 import default_picture from "../Images/default_profile_picture.png";
 import EmailForm from "./EmailForm";
-import { auth, changeEmail, changeDisplayName, changeUserEmail, signOut } from "../firebase";
+import { auth, changeEmail, changeDisplayName, changeUserEmail, signOut, storageRef, changeProfilePic } from "../firebase";
 import { Form } from "react-bootstrap";
 import { navigate } from "@reach/router";
 
@@ -28,6 +29,8 @@ const ProfilePage = () => {
   const [currentEmail, setCurrentEmail] = useState(email);
   const [newUsername, setNewUsername] = useState("");
   const [currentUsername, setCurrentUsername] = useState(displayName);
+  const [imageAsFile, setImageAsFile] = useState('')
+  const [imageAsUrl, setImageAsUrl] = useState(photoURL)
 
   const useStyles = makeStyles({
     root: {
@@ -49,7 +52,7 @@ const ProfilePage = () => {
   }
   
   const handleButton = async (event) => {
-    const { name } = event.currentTarget;
+    const { name, files } = event.currentTarget;
     if (name === "changeEmailButton") {
       setEmailDialogOpen(true);
     }
@@ -78,7 +81,35 @@ const ProfilePage = () => {
       setDisplayNameDialogOpen(false);
       setCurrentUsername(newUsername);
     }
+    if (name === "profilePicSubmit") {
+      console.log('start of upload')
+      // async magic goes here...
+      if(imageAsFile === '') {
+        console.error(`not an image, the image file is a ${typeof(imageAsFile)}`)
+      }
+      const uploadTask = storageRef.child(`/${user.uid}/images/${imageAsFile.name}`).put(imageAsFile)
+      //initiates the firebase side uploading 
+      uploadTask.on('state_changed',
+      (snapShot) => {
+      }, (err) => {
+        //catches the errors
+        console.log(err)
+      },
+      () => {
+        storageRef.child(`/${user.uid}/images/${imageAsFile.name}`).getDownloadURL()
+         .then(fireBaseUrl => {
+            changeProfilePic(fireBaseUrl)
+            setImageAsUrl(fireBaseUrl)
+            setProfilePicDialogOpen(false)
+        })
+      })
+    }
   };
+
+  const handleImageAsFile = (event) => {
+    const image = event.currentTarget.files[0]
+    setImageAsFile(imageFile => (image))
+  }
 
   return (
     <div>
@@ -87,7 +118,7 @@ const ProfilePage = () => {
           <Grid item xs>
             <CardMedia
               className={classes.media}
-              image={photoURL || default_picture}
+              image={imageAsUrl || default_picture}
               title="Default Profile Picture"
             />
             <Button name="changeProfilePicButton" onClick={handleButton}>
@@ -111,7 +142,7 @@ const ProfilePage = () => {
       <Dialog open={profilePicDialogOpen}>
         <DialogTitle>Change Profile Picture</DialogTitle>
         <DialogContent>
-          <h2>UNDER DEVELOPMENT</h2>
+          <input type="file" onChange={handleImageAsFile} accept="image/*"/>
         </DialogContent>
         <DialogActions>
           <Button name="cancel" onClick={handleButton}>
