@@ -136,5 +136,12 @@ export const changeUserEmail = async (newEmail) => {
   } catch (error) {
     return error.code
   }
-  
+}
+
+export const getInProgressModules = async (user) => {
+  // query user document to get current modules
+}
+
+export const getAllModules = async () => {
+  // query modules collection to compile all modules
 }

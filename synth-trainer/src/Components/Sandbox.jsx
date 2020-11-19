@@ -88,8 +88,9 @@ const Sandbox = () => {
         <h1 className="text-3xl text-center font-bold">Sandbox</h1>
       </Grid>
       <Grid item xs={12}>
-        <Grid container alignItems="center" alignContent="center">
-          <Grid item xs={4}>
+        <Grid container alignItems="center" alignContent="center" spacing={2}>
+          <Grid item xs={3}>{/*Centers grid*/}</Grid>
+          <Grid item xs={2}>
             <Card
               id="sandbox-card"
               className="text-center"
@@ -118,7 +119,7 @@ const Sandbox = () => {
               </Form>
             </Card>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={2}>
             <Card
               id="envelope-card"
               className="text-center"
@@ -190,7 +191,7 @@ const Sandbox = () => {
               </Grid>
             </Card>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={2}>
             <Card id="volumeControlCard" bg="info">
               <VolumeControl 
                 volume={volume}
