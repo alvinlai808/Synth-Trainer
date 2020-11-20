@@ -27,7 +27,8 @@ class LimitedKnob extends React.Component {
       let { value, ...rest } = this.props;
       return (
         <div>
-          {this.state.value.toFixed(0)} ms
+          {
+          this.state.value.toFixed(0)/1000} s
           <div>
             <Knob value={this.state.value} onChange={this.handleOnChange} {...rest} />
           </div>

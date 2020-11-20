@@ -1,4 +1,3 @@
-//We'll probably want to refactor most of this sooner or later
 import React, { useState } from "react";
 import * as Tone from "tone";
 import { Button, Card, Form } from "react-bootstrap";
@@ -10,56 +9,67 @@ import Grid from "@material-ui/core/Grid";
 import VolumeControl from "./VolumeControl";
 
 const Sandbox = () => {
-  const [waveform, setWaveform] = useState("sawtooth");
+  const [mainWaveform, setMainWaveform] = useState("sawtooth");
+  const [modulationWaveform, setModulationWaveform] = useState("sawtooth");
   const [volume, setVolume] = useState(100);
-  let attackValue = 0;
-  let decayValue = 1.0;
-  let sustainValue = 1.0;
-  let releaseValue = 1.0;
+  const [attackValue, setAttackValue] = useState(0);
+  const [decayValue, setDecayValue] = useState(1.0);
+  const [sustainValue, setSustainValue] = useState(1.0);
+  const [releaseValue, setReleaseValue] = useState(1.0);
+
+  //Initializing Synth Settings
+  const synthSettings = {
+    oscillator: {
+      type: mainWaveform,
+      //count: mainWaveCount
+    },
+    envelope: {
+      attack: attackValue,
+      decay: decayValue,
+      sustain: sustainValue,
+      release: releaseValue,
+    },
+    modulation: {
+      type: modulationWaveform,
+    },
+    modulationEnvelope: {
+      attack: 0.5,
+      decay: 0.5,
+      sustain: 0.5,
+      release: 0.5,
+    }, 
+    //harmonicity: 10,
+    volume: volume - 100,
+  }
+  //Initializing Synth Object
+  const polySynth = new Tone.PolySynth(Tone.AMSynth, synthSettings).toDestination();
 
   const playTone = (noteFrequency) => {
-    const synthSettings = {
-      oscillator: {
-        type: waveform,
-      },
-      envelope: {
-        attack: attackValue,
-        decay: decayValue,
-        sustain: sustainValue,
-        release: releaseValue,
-      },
-      volume: volume - 100,
-    }
-    const polySynth = new Tone.PolySynth(Tone.AMSynth, synthSettings).toDestination();
     polySynth.triggerAttackRelease(noteFrequency, attackValue + 0.01);
   };
 
-  const buttonClickHandler = (event) => {
+  const buttonClickHandler = (event, oscillator) => {
     const { name } = event.currentTarget;
-    if (name === "squareButton") {
-      setWaveform("square");
-    }
-    if (name === "sawtoothButton") {
-      setWaveform("sawtooth");
-    }
-    if (name === "sineButton") {
-      setWaveform("sine");
+    if (oscillator === 1) {
+      setMainWaveform(name)
+    } else {
+      setModulationWaveform(name)
     }
   };
 
   function knobHandler() {
     const { name, value } = this;
     if (name === "Attack") {
-      attackValue = value / 1000;
+      setAttackValue(value / 1000);
     }
     if (name === "Decay") {
-      decayValue = value / 1000;
+      setDecayValue(value / 1000);
     }
     if (name === "Sustain") {
-      sustainValue = value / 1000;
+      setSustainValue(value / 1000);
     }
     if (name === "Release") {
-      releaseValue = value / 1000;
+      setReleaseValue(value / 1000);
     }
   }
 
@@ -88,38 +98,58 @@ const Sandbox = () => {
         <h1 className="text-3xl text-center font-bold">Sandbox</h1>
       </Grid>
       <Grid item xs={12}>
-        <Grid container alignItems="center" alignContent="center" spacing={2}>
-          <Grid item xs={3}>{/*Centers grid*/}</Grid>
-          <Grid item xs={2}>
+        <Grid container alignItems="center" alignContent="center">
+          <Grid item xs={4}>
             <Card
               id="sandbox-card"
               className="text-center"
               bg="info"
             >
-              <Card.Title id="sandbox-label">Oscillator</Card.Title>
+              <Card.Title id="sandbox-label">Main Oscillator</Card.Title>
               <Form>
                 <Button
-                  name="squareButton"
-                  onClick={(event) => buttonClickHandler(event)}
+                  name="square"
+                  onClick={(event) => buttonClickHandler(event, 1)} 
                 >
                   Square
                 </Button>
                 <Button
-                  name="sawtoothButton"
-                  onClick={(event) => buttonClickHandler(event)}
+                  name="sawtooth"
+                  onClick={(event) => buttonClickHandler(event, 1)}
                 >
                   Saw
                 </Button>
                 <Button
-                  name="sineButton"
-                  onClick={(event) => buttonClickHandler(event)}
+                  name="sine"
+                  onClick={(event) => buttonClickHandler(event, 1)}
+                >
+                  Sine
+                </Button>
+              </Form>
+              <Card.Title id="sandbox-label">Modulation Oscillator</Card.Title>
+              <Form>
+                <Button
+                  name="square"
+                  onClick={(event) => buttonClickHandler(event, 2)}
+                >
+                  Square
+                </Button>
+                <Button
+                  name="sawtooth"
+                  onClick={(event) => buttonClickHandler(event, 2)}
+                >
+                  Saw
+                </Button>
+                <Button
+                  name="sine"
+                  onClick={(event) => buttonClickHandler(event, 2)}
                 >
                   Sine
                 </Button>
               </Form>
             </Card>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={4}>
             <Card
               id="envelope-card"
               className="text-center"
@@ -149,7 +179,7 @@ const Sandbox = () => {
                     value={100}
                     style={{ display: "inline-block" }}
                     min={0}
-                    max={1000}
+                    max={5000}
                     unlockDistance={0}
                     preciseMode={false}
                     onEnd={knobHandler}
@@ -179,7 +209,7 @@ const Sandbox = () => {
                     value={100}
                     style={{ display: "inline-block" }}
                     min={0}
-                    max={1000}
+                    max={5000}
                     unlockDistance={0}
                     preciseMode={false}
                     onEnd={knobHandler}
@@ -191,7 +221,7 @@ const Sandbox = () => {
               </Grid>
             </Card>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={4}>
             <Card id="volumeControlCard" bg="info">
               <VolumeControl 
                 volume={volume}
