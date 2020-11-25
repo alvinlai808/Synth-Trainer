@@ -47,22 +47,6 @@ const FilterCard = ({ knobHandler, filterHandler }) => {
             height={200}
           />
         </Grid>
-        <h3>Auto Filter</h3>
-        <Grid item xs={6} alignItems="center" direction="row">
-          <h8 className="text-3xl font-bold">LFO Frequency</h8>
-          <LimitedKnob
-            name="LFO Frequency"
-            value={100}
-            style={{ display: "inline-block" }}
-            min={0}
-            max={5000}
-            unlockDistance={0}
-            preciseMode={false}
-            onEnd={knobHandler}
-            width={200}
-            height={200}
-          />
-        </Grid>
       </Grid>
     </Card>
   );
