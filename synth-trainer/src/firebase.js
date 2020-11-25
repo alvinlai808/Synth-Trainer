@@ -151,7 +151,7 @@ export const changeProfilePic = async (imageUrl) => {
         photoURL: imageUrl
       })
     } catch (error) {
-      console.error(error + "DSADSADSADASDASDAS")
+      console.error(error)
     }
   }
   
