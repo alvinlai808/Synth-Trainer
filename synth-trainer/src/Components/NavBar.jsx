@@ -5,19 +5,19 @@ import { signOut } from "../firebase";
 import { UserContext } from "../providers/UserProvider";
 
 const onClickHandler = (event) => {
-  const { name } = event.currentTarget
+  const { name } = event.currentTarget;
   if (name === "logOut") {
     try {
       signOut();
-      window.location = "/"
+      window.location = "/";
     } catch (error) {
       console.error(error);
     }
   }
-}
+};
 
 const NavigationBar = () => {
-  const auth = useContext(UserContext)
+  const auth = useContext(UserContext);
   if (auth) {
     return (
       <Navbar bg="dark" expand="lg" variant="dark">
@@ -37,7 +37,9 @@ const NavigationBar = () => {
             <Nav.Link href="profilePage">Profile</Nav.Link>
             <Nav.Link href="sandbox">Sandbox</Nav.Link>
             <Nav.Link href="#settings">Settings</Nav.Link>
-            <Button name="logOut" onClick={event => onClickHandler(event)}>Log Out</Button>
+            <Button name="logOut" onClick={(event) => onClickHandler(event)}>
+              Log Out
+            </Button>
           </Nav>
           {/* <Form inline>
             <FormControl type="text" placeholder="Search" className="mr-sm-2" />
@@ -63,6 +65,5 @@ const NavigationBar = () => {
       </Navbar>
     );
   }
-  
 };
 export default NavigationBar;
