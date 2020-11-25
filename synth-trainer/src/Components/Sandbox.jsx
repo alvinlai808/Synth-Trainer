@@ -1,26 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as Tone from "tone";
-import { Button, Card, Form } from "react-bootstrap";
+import { Card, Form } from "react-bootstrap";
 import Grid from "@material-ui/core/Grid";
 import VolumeControl from "./SynthComponents/VolumeControl";
 import Keyboard from "./SynthComponents/Keyboard";
 import OscillatorCard from "./SynthComponents/OscillatorCard";
 import ADSRCard from "./SynthComponents/ADSRCard";
 import FilterCard from "./SynthComponents/FilterCard";
+import VibratoCard from "./SynthComponents/VibratoCard";
 
 const Sandbox = () => {
+  //Oscillator Parameters
   const [mainWaveform, setMainWaveform] = useState("sawtooth");
   const [modulationWaveform, setModulationWaveform] = useState("sawtooth");
+  //Volume
   const [volume, setVolume] = useState(100);
-  //const [detuneValue, setDetuneValue] = useState(100);
+  //ADSR Parameters
   const [attackValue, setAttackValue] = useState(0);
   const [decayValue, setDecayValue] = useState(0);
   const [sustainValue, setSustainValue] = useState(1.0);
   const [releaseValue, setReleaseValue] = useState(1.0);
+  //Filter Parameters
   const [filterFrequency, setFilterFrequency] = useState(0);
   const [filterType, setFilterType] = useState("highpass");
   const [rollOff, setRollOff] = useState(-12);
+  //Vibrato Parameters
+  const [vibratoEnabled, setVibratoEnabled] = useState(false);
 
+  //Vibrato Effect
+  const vibrato = new Tone.Vibrato({
+    frequency: "1n",
+    depth: 1,
+  }).toDestination();
+
+  //Filter Effect
   const filter = new Tone.Filter(
     filterFrequency,
     filterType,
@@ -30,9 +43,7 @@ const Sandbox = () => {
   //Initializing Synth Settings
   const synthSettings = {
     oscillator: {
-      //detune: detuneValue,
       type: mainWaveform,
-      //count: mainWaveCount
     },
     envelope: {
       attack: attackValue,
@@ -49,14 +60,15 @@ const Sandbox = () => {
       sustain: 0.5,
       release: 0.5,
     },
-    //harmonicity: 10,
     volume: volume - 100,
   };
+
   //Instantiating Synth Object
-  const polySynth = new Tone.PolySynth(Tone.FMSynth, synthSettings).connect(
+  const polySynth = new Tone.PolySynth(Tone.FMSynth, synthSettings).chain(
     filter
   );
 
+  //Handles generating notes
   const playTone = (noteFrequency) => {
     polySynth.triggerAttackRelease(noteFrequency, attackValue + 0.01);
   };
@@ -75,6 +87,27 @@ const Sandbox = () => {
     setFilterType(name);
   };
 
+  const vibratoHandler = () => {
+    if (!vibratoEnabled) {
+      setVibratoEnabled(true);
+    } else {
+      setVibratoEnabled(false);
+    }
+  };
+
+  //Turns Vibrato on or off. Depends on vibratoEnabled
+  useEffect(() => {
+    if (vibratoEnabled) {
+      polySynth.chain(filter, vibrato, Tone.Destination);
+    } else {
+      polySynth.disconnect();
+      //Tone's disconnect method disconnects all nodes
+      //so we have to reconnect the ones we want manually
+      polySynth.connect(filter); // <- reconnecting filter
+    }
+  }, [vibratoEnabled]);
+
+  //Handles event from all knobs
   function knobHandler() {
     const { name, value } = this;
     if (name === "Attack") {
@@ -109,12 +142,26 @@ const Sandbox = () => {
           style={{ color: "white" }}
           className="text-3xl text-center font-bold"
         >
-          Synth
+          Sandbox
         </h1>
       </Grid>
       <Grid item xs={12}>
-        <Grid container alignItems="center" alignContent="center">
-          <Grid item xs={4}>
+        <Grid
+          container
+          alignItems="center"
+          alignContent="center"
+          xs={12}
+          justify="center"
+          spacing={2}
+          direction="row"
+        >
+          <Grid
+            item
+            xs={2}
+            justify="center"
+            alignItems="center"
+            direction="column"
+          >
             <OscillatorCard
               oscillatorTitle={"Oscillator 1"}
               oscillatorID={1}
@@ -144,6 +191,9 @@ const Sandbox = () => {
                 knobHandler={knobHandler}
                 filterHandler={filterHandler}
               />
+            </Card>
+            <Card id="vibratoCard" bg="info">
+              <VibratoCard vibratoHandler={vibratoHandler} />
             </Card>
           </Grid>
         </Grid>
