@@ -13,7 +13,12 @@ const WaveformExample = ({
   buttonHandler,
 }) => {
   return (
-    <Card id={waveform + "-example"} className="text-left" bg="info">
+    <Card
+      id={waveform + "-example"}
+      className="text-left"
+      bg="info"
+      width="10px"
+    >
       <Card.Title>
         {waveform[0].toUpperCase() + waveform.slice(1)} Waveform Example
       </Card.Title>
@@ -22,7 +27,7 @@ const WaveformExample = ({
         <Card.Body>
           <Grid container spacing={2} alignItems="center">
             <Grid item>
-              <Button name="playSawtoothExample" onClick={buttonHandler}>
+              <Button name={waveform} onClick={buttonHandler}>
                 <PlayArrow />
               </Button>
             </Grid>

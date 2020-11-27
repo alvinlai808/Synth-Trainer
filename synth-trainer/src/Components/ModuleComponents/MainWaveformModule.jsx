@@ -29,16 +29,14 @@ const MainWaveformModule = () => {
 
   const buttonHandler = (event) => {
     const { name } = event.currentTarget;
-
-    if (name === "playSawtoothExample") {
-      playTone("c3");
-    }
+    setMainWaveform(name);
+    playTone("c3");
   };
 
   return (
     <div>
       <h2>Intro</h2>
-      <h2>Sine wave</h2>
+      <h2>Sine Wave</h2>
       <WaveformExample
         waveform="sine"
         message="Click the button to hear a C3 note with a sine waveform"
@@ -54,7 +52,7 @@ const MainWaveformModule = () => {
         setVolume={setVolume}
         buttonHandler={buttonHandler}
       />
-      <h2>Sawtooth</h2>
+      <h2>Sawtooth Wave</h2>
       <WaveformExample
         waveform="sawtooth"
         message="Click the button to hear a C3 note with a sawtooth waveform"

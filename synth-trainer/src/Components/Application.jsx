@@ -10,6 +10,7 @@ import { UserContext } from "../providers/UserProvider";
 import { NotFound } from "./NotFound";
 import HomePage from "./HomePage";
 import MainWaveformModule from "./ModuleComponents/MainWaveformModule";
+import MainWaveformTest from "./ModuleComponents/MainWaveformTest";
 
 function Application() {
   const user = React.useContext(UserContext);
@@ -33,9 +34,10 @@ function Application() {
           <Sandbox path="sandbox" />
           <SignUp path="signUp" />
           <SignIn path="/" default />
-          {/* <Settings path="settings" /> */}
           <PasswordReset path="passwordReset" />
+          {/* Work on Nested Paths */}
           <MainWaveformModule path="module1" />
+          <MainWaveformTest path="module1/test" />
         </Router>
       </div>
     );
