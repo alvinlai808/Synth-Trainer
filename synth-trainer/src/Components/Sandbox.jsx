@@ -108,8 +108,8 @@ const Sandbox = () => {
   }, [vibratoEnabled]);
 
   //Handles event from all knobs
-  function knobHandler() {
-    const { name, value } = this;
+  const knobHandler = (event) => {
+    const { name, value } = event.currentTarget;
     if (name === "Attack") {
       setAttackValue(value / 1000);
     }
@@ -126,6 +126,26 @@ const Sandbox = () => {
       setFilterFrequency(value);
     }
   }
+
+
+  // function knobHandler() {
+  //   const { name, value } = this;
+  //   if (name === "Attack") {
+  //     setAttackValue(value / 1000);
+  //   }
+  //   if (name === "Decay") {
+  //     setDecayValue(value / 1000);
+  //   }
+  //   if (name === "Sustain") {
+  //     setSustainValue(value / 1000);
+  //   }
+  //   if (name === "Release") {
+  //     setReleaseValue(value / 1000);
+  //   }
+  //   if (name === "Frequency") {
+  //     setFilterFrequency(value);
+  //   }
+  // }
 
   return (
     <Grid

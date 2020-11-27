@@ -14,7 +14,7 @@ const ADSRCard = ({ knobHandler }) => {
           <ADSRSLIDER
             name = "Attack"
             value = {600}
-            //onChangeCommitted = {knobHandler}
+            onChangeCommitted = {knobHandler}
           />
         </Grid>
         <Grid item xs={6}>
@@ -22,7 +22,7 @@ const ADSRCard = ({ knobHandler }) => {
           <ADSRSLIDER
             name = "Decay"
             value = {600}
-            //onChangeCommitted = {knobHandler}
+            onChangeCommitted = {knobHandler}
           />
         </Grid>
         <Grid item xs={6}>
