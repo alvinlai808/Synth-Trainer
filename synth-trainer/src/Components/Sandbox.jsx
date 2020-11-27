@@ -163,11 +163,13 @@ const Sandbox = () => {
             direction="column"
           >
             <OscillatorCard
+              waveform={mainWaveform}
               oscillatorTitle={"Oscillator 1"}
               oscillatorID={1}
               oscillatorHandler={oscillatorHandler}
             />
             <OscillatorCard
+              waveform={modulationWaveform}
               oscillatorTitle={"Oscillator 2"}
               oscillatorID={2}
               oscillatorHandler={oscillatorHandler}
@@ -188,6 +190,7 @@ const Sandbox = () => {
             </Card>
             <Card id="filterCard" bg="info">
               <FilterCard
+                filterType={filterType}
                 knobHandler={knobHandler}
                 filterHandler={filterHandler}
               />
