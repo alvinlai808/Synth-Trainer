@@ -106,7 +106,7 @@ export default function VolumeControl({ volume, setVolume }) {
             aria-labelledby="input-slider"
           />
         </Grid>
-        <Grid item xs>
+        <Grid item>
           <Input
             className={classes.input}
             value={value}

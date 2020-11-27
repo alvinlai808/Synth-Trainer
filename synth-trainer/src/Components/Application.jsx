@@ -9,6 +9,7 @@ import Sandbox from "./Sandbox";
 import { UserContext } from "../providers/UserProvider";
 import { NotFound } from "./NotFound";
 import HomePage from "./HomePage";
+import MainWaveformModule from "./ModuleComponents/MainWaveformModule";
 
 function Application() {
   const user = React.useContext(UserContext);
@@ -34,6 +35,7 @@ function Application() {
           <SignIn path="/" default />
           {/* <Settings path="settings" /> */}
           <PasswordReset path="passwordReset" />
+          <MainWaveformModule path="module1" />
         </Router>
       </div>
     );
