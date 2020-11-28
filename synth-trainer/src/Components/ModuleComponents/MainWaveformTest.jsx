@@ -12,7 +12,12 @@ import { Card, Button } from "react-bootstrap";
 import Grid from "@material-ui/core/Grid";
 import PlayArrow from "@material-ui/icons/PlayArrow";
 import Repeat from "@material-ui/icons/Repeat";
-import { LinearProgress } from "@material-ui/core";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  LinearProgress,
+} from "@material-ui/core";
 
 let [score, current] = [0, 0];
 const waveforms = ["sine", "square", "sawtooth"];
@@ -21,6 +26,7 @@ const MainWaveformTest = () => {
   const [userGuess, setUserGuess] = useState([false, ""]);
   const [waveform, setWaveform] = useState("sine");
   const [canPlayNewSound, setCanPlayNewSound] = useState(true);
+  const [userPassed, setUserPassed] = useState();
 
   const handleButton = (event) => {
     const { name } = event.currentTarget;
@@ -39,6 +45,18 @@ const MainWaveformTest = () => {
     if (name === "replaySound") {
       // Replay sound
       return;
+    }
+
+    if (name === "submit") {
+      if (score >= 8) {
+        // User passes
+        setUserPassed(true);
+        return;
+      } else {
+        setUserPassed(false);
+        //User does not pass
+        return;
+      }
     }
     setUserGuess([true, name]);
     if (name === waveform) {
@@ -139,6 +157,21 @@ const MainWaveformTest = () => {
       >
         Submit
       </Button>
+
+      <Dialog
+        open={userPassed !== undefined}
+        keepMounted
+        maxWidth="sm"
+        fullWidth
+        name="finalDialog"
+      >
+        <DialogContent>{userPassed ? "Nice!" : "So Close!"}</DialogContent>
+        <DialogActions>
+          <Button onClick={handleButton} name="closeFinalDialog">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
