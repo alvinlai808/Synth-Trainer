@@ -37,7 +37,11 @@ const NavigationBar = () => {
             </NavDropdown>
             <Nav.Link href="/profilePage">Profile</Nav.Link>
             {/* <Nav.Link href="#settings">Settings</Nav.Link> */}
-            <Button name="logOut" onClick={(event) => onClickHandler(event)}>
+            <Button
+              name="logOut"
+              variant="outline-light"
+              onClick={(event) => onClickHandler(event)}
+            >
               Log Out
             </Button>
           </Nav>
