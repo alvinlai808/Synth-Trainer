@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { Button, Card, Form } from "react-bootstrap";
-import PlayArrow from "@material-ui/icons/PlayArrow";
+import { Button } from "react-bootstrap";
 import * as Tone from "tone";
-import VolumeControl from "../SynthComponents/VolumeControl";
-import Grid from "@material-ui/core/Grid";
 import WaveformExample from "./WaveformExample";
+import MainWaveformTest from "./MainWaveformTest";
+import { navigate } from "@reach/router";
 
-const MainWaveformModule = () => {
+const MainWaveformModule = (props) => {
   //Oscillator Parameters
   const [mainWaveform, setMainWaveform] = useState("sawtooth");
   //Volume
@@ -29,10 +28,13 @@ const MainWaveformModule = () => {
 
   const buttonHandler = (event) => {
     const { name } = event.currentTarget;
+    if (name === "next") {
+      navigate("/module1/test");
+      return;
+    }
     setMainWaveform(name);
     playTone("c3");
   };
-
   return (
     <div>
       <h2>Intro</h2>
@@ -60,7 +62,9 @@ const MainWaveformModule = () => {
         setVolume={setVolume}
         buttonHandler={buttonHandler}
       />
-      <Button>Take the Test!</Button>
+      <Button onClick={buttonHandler} name="next">
+        Take the Test!
+      </Button>
     </div>
   );
 };
