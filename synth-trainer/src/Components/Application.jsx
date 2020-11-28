@@ -1,5 +1,5 @@
 import React from "react";
-import { Redirect, Router, Route } from "@reach/router";
+import { Router } from "@reach/router";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import ProfilePage from "./ProfilePage";
@@ -19,10 +19,10 @@ function Application() {
       <div>
         <NavBar />
         <Router>
-          <ProfilePage path="profilePage" />
           <HomePage path="/" />
+          <ProfilePage path="profilePage" />
           <Sandbox path="sandbox" />
-          <NotFound default />
+          <NotFound path="404" default />
         </Router>
       </div>
     );
@@ -31,11 +31,10 @@ function Application() {
       <div>
         <NavBar />
         <Router>
+          <SignIn path="/" />
           <Sandbox path="sandbox" />
           <SignUp path="signUp" />
-          <SignIn path="/" default />
           <PasswordReset path="passwordReset" />
-          {/* Work on Nested Paths */}
           <MainWaveformModule path="module1" />
           <MainWaveformTest path="module1/test" />
         </Router>
