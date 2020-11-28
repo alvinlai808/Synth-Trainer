@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Card, Form } from "react-bootstrap";
 
 const OscillatorCard = ({
-  waveform,
+  //waveform,
   oscillatorTitle,
   oscillatorID,
   oscillatorHandler,
@@ -36,7 +36,7 @@ const OscillatorCard = ({
       <Card.Title id="oscillator-label">{oscillatorTitle}</Card.Title>
       <Form>
         <Button
-          variant={waveform === "sine" ? "success" : "primary"}
+          //variant={waveform === "sine" ? "success" : "primary"}
           style={{backgroundColor:squareColor}}
           name="square"
           onClick={(event) => {oscillatorHandler(event, oscillatorID); handlebuttonclick(event)}}
@@ -44,7 +44,7 @@ const OscillatorCard = ({
           Square
         </Button>
         <Button
-          variant={waveform === "sine" ? "success" : "primary"}
+          //variant={waveform === "sine" ? "success" : "primary"}
           style={{backgroundColor:sawtoothColor}}
           name="sawtooth"
           onClick={(event) => {oscillatorHandler(event, oscillatorID); handlebuttonclick(event)}}
@@ -52,7 +52,7 @@ const OscillatorCard = ({
           Saw
         </Button>
         <Button
-          variant={waveform === "sine" ? "success" : "primary"}
+          //variant={waveform === "sine" ? "success" : "primary"}
           style={{backgroundColor:sineColor}}
           name="sine"
           onClick={(event) => {oscillatorHandler(event, oscillatorID); handlebuttonclick(event)}}
