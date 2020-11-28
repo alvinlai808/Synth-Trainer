@@ -1,3 +1,4 @@
+import { navigate, Link } from "@reach/router";
 import React from "react";
 import { useContext } from "react";
 import { Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
@@ -9,7 +10,7 @@ const onClickHandler = (event) => {
   if (name === "logOut") {
     try {
       signOut();
-      window.location = "/";
+      navigate("/");
     } catch (error) {
       console.error(error);
     }
@@ -34,9 +35,8 @@ const NavigationBar = () => {
                 Separated link{" "}
               </NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link href="profilePage">Profile</Nav.Link>
-            <Nav.Link href="sandbox">Sandbox</Nav.Link>
-            <Nav.Link href="#settings">Settings</Nav.Link>
+            <Nav.Link href="/profilePage">Profile</Nav.Link>
+            {/* <Nav.Link href="#settings">Settings</Nav.Link> */}
             <Button name="logOut" onClick={(event) => onClickHandler(event)}>
               Log Out
             </Button>
@@ -55,7 +55,7 @@ const NavigationBar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
-            <Nav.Link href="sandbox">Sandbox</Nav.Link>
+            <Nav.Link href="/sandbox">Sandbox</Nav.Link>
           </Nav>
           {/* <Form inline>
             <FormControl type="text" placeholder="Search" className="mr-sm-2" />
