@@ -27,7 +27,7 @@ const NavigationBar = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
             <NavDropdown title="Modules" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Module 1</NavDropdown.Item>
+              <NavDropdown.Item href="/module1">Module 1</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Module 2</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.3">Module 3</NavDropdown.Item>
               <NavDropdown.Divider />

@@ -22,6 +22,8 @@ function Application() {
           <HomePage path="/" />
           <ProfilePage path="profilePage" />
           <Sandbox path="sandbox" />
+          <MainWaveformModule path="module1" />
+          <MainWaveformTest path="module1/test" />
           <NotFound path="404" default />
         </Router>
       </div>
@@ -35,8 +37,6 @@ function Application() {
           <Sandbox path="sandbox" />
           <SignUp path="signUp" />
           <PasswordReset path="passwordReset" />
-          <MainWaveformModule path="module1" />
-          <MainWaveformTest path="module1/test" />
         </Router>
       </div>
     );
