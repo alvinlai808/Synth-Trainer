@@ -23,23 +23,32 @@ const MainWaveformModule = (props) => {
 
   const [moduleRef, setModuleRef] = useState(null);
   //Oscillator Parameters
-  const [mainWaveform, setMainWaveform] = useState("sawtooth");
+  let mainWaveform = "";
   //Volume
   const [volume, setVolume] = useState(100);
 
-  //Initializing Synth Settings
-  const synthSettings = {
-    oscillator: {
-      type: mainWaveform,
-    },
-    volume: 50,
-  };
+  const [playingSound, setPlayingSound] = useState(false);
 
+  //Initializing Synth Settings
+  let synthSettings = {};
+  let polySynth = null;
+
+  const createSynth = () => {
+    synthSettings = {
+      oscillator: {
+        type: mainWaveform,
+      },
+      volume: volume - 100,
+    };
+    polySynth = new Tone.PolySynth(Tone.FMSynth, synthSettings).toDestination();
+  };
   //Instantiating Synth Object
-  const polySynth = new Tone.PolySynth(Tone.FMSynth, synthSettings);
+
   //Handles generating notes
   const playTone = (noteFrequency) => {
-    polySynth.triggerAttackRelease(noteFrequency, 0.5);
+    setPlayingSound(true);
+    polySynth.triggerAttackRelease(noteFrequency, 1);
+    setPlayingSound(false);
   };
 
   const buttonHandler = (event) => {
@@ -48,8 +57,9 @@ const MainWaveformModule = (props) => {
       navigate(moduleRef.test_address);
       return;
     }
-    setMainWaveform(name);
-    playTone("c3");
+    mainWaveform = name;
+    createSynth();
+    playTone("C4");
   };
   if (moduleRef === undefined) {
     return <p>Loading</p>;
@@ -64,6 +74,7 @@ const MainWaveformModule = (props) => {
         volume={volume}
         setVolume={setVolume}
         buttonHandler={buttonHandler}
+        disabled={playingSound}
       />
       <h2>Square Wave</h2>
       <WaveformExample
@@ -72,6 +83,7 @@ const MainWaveformModule = (props) => {
         volume={volume}
         setVolume={setVolume}
         buttonHandler={buttonHandler}
+        disabled={playingSound}
       />
       <h2>Sawtooth Wave</h2>
       <WaveformExample
@@ -80,6 +92,7 @@ const MainWaveformModule = (props) => {
         volume={volume}
         setVolume={setVolume}
         buttonHandler={buttonHandler}
+        disabled={playingSound}
       />
       <Button onClick={buttonHandler} name="next">
         Take the Test!

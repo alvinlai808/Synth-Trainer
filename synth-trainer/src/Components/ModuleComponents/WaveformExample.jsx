@@ -11,6 +11,7 @@ const WaveformExample = ({
   volume,
   setVolume,
   buttonHandler,
+  disabled,
 }) => {
   return (
     <Card
@@ -27,7 +28,11 @@ const WaveformExample = ({
         <Card.Body>
           <Grid container spacing={2} alignItems="center">
             <Grid item>
-              <Button name={waveform} onClick={buttonHandler}>
+              <Button
+                name={waveform}
+                onClick={buttonHandler}
+                disabled={disabled}
+              >
                 <PlayArrow />
               </Button>
             </Grid>

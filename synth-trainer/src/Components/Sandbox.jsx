@@ -125,8 +125,7 @@ const Sandbox = () => {
     if (name === "Frequency") {
       setFilterFrequency(value);
     }
-  }
-
+  };
 
   // function knobHandler() {
   //   const { name, value } = this;
