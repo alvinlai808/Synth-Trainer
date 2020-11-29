@@ -18,11 +18,17 @@ import {
   DialogContent,
   LinearProgress,
 } from "@material-ui/core";
+import { useContext } from "react";
+import { addInProgressModules } from "../../firebase";
+import UserProvider from "../../providers/UserProvider";
 
 let [score, current] = [0, 0];
 const waveforms = ["sine", "square", "sawtooth"];
 
 const MainWaveformTest = () => {
+  const user = useContext(UserProvider);
+  addInProgressModules(user, "MainWaveformModule");
+
   const [userGuess, setUserGuess] = useState([false, ""]);
   const [waveform, setWaveform] = useState("sine");
   const [canPlayNewSound, setCanPlayNewSound] = useState(true);

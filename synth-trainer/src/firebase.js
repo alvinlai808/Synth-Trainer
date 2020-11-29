@@ -188,7 +188,6 @@ export const addInProgressModules = async (user, currentModule) => {
 
 const setDateAccessedModule = (currentInProgressModules, currentModule) => {
   const date = new Date();
-  console.log(currentInProgressModules);
   let currentModuleInstance = currentInProgressModules.find(
     (module) => module.name === currentModule
   );
@@ -206,16 +205,20 @@ export const removeInProgressModule = async (user, module) => {
   if (snapshot.exists) {
     try {
       const currentInProgressModules = snapshot.data().inProgressModules;
-      const index = currentInProgressModules.indexOf(module);
+      const index = currentInProgressModules
+        .map((module) => {
+          return module.name;
+        })
+        .indexOf(module);
       if (index > -1) {
         currentInProgressModules.splice(index, 1);
         userRef.update({
           inProgressModules: currentInProgressModules,
         });
-        return getInProgressModules(user);
+        return currentInProgressModules;
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 };
@@ -234,5 +237,9 @@ export const getInProgressModules = async (user) => {
 };
 
 export const getAllModules = async () => {
-  // query modules collection to compile all modules
+  const modules = firestore.collection("modules");
+  const snapshot = await modules.get();
+  if (!snapshot.empty) {
+    return snapshot.docs.map((doc) => doc.data());
+  }
 };
