@@ -13,7 +13,7 @@ const HomePage = () => {
   const user = useContext(UserContext);
   const allModules = getAllModules();
 
-  const [inProgressModules, setInProgressModules] = useState([]);
+  const [inProgressModules, setInProgressModules] = useState([{}]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,18 +42,22 @@ const HomePage = () => {
       <h1>UNDER CONSTRUCTION</h1>
       <h2>Modules In Progress</h2>
       {inProgressModules.map((module) => {
-        return (
-          <Card bg="info" key={module}>
-            <Card.Title>{module.split(/(?=[A-Z])/).join(" ")}</Card.Title>
-            <Card.Body>
-              <p>First Accessed: *WIP*</p>
-              <p>Last Accessed: *WIP</p>
-              <Button id={module} name="abandonModule" onClick={handleButton}>
-                Abandon Module
-              </Button>
-            </Card.Body>
-          </Card>
-        );
+        if (module.name !== undefined) {
+          return (
+            <Card bg="info" key={module.name}>
+              <Card.Title>
+                {module.name.split(/(?=[A-Z])/).join(" ")}
+              </Card.Title>
+              <Card.Body>
+                <p>First Accessed: {module.firstAccess.toDate().toString()}</p>
+                <p>Last Accessed: {module.recentAccess.toDate().toString()}</p>
+                <Button id={module} name="abandonModule" onClick={handleButton}>
+                  Abandon Module
+                </Button>
+              </Card.Body>
+            </Card>
+          );
+        }
       })}
     </div>
   );

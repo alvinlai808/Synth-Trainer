@@ -164,19 +164,39 @@ export const addInProgressModules = async (user, currentModule) => {
   if (snapshot.exists) {
     try {
       const currentInProgressModules = snapshot.data().inProgressModules;
-      if (currentInProgressModules === undefined) {
-        userRef.update({ inProgressModules: [currentModule] });
-        return;
-      } else if (!currentInProgressModules.includes(currentModule)) {
-        currentInProgressModules.push(currentModule);
-        await userRef.update({
-          inProgressModules: currentInProgressModules,
-        });
+      const newModule = setDateAccessedModule(
+        currentInProgressModules,
+        currentModule
+      );
+      if (newModule[0] === 1) {
+        const index = currentInProgressModules
+          .map((module) => {
+            return module.name;
+          })
+          .indexOf(currentModule);
+        currentInProgressModules.splice(index, 1);
       }
-      // setDateAccessedModule(user, currentModule)
+      currentInProgressModules.push(newModule[1]);
+      await userRef.update({
+        inProgressModules: currentInProgressModules,
+      });
     } catch (error) {
       console.error(error);
     }
+  }
+};
+
+const setDateAccessedModule = (currentInProgressModules, currentModule) => {
+  const date = new Date();
+  console.log(currentInProgressModules);
+  let currentModuleInstance = currentInProgressModules.find(
+    (module) => module.name === currentModule
+  );
+  if (currentModuleInstance === undefined) {
+    return [0, { name: currentModule, firstAccess: date, recentAccess: date }];
+  } else {
+    currentModuleInstance.recentAccess = date;
+    return [1, currentModuleInstance];
   }
 };
 
