@@ -19,27 +19,44 @@ import {
   LinearProgress,
 } from "@material-ui/core";
 import { useContext } from "react";
-import { addInProgressModules } from "../../firebase";
-import UserProvider from "../../providers/UserProvider";
+import {
+  addInProgressModules,
+  getInProgressModules,
+  getModuleRef,
+  removeInProgressModule,
+} from "../../firebase";
+import { UserContext } from "../../providers/UserProvider";
+import { useEffect } from "react";
+import { navigate } from "@reach/router";
 
-let [score, current] = [0, 0];
 const waveforms = ["sine", "square", "sawtooth"];
 
 const MainWaveformTest = () => {
-  const user = useContext(UserProvider);
-  addInProgressModules(user, "MainWaveformModule");
+  const user = useContext(UserContext);
+
+  useEffect(() => {
+    const loadData = async () => {
+      addInProgressModules(user, "MainWaveformModule");
+      setModuleRef(await getModuleRef("MainWaveformModule"));
+    };
+
+    loadData();
+  }, []);
 
   const [userGuess, setUserGuess] = useState([false, ""]);
-  const [waveform, setWaveform] = useState("sine");
+  const [waveform, setWaveform] = useState("");
   const [canPlayNewSound, setCanPlayNewSound] = useState(true);
   const [userPassed, setUserPassed] = useState();
+  const [moduleRef, setModuleRef] = useState();
+  const [score, setScore] = useState(0);
+  const [currentTest, setCurrentTest] = useState(0);
 
-  const handleButton = (event) => {
+  const handleButton = async (event) => {
     const { name } = event.currentTarget;
     switch (name) {
       case "playSound":
         setUserGuess([false, ""]);
-        current += 1;
+        setCurrentTest(currentTest + 1);
         setCanPlayNewSound(false);
         setWaveform(waveforms[Math.floor(Math.random() * waveforms.length)]);
         // Play Sound
@@ -57,7 +74,6 @@ const MainWaveformTest = () => {
           break;
         } else {
           setUserPassed(false);
-          //User does not pass
           break;
         }
 
@@ -65,39 +81,62 @@ const MainWaveformTest = () => {
         setUserPassed(undefined);
         break;
 
+      case "home":
+        let result = await removeInProgressModule(user, "MainWaveformModule");
+        console.log(result);
+        navigate("/");
+        break;
+
+      case "return":
+        navigate(moduleRef.address);
+        console.log(moduleRef);
+        break;
+
+      case "tryAgain":
+        setScore(0);
+        setCurrentTest(0);
+        setUserGuess([false, ""]);
+        setCanPlayNewSound(true);
+        setUserPassed(undefined);
+        break;
+
       default:
         setUserGuess([true, name]);
         if (name === waveform) {
-          score += 1;
+          setScore(score + 1);
         }
         setCanPlayNewSound(true);
     }
   };
+
+  if (moduleRef === undefined) {
+    return <p>Loading</p>;
+  }
 
   return (
     <div>
       <Card bg="info">
         <Card.Title>Waveform Test</Card.Title>
         <Card.Text>
-          {current === 0 ? "Press Play to Begin!" : "Wave: " + current}
+          {currentTest === 0 ? "Press Play to Begin!" : "Wave: " + currentTest}
         </Card.Text>
         <Card.Text>Score: {score}</Card.Text>
         <Card.Body>
           <LinearProgress
             variant="determinate"
-            value={current * 10}
+            value={currentTest * 10}
           ></LinearProgress>
           <Button
             name="playSound"
             onClick={handleButton}
-            disabled={!canPlayNewSound || (current === 10 && userGuess[0])}
+            disabled={!canPlayNewSound || (currentTest === 10 && userGuess[0])}
           >
             <PlayArrow />
           </Button>
           <Button
             name="replaySound"
             onClick={handleButton}
-            disabled={canPlayNewSound || (current === 10 && userGuess[0])}
+            disabled={canPlayNewSound || (currentTest === 10 && userGuess[0])}
           >
             <Repeat />
           </Button>
@@ -115,7 +154,9 @@ const MainWaveformTest = () => {
                     : "primary"
                 }
                 onClick={handleButton}
-                disabled={canPlayNewSound || (current === 10 && userGuess[0])}
+                disabled={
+                  canPlayNewSound || (currentTest === 10 && userGuess[0])
+                }
               >
                 Sawtooth
               </Button>
@@ -133,7 +174,9 @@ const MainWaveformTest = () => {
                 }
                 name="sine"
                 onClick={handleButton}
-                disabled={canPlayNewSound || (current === 10 && userGuess[0])}
+                disabled={
+                  canPlayNewSound || (currentTest === 10 && userGuess[0])
+                }
               >
                 Sine
               </Button>
@@ -151,9 +194,11 @@ const MainWaveformTest = () => {
                 }
                 name="square"
                 onClick={handleButton}
-                disabled={canPlayNewSound || (current === 10 && userGuess[0])}
+                disabled={
+                  canPlayNewSound || (currentTest === 10 && userGuess[0])
+                }
               >
-                Sine
+                Square
               </Button>
             </Grid>
           </Grid>
@@ -162,11 +207,13 @@ const MainWaveformTest = () => {
       <Button
         name="submit"
         onClick={handleButton}
-        disabled={!(current === 10 && userGuess[0])}
+        disabled={!(currentTest === 10 && userGuess[0])}
       >
         Submit
       </Button>
-
+      <Button name="home" onClick={handleButton}>
+        Return to Home
+      </Button>
       <Dialog
         open={userPassed !== undefined}
         keepMounted
@@ -176,11 +223,28 @@ const MainWaveformTest = () => {
       >
         <DialogContent>
           <h2>
-            You got {score} / {current}
+            You got {score} / {currentTest}
           </h2>
           <h3>{userPassed ? "Nice!" : "So Close!"}</h3>
         </DialogContent>
         <DialogActions>
+          {userPassed ? (
+            <Button name="home" onClick={handleButton}>
+              Return to Home
+            </Button>
+          ) : (
+            <div>
+              <Button name="return" onClick={handleButton}>
+                Return to Module
+              </Button>
+              <Button name="tryAgain" onClick={handleButton}>
+                Try Again
+              </Button>
+              <Button name="home" onClick={handleButton}>
+                Return to Home
+              </Button>
+            </div>
+          )}
           <Button onClick={handleButton} name="closeFinalDialog">
             Close
           </Button>
