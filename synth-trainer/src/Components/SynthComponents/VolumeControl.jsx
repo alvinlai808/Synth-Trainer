@@ -20,28 +20,16 @@ const useStyles = makeStyles({
 
 export default function VolumeControl({ volume, setVolume }) {
   const classes = useStyles();
-  const [value, setValue] = React.useState(volume);
-  const [previousValue, setPreviousValue] = React.useState(volume);
+  const [previousVolume, setPreviousVolume] = React.useState(volume);
   const [isMuted, setIsMuted] = React.useState(false);
 
-  const checkIfMuted = () => {
-    if (value === 0) {
-      setIsMuted(true);
-    } else {
-      setIsMuted(false);
-    }
-  };
-
   const toggleMute = () => {
-    if (isMuted) {
-      setValue(previousValue);
-      setVolume(previousValue);
+    if (volume === 0) {
+      setVolume(previousVolume);
     } else {
-      setPreviousValue(value);
-      setValue(0);
+      setPreviousVolume(volume);
       setVolume(0);
     }
-    setIsMuted(!isMuted);
   };
 
   const handleButton = (event) => {
@@ -52,26 +40,18 @@ export default function VolumeControl({ volume, setVolume }) {
   };
 
   const handleSliderChange = (event, newValue) => {
-    setValue(newValue);
-    setVolume(newValue);
-    checkIfMuted();
+    setVolume(newValue / 4 + 75);
   };
 
   const handleInputChange = (event) => {
-    setValue(event.target.value === "" ? "" : Number(event.target.value));
-    setVolume(event.target.value);
-    checkIfMuted();
+    setVolume(event.target.value / 4 + 75);
   };
 
   const handleBlur = () => {
-    if (value < 0) {
-      setValue(0);
+    if (volume < 0) {
       setVolume(0);
-      checkIfMuted();
-    } else if (value > 100) {
-      setValue(100);
-      setVolume(100);
-      checkIfMuted();
+    } else if (volume > 100) {
+      setVolume(125);
     }
   };
 
@@ -96,12 +76,12 @@ export default function VolumeControl({ volume, setVolume }) {
       <Grid container spacing={2} alignItems="center">
         <Grid item>
           <Button name="muteButton" onClick={handleButton} outlined="true">
-            {isMuted ? <VolumeOff /> : <VolumeUp />}
+            {volume === 0 ? <VolumeOff /> : <VolumeUp />}
           </Button>
         </Grid>
         <Grid item xs>
           <Slider
-            value={typeof value === "number" ? value : 0}
+            value={typeof volume === "number" ? (volume - 75) * 4 : 0}
             onChange={handleSliderChange}
             aria-labelledby="input-slider"
           />
@@ -109,7 +89,7 @@ export default function VolumeControl({ volume, setVolume }) {
         <Grid item>
           <Input
             className={classes.input}
-            value={value}
+            value={(volume - 75) * 4}
             margin="dense"
             onChange={handleInputChange}
             onBlur={handleBlur}
