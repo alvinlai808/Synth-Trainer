@@ -236,6 +236,14 @@ export const getInProgressModules = async (user) => {
   }
 };
 
+export const getModuleRef = async (module) => {
+  const modules = firestore.doc(`modules/${module}`);
+  const snapshot = await modules.get();
+  if (snapshot.exists) {
+    return snapshot.data();
+  }
+};
+
 export const getAllModules = async () => {
   const modules = firestore.collection("modules");
   const snapshot = await modules.get();

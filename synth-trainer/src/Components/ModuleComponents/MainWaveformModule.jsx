@@ -4,13 +4,24 @@ import * as Tone from "tone";
 import WaveformExample from "./WaveformExample";
 import { navigate } from "@reach/router";
 import { useEffect } from "react";
-import { addInProgressModules } from "../../firebase";
+import { addInProgressModules, getModuleRef } from "../../firebase";
 import { UserContext } from "../../providers/UserProvider";
+import { ModulationSynth } from "tone/build/esm/instrument/ModulationSynth";
 
 const MainWaveformModule = (props) => {
   const user = useContext(UserContext);
-  addInProgressModules(user, "MainWaveformModule");
 
+  useEffect(() => {
+    const initializeData = async () => {
+      const result = await getModuleRef("MainWaveformModule");
+      addInProgressModules(user, "MainWaveformModule");
+
+      setModuleRef(result);
+    };
+    initializeData();
+  }, []);
+
+  const [moduleRef, setModuleRef] = useState(null);
   //Oscillator Parameters
   const [mainWaveform, setMainWaveform] = useState("sawtooth");
   //Volume
@@ -34,12 +45,15 @@ const MainWaveformModule = (props) => {
   const buttonHandler = (event) => {
     const { name } = event.currentTarget;
     if (name === "next") {
-      navigate("/module1/test");
+      navigate(moduleRef.test_address);
       return;
     }
     setMainWaveform(name);
     playTone("c3");
   };
+  if (moduleRef === undefined) {
+    return <p>Loading</p>;
+  }
   return (
     <div>
       <h2>Intro</h2>
