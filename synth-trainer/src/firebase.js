@@ -17,7 +17,7 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
-export const storage = firebase.storage()
+export const storage = firebase.storage();
 export const storageRef = storage.ref();
 
 // Configure FirebaseUI.
@@ -30,7 +30,7 @@ export const uiConfig = {
 };
 
 const provider = new firebase.auth.GoogleAuthProvider();
-provider.addScope('email')
+provider.addScope("email");
 
 export const signInWithGoogle = () => {
   auth.signInWithPopup(provider);
@@ -46,11 +46,13 @@ export const generateUserDocument = async (user, additionalData) => {
   const snapshot = await userRef.get();
   if (!snapshot.exists) {
     const { email, displayName, photoURL } = user;
+    const inProgressModules = [];
     try {
       await userRef.set({
         displayName,
         email,
         photoURL,
+        inProgressModules,
         ...additionalData,
       });
     } catch (error) {
@@ -110,57 +112,107 @@ export const changeEmail = async (uid, email) => {
   if (snapshot.exists) {
     try {
       await userRef.update({
-        email: email
-      }) 
+        email: email,
+      });
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   }
-}
+};
 
 export const changeDisplayName = async (uid, newDisplayName) => {
   if (!uid || !newDisplayName) return;
-  const userRef = firestore.doc(`users/${uid}`)
-  const snapshot = await userRef.get()
+  const userRef = firestore.doc(`users/${uid}`);
+  const snapshot = await userRef.get();
   if (snapshot.exists) {
     try {
       await userRef.update({
-        displayName: newDisplayName
-      })
+        displayName: newDisplayName,
+      });
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   }
-}
+};
 
 export const changeUserEmail = async (newEmail) => {
-  try { 
+  try {
     await auth.currentUser.updateEmail(newEmail);
   } catch (error) {
-    return error.code
+    return error.code;
   }
-}
+};
 
 export const changeProfilePic = async (imageUrl) => {
   if (!imageUrl) return;
-  const userRef = firestore.doc(`users/${auth.currentUser.uid}`)
-  const snapshot = await userRef.get()
+  const userRef = firestore.doc(`users/${auth.currentUser.uid}`);
+  const snapshot = await userRef.get();
   if (snapshot.exists) {
     try {
       await userRef.update({
-        photoURL: imageUrl
-      })
+        photoURL: imageUrl,
+      });
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   }
-  
-}
+};
+
+export const addInProgressModules = async (user, currentModule) => {
+  const userRef = firestore.doc(`users/${auth.currentUser.uid}`);
+  const snapshot = await userRef.get();
+  if (snapshot.exists) {
+    try {
+      const currentInProgressModules = snapshot.data().inProgressModules;
+      if (currentInProgressModules === undefined) {
+        userRef.update({ inProgressModules: [currentModule] });
+        return;
+      } else if (!currentInProgressModules.includes(currentModule)) {
+        currentInProgressModules.push(currentModule);
+        await userRef.update({
+          inProgressModules: currentInProgressModules,
+        });
+      }
+      // setDateAccessedModule(user, currentModule)
+    } catch (error) {
+      console.error(error);
+    }
+  }
+};
+
+export const removeInProgressModule = async (user, module) => {
+  const userRef = firestore.doc(`users/${auth.currentUser.uid}`);
+  const snapshot = await userRef.get();
+  if (snapshot.exists) {
+    try {
+      const currentInProgressModules = snapshot.data().inProgressModules;
+      const index = currentInProgressModules.indexOf(module);
+      if (index > -1) {
+        currentInProgressModules.splice(index, 1);
+        userRef.update({
+          inProgressModules: currentInProgressModules,
+        });
+        return getInProgressModules(user);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+};
 
 export const getInProgressModules = async (user) => {
-  // query user document to get current modules
-}
+  const userRef = firestore.doc(`users/${auth.currentUser.uid}`);
+  const snapshot = await userRef.get();
+  if (snapshot.exists) {
+    try {
+      const result = snapshot.data().inProgressModules;
+      return result;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+};
 
 export const getAllModules = async () => {
   // query modules collection to compile all modules
-}
+};

@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button } from "react-bootstrap";
 import * as Tone from "tone";
 import WaveformExample from "./WaveformExample";
-import MainWaveformTest from "./MainWaveformTest";
 import { navigate } from "@reach/router";
+import { useEffect } from "react";
+import { addInProgressModules } from "../../firebase";
+import { UserContext } from "../../providers/UserProvider";
 
 const MainWaveformModule = (props) => {
+  const user = useContext(UserContext);
+  addInProgressModules(user, "MainWaveformModule");
+
   //Oscillator Parameters
   const [mainWaveform, setMainWaveform] = useState("sawtooth");
   //Volume

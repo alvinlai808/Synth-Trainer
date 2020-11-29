@@ -30,39 +30,42 @@ const MainWaveformTest = () => {
 
   const handleButton = (event) => {
     const { name } = event.currentTarget;
+    switch (name) {
+      case "playSound":
+        setUserGuess([false, ""]);
+        current += 1;
+        setCanPlayNewSound(false);
+        setWaveform(waveforms[Math.floor(Math.random() * waveforms.length)]);
+        // Play Sound
+        // Set play to disabled
+        // Set replay to enabled
+        break;
 
-    if (name === "playSound") {
-      setUserGuess([false, ""]);
-      current += 1;
-      setCanPlayNewSound(false);
-      setWaveform(waveforms[Math.floor(Math.random() * waveforms.length)]);
-      // Play Sound
-      // Set play to disabled
-      // Set replay to enabled
-      return;
-    }
+      case "replaySound":
+        break;
 
-    if (name === "replaySound") {
-      // Replay sound
-      return;
-    }
+      case "submit":
+        if (score >= 8) {
+          // User passes
+          setUserPassed(true);
+          break;
+        } else {
+          setUserPassed(false);
+          //User does not pass
+          break;
+        }
 
-    if (name === "submit") {
-      if (score >= 8) {
-        // User passes
-        setUserPassed(true);
-        return;
-      } else {
-        setUserPassed(false);
-        //User does not pass
-        return;
-      }
+      case "closeFinalDialog":
+        setUserPassed(undefined);
+        break;
+
+      default:
+        setUserGuess([true, name]);
+        if (name === waveform) {
+          score += 1;
+        }
+        setCanPlayNewSound(true);
     }
-    setUserGuess([true, name]);
-    if (name === waveform) {
-      score += 1;
-    }
-    setCanPlayNewSound(true);
   };
 
   return (
@@ -165,7 +168,12 @@ const MainWaveformTest = () => {
         fullWidth
         name="finalDialog"
       >
-        <DialogContent>{userPassed ? "Nice!" : "So Close!"}</DialogContent>
+        <DialogContent>
+          <h2>
+            You got {score} / {current}
+          </h2>
+          <h3>{userPassed ? "Nice!" : "So Close!"}</h3>
+        </DialogContent>
         <DialogActions>
           <Button onClick={handleButton} name="closeFinalDialog">
             Close
