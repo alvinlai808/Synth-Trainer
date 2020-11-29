@@ -82,8 +82,7 @@ const MainWaveformTest = () => {
         break;
 
       case "home":
-        let result = await removeInProgressModule(user, "MainWaveformModule");
-        console.log(result);
+        await removeInProgressModule(user, "MainWaveformModule");
         navigate("/");
         break;
 

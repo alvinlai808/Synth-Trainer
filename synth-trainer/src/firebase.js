@@ -215,8 +215,8 @@ export const removeInProgressModule = async (user, module) => {
         userRef.update({
           inProgressModules: currentInProgressModules,
         });
-        return currentInProgressModules;
       }
+      return currentInProgressModules;
     } catch (error) {
       console.error(error);
     }
