@@ -51,7 +51,7 @@ const MainWaveformTest = () => {
   const [score, setScore] = useState(0);
   const [currentTest, setCurrentTest] = useState(0);
 
-  const handleButton = async (event) => {
+  const handleButton = (event) => {
     const { name } = event.currentTarget;
     switch (name) {
       case "playSound":
@@ -82,8 +82,9 @@ const MainWaveformTest = () => {
         break;
 
       case "home":
-        await removeInProgressModule(user, "MainWaveformModule");
-        navigate("/");
+        removeInProgressModule(user, "MainWaveformModule").then(() => {
+          navigate("/");
+        });
         break;
 
       case "return":
@@ -210,9 +211,7 @@ const MainWaveformTest = () => {
       >
         Submit
       </Button>
-      <Button name="home" onClick={handleButton}>
-        Return to Home
-      </Button>
+
       <Dialog
         open={userPassed !== undefined}
         keepMounted
