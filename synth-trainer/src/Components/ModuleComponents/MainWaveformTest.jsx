@@ -8,6 +8,7 @@
 // ( ) after 10 the user can click see score to view results
 
 import React, { useState } from "react";
+import * as Tone from "tone";
 import { Card, Button } from "react-bootstrap";
 import Grid from "@material-ui/core/Grid";
 import PlayArrow from "@material-ui/icons/PlayArrow";
@@ -28,6 +29,7 @@ import {
 import { UserContext } from "../../providers/UserProvider";
 import { useEffect } from "react";
 import { navigate } from "@reach/router";
+import VolumeControl from "../SynthComponents/VolumeControl";
 
 const waveforms = ["sine", "square", "sawtooth"];
 
@@ -43,13 +45,46 @@ const MainWaveformTest = () => {
     loadData();
   }, []);
 
+  let waveform = "";
+
   const [userGuess, setUserGuess] = useState([false, ""]);
-  const [waveform, setWaveform] = useState("");
+  const [waveformHook, setWaveformHook] = useState(waveform);
   const [canPlayNewSound, setCanPlayNewSound] = useState(true);
   const [userPassed, setUserPassed] = useState();
   const [moduleRef, setModuleRef] = useState();
   const [score, setScore] = useState(0);
   const [currentTest, setCurrentTest] = useState(0);
+
+  //Volume
+  const [volume, setVolume] = useState(100);
+
+  let playingSound = false;
+  const PLAYING_TIME = 1;
+  let synthSettings = {};
+  let polySynth = new Tone.PolySynth(
+    Tone.FMSynth,
+    synthSettings
+  ).toDestination();
+
+  const createSynth = () => {
+    synthSettings = {
+      oscillator: {
+        type: waveform,
+      },
+      volume: volume - 100,
+    };
+    polySynth.set(synthSettings);
+  };
+  //Instantiating Synth Object
+
+  //Handles generating notes
+  const playTone = (noteFrequency) => {
+    if (!playingSound) {
+      playingSound = true;
+      polySynth.triggerAttackRelease(noteFrequency, PLAYING_TIME);
+      setTimeout(() => (playingSound = false), PLAYING_TIME * 1000);
+    }
+  };
 
   const handleButton = (event) => {
     const { name } = event.currentTarget;
@@ -58,18 +93,19 @@ const MainWaveformTest = () => {
         setUserGuess([false, ""]);
         setCurrentTest(currentTest + 1);
         setCanPlayNewSound(false);
-        setWaveform(waveforms[Math.floor(Math.random() * waveforms.length)]);
-        // Play Sound
-        // Set play to disabled
-        // Set replay to enabled
+        waveform = waveforms[Math.floor(Math.random() * waveforms.length)];
+        setWaveformHook(waveform);
+        createSynth();
+        playTone("C4");
         break;
 
       case "replaySound":
+        createSynth();
+        playTone("C4");
         break;
 
       case "submit":
         if (score >= 8) {
-          // User passes
           setUserPassed(true);
           break;
         } else {
@@ -89,7 +125,6 @@ const MainWaveformTest = () => {
 
       case "return":
         navigate(moduleRef.address);
-        console.log(moduleRef);
         break;
 
       case "tryAgain":
@@ -102,7 +137,7 @@ const MainWaveformTest = () => {
 
       default:
         setUserGuess([true, name]);
-        if (name === waveform) {
+        if (name === waveformHook) {
           setScore(score + 1);
         }
         setCanPlayNewSound(true);
@@ -140,16 +175,17 @@ const MainWaveformTest = () => {
           >
             <Repeat />
           </Button>
+          <VolumeControl volume={volume} setVolume={setVolume} />
           <Grid container spacing={2}>
             <Grid item>
               <Button
                 name="sawtooth"
                 variant={
-                  userGuess[0] && waveform === "sawtooth"
+                  userGuess[0] && waveformHook === "sawtooth"
                     ? "success"
                     : userGuess[0] &&
                       userGuess[1] === "sawtooth" &&
-                      waveform !== "sawtooth"
+                      waveformHook !== "sawtooth"
                     ? "danger"
                     : "primary"
                 }
@@ -164,11 +200,11 @@ const MainWaveformTest = () => {
             <Grid item>
               <Button
                 variant={
-                  userGuess[0] && waveform === "sine"
+                  userGuess[0] && waveformHook === "sine"
                     ? "success"
                     : userGuess[0] &&
                       userGuess[1] === "sine" &&
-                      waveform !== "sine"
+                      waveformHook !== "sine"
                     ? "danger"
                     : "primary"
                 }
@@ -184,11 +220,11 @@ const MainWaveformTest = () => {
             <Grid item>
               <Button
                 variant={
-                  userGuess[0] && waveform === "square"
+                  userGuess[0] && waveformHook === "square"
                     ? "success"
                     : userGuess[0] &&
                       userGuess[1] === "square" &&
-                      waveform !== "square"
+                      waveformHook !== "square"
                     ? "danger"
                     : "primary"
                 }

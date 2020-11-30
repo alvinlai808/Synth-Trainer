@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Button, Card, Form } from "react-bootstrap";
 import PlayArrow from "@material-ui/icons/PlayArrow";
-import * as Tone from "tone";
 import VolumeControl from "../SynthComponents/VolumeControl";
 import Grid from "@material-ui/core/Grid";
 
@@ -11,7 +10,6 @@ const WaveformExample = ({
   volume,
   setVolume,
   buttonHandler,
-  disabled,
 }) => {
   return (
     <Card
@@ -28,11 +26,7 @@ const WaveformExample = ({
         <Card.Body>
           <Grid container spacing={2} alignItems="center">
             <Grid item>
-              <Button
-                name={waveform}
-                onClick={buttonHandler}
-                disabled={disabled}
-              >
+              <Button name={waveform} onClick={buttonHandler}>
                 <PlayArrow />
               </Button>
             </Grid>

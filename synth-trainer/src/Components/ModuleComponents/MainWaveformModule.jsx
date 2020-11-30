@@ -6,7 +6,7 @@ import { navigate } from "@reach/router";
 import { useEffect } from "react";
 import { addInProgressModules, getModuleRef } from "../../firebase";
 import { UserContext } from "../../providers/UserProvider";
-import { ModulationSynth } from "tone/build/esm/instrument/ModulationSynth";
+import { connectSeries } from "tone";
 
 const MainWaveformModule = (props) => {
   const user = useContext(UserContext);
@@ -18,6 +18,7 @@ const MainWaveformModule = (props) => {
 
       setModuleRef(result);
     };
+
     initializeData();
   }, []);
 
@@ -27,11 +28,13 @@ const MainWaveformModule = (props) => {
   //Volume
   const [volume, setVolume] = useState(100);
 
-  const [playingSound, setPlayingSound] = useState(false);
-
-  //Initializing Synth Settings
+  let playingSound = false;
+  const PLAYING_TIME = 1;
   let synthSettings = {};
-  let polySynth = null;
+  let polySynth = new Tone.PolySynth(
+    Tone.FMSynth,
+    synthSettings
+  ).toDestination();
 
   const createSynth = () => {
     synthSettings = {
@@ -40,15 +43,17 @@ const MainWaveformModule = (props) => {
       },
       volume: volume - 100,
     };
-    polySynth = new Tone.PolySynth(Tone.FMSynth, synthSettings).toDestination();
+    polySynth.set(synthSettings);
   };
   //Instantiating Synth Object
 
   //Handles generating notes
   const playTone = (noteFrequency) => {
-    setPlayingSound(true);
-    polySynth.triggerAttackRelease(noteFrequency, 1);
-    setPlayingSound(false);
+    if (!playingSound) {
+      playingSound = true;
+      polySynth.triggerAttackRelease(noteFrequency, PLAYING_TIME);
+      setTimeout(() => (playingSound = false), PLAYING_TIME * 1000);
+    }
   };
 
   const buttonHandler = (event) => {
@@ -74,7 +79,6 @@ const MainWaveformModule = (props) => {
         volume={volume}
         setVolume={setVolume}
         buttonHandler={buttonHandler}
-        disabled={playingSound}
       />
       <h2>Square Wave</h2>
       <WaveformExample
@@ -83,7 +87,6 @@ const MainWaveformModule = (props) => {
         volume={volume}
         setVolume={setVolume}
         buttonHandler={buttonHandler}
-        disabled={playingSound}
       />
       <h2>Sawtooth Wave</h2>
       <WaveformExample
@@ -92,7 +95,6 @@ const MainWaveformModule = (props) => {
         volume={volume}
         setVolume={setVolume}
         buttonHandler={buttonHandler}
-        disabled={playingSound}
       />
       <Button onClick={buttonHandler} name="next">
         Take the Test!

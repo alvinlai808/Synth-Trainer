@@ -1,3 +1,5 @@
+// Current volume range is 75 - 100
+
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -21,14 +23,14 @@ const useStyles = makeStyles({
 export default function VolumeControl({ volume, setVolume }) {
   const classes = useStyles();
   const [previousVolume, setPreviousVolume] = React.useState(volume);
-  const [isMuted, setIsMuted] = React.useState(false);
 
   const toggleMute = () => {
-    if (volume === 0) {
+    if (volume === 75) {
       setVolume(previousVolume);
     } else {
       setPreviousVolume(volume);
-      setVolume(0);
+      setVolume(75);
+      console.log(volume);
     }
   };
 
@@ -48,8 +50,8 @@ export default function VolumeControl({ volume, setVolume }) {
   };
 
   const handleBlur = () => {
-    if (volume < 0) {
-      setVolume(0);
+    if (volume < 75) {
+      setVolume(75);
     } else if (volume > 100) {
       setVolume(125);
     }
