@@ -42,6 +42,10 @@ const HomePage = () => {
     }
   };
 
+  if (inProgressModules === undefined || allModules === undefined) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div>
       <h1>UNDER CONSTRUCTION</h1>
