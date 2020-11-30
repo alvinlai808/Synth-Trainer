@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { auth } from "../firebase";
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
+import { auth, uiConfig } from "../firebase";
 import {
   Alert,
   Button,
@@ -7,10 +8,11 @@ import {
   Form,
   FormControl,
   FormGroup,
-  InputGroup
+  InputGroup,
 } from "react-bootstrap";
 import "./SignIn.css";
 import EmailForm from "./EmailForm";
+import { navigate } from "@reach/router";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -27,9 +29,13 @@ const SignIn = () => {
       return;
     }
     auth.signInWithEmailAndPassword(email, password).catch((error) => {
-      setError("Error signing in with password and email!");
+      setError(error.message);
       setIsError(true);
-      console.error("Error signing in with password and email", error);
+    });
+    auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        navigate("/");
+      }
     });
   };
 
@@ -46,11 +52,16 @@ const SignIn = () => {
       <Alert show={isError} variant="danger" className="text-center">
         {error}
       </Alert>
-      <div className="col-sm-12 my-auto">
+      <div>
         <Card id="sign-in-card" className="text-center w-50">
           <Card.Title id="sign-in-label">Sign In</Card.Title>
           <Form>
-            <EmailForm email={email} isValidEmail={isValidEmail} setEmail={setEmail} setIsValidEmail={setIsValidEmail}/>
+            <EmailForm
+              email={email}
+              isValidEmail={isValidEmail}
+              setEmail={setEmail}
+              setIsValidEmail={setIsValidEmail}
+            />
             <InputGroup className="mb-3" controlId="formBasicPassword">
               <InputGroup.Prepend>
                 <InputGroup.Text>Password</InputGroup.Text>
@@ -72,13 +83,14 @@ const SignIn = () => {
                 onClick={(event) => {
                   signInWithEmailAndPasswordHandler(event, email, password);
                 }}
+                type='submit'
               >
                 Sign in
               </Button>
             </Form.Group>
 
             <Form.Group>
-              <Button variant="primary">Sign in with Google</Button>
+              <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />
             </Form.Group>
           </Form>
           <Form.Group>
@@ -90,13 +102,6 @@ const SignIn = () => {
           <FormGroup>
             <Button href="passwordReset">Forgot Password?</Button>
           </FormGroup>
-
-          <Form.Group>
-            Go to main page since alvin doesnt know how to route shit{" "}
-            <Button id="mainPage-button" href="MainPage">
-              Main Page
-            </Button>
-          </Form.Group>
         </Card>
       </div>
     </div>

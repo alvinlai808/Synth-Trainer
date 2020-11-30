@@ -1,28 +1,200 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { UserContext } from "../providers/UserProvider";
-import {auth} from "../firebase";
+import Grid from "@material-ui/core/Grid";
+import Card from "@material-ui/core/Card";
+import Button from "@material-ui/core/Button";
+import { makeStyles } from "@material-ui/core/styles";
+import {
+  CardMedia,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Input,
+} from "@material-ui/core";
+import default_picture from "../Images/default_profile_picture.png";
+import EmailForm from "./EmailForm";
+import { auth, changeEmail, changeDisplayName, changeUserEmail, signOut, storageRef, changeProfilePic } from "../firebase";
+import { Form } from "react-bootstrap";
+import { navigate } from "@reach/router";
+
 const ProfilePage = () => {
   const user = useContext(UserContext);
-  const {photoURL, displayName, email} = user;
+  const { photoURL, displayName, email } = user;
+  const [emailDialogOpen, setEmailDialogOpen] = useState(false);
+  const [displayNameDialogOpen, setDisplayNameDialogOpen] = useState(false);
+  const [profilePicDialogOpen, setProfilePicDialogOpen] = useState(false);
+  const [newEmail, setNewEmail] = useState("");
+  const [isValidEmail, setIsValidEmail] = useState(false);
+  const [currentEmail, setCurrentEmail] = useState(email);
+  const [newUsername, setNewUsername] = useState("");
+  const [currentUsername, setCurrentUsername] = useState(displayName);
+  const [imageAsFile, setImageAsFile] = useState('')
+  const [imageAsUrl, setImageAsUrl] = useState(photoURL)
+
+  const useStyles = makeStyles({
+    root: {
+      maxWidth: 345,
+    },
+    media: {
+      height: 140,
+      width: 140,
+    },
+  });
+
+  const classes = useStyles();
+
+  const handleForm = (event) => {
+    const { name, value } = event.currentTarget;
+    if (name === "username") {
+      setNewUsername(value)
+    }
+  }
+  
+  const handleButton = async (event) => {
+    const { name, files } = event.currentTarget;
+    if (name === "changeEmailButton") {
+      setEmailDialogOpen(true);
+    }
+    if (name === "changeUsernameButton") {
+      setDisplayNameDialogOpen(true);
+    }
+    if (name === "changeProfilePicButton") {
+      setProfilePicDialogOpen(true);
+    }
+    if (name === "cancel") {
+      setEmailDialogOpen(false);
+      setDisplayNameDialogOpen(false);
+      setProfilePicDialogOpen(false);
+    }
+    if (name === "emailSubmit") {
+      if (await changeUserEmail(newEmail) === "auth/requires-recent-login") {
+        signOut();
+        navigate("/")
+      }
+      changeEmail(auth.currentUser.uid, newEmail);
+      setEmailDialogOpen(false);
+      setCurrentEmail(newEmail);
+    }
+    if (name === "displayNameSubmit") {
+      changeDisplayName(auth.currentUser.uid, newUsername);
+      setDisplayNameDialogOpen(false);
+      setCurrentUsername(newUsername);
+    }
+    if (name === "profilePicSubmit") {
+      console.log('start of upload')
+      // async magic goes here...
+      if(imageAsFile === '') {
+        console.error(`not an image, the image file is a ${typeof(imageAsFile)}`)
+      }
+      const uploadTask = storageRef.child(`/${user.uid}/images/${imageAsFile.name}`).put(imageAsFile)
+      //initiates the firebase side uploading 
+      uploadTask.on('state_changed',
+      (snapShot) => {
+      }, (err) => {
+        //catches the errors
+        console.log(err)
+      },
+      () => {
+        storageRef.child(`/${user.uid}/images/${imageAsFile.name}`).getDownloadURL()
+         .then(fireBaseUrl => {
+            changeProfilePic(fireBaseUrl)
+            setImageAsUrl(fireBaseUrl)
+            setProfilePicDialogOpen(false)
+        })
+      })
+    }
+  };
+
+  const handleImageAsFile = (event) => {
+    const image = event.currentTarget.files[0]
+    setImageAsFile(imageFile => (image))
+  }
+
   return (
-    <div className = "mx-auto w-11/12 md:w-2/4 py-8 px-4 md:px-8">
-      <div className="flex border flex-col items-center md:flex-row md:items-start border-blue-400 px-3 py-4">
-        <div
-          style={{
-            background: `url(${photoURL || 'https://res.cloudinary.com/dqcsk8rsc/image/upload/v1577268053/avatar-1-bitmoji_upgwhc.png'})  no-repeat center center`,
-            backgroundSize: "cover",
-            height: "200px",
-            width: "200px"
-          }}
-          className="border border-blue-300"
-        ></div>
-        <div className = "md:pl-4">
-        <h2 className = "text-2xl font-semibold">{displayName}</h2>
-        <h3 className = "italic">{email}</h3>
-        </div>
-      </div>
-      <button className = "w-full py-3 bg-red-600 mt-4 text-white" onClick = {() => {auth.signOut()}}>Sign out</button>
+    <div>
+      <Card bg="info">
+        <Grid container>
+          <Grid item xs>
+            <CardMedia
+              className={classes.media}
+              image={imageAsUrl || default_picture}
+              title="Default Profile Picture"
+            />
+            <Button name="changeProfilePicButton" onClick={handleButton}>
+              Change Profile Picture
+            </Button>
+          </Grid>
+          <Grid item xs>
+            <h2>{currentUsername}</h2>
+            <Button name="changeUsernameButton" onClick={handleButton}>
+              Change Username
+            </Button>
+          </Grid>
+          <Grid item xs>
+            <h2>{currentEmail}</h2>
+            <Button name="changeEmailButton" onClick={handleButton}>
+              Change Email
+            </Button>
+          </Grid>
+        </Grid>
+      </Card>
+      <Dialog open={profilePicDialogOpen}>
+        <DialogTitle>Change Profile Picture</DialogTitle>
+        <DialogContent>
+          <input type="file" onChange={handleImageAsFile} accept="image/*"/>
+        </DialogContent>
+        <DialogActions>
+          <Button name="cancel" onClick={handleButton}>
+            Cancel
+          </Button>
+          <Button name="profilePicSubmit" onClick={handleButton}>
+            Submit
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog open={displayNameDialogOpen}>
+        <DialogTitle>Change Username</DialogTitle>
+        <DialogContent>
+          <Form>
+            <Form.Control
+              name="username"
+              type="username"
+              placeholder="Enter Username"
+              value={newUsername}
+              onChange={handleForm}
+            />
+          </Form>
+        </DialogContent>
+        <DialogActions>
+          <Button name="cancel" onClick={handleButton}>
+            Cancel
+          </Button>
+          <Button name="displayNameSubmit" onClick={handleButton}>
+            Submit
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog open={emailDialogOpen}>
+        <DialogTitle>Change Email</DialogTitle>
+        <DialogContent>
+          <EmailForm
+            email={newEmail}
+            isValidEmail={isValidEmail}
+            setEmail={setNewEmail}
+            setIsValidEmail={setIsValidEmail}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button name="cancel" onClick={handleButton}>
+            Cancel
+          </Button>
+          <Button name="emailSubmit" onClick={handleButton}>
+            Submit
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
-  ) 
+  );
 };
 export default ProfilePage;

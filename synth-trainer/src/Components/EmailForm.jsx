@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   FormControl,
   InputGroup,
@@ -12,7 +12,7 @@ const EmailForm = ({email, isValidEmail, setEmail, setIsValidEmail}) => {
   const emailRegExp = /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i;
 
   const onChangeHandler = (event) => {
-    const { name, value } = event.currentTarget;
+    const { value } = event.currentTarget;
     setEmail(value);
   };
 
@@ -34,14 +34,14 @@ const EmailForm = ({email, isValidEmail, setEmail, setIsValidEmail}) => {
 
   return (
     <div>
-      <InputGroup className="mb-3" controlId="formBasicEmail">
+      <InputGroup className="mb-3">
         <InputGroup.Prepend>
           <InputGroup.Text>Email address</InputGroup.Text>
         </InputGroup.Prepend>
         <OverlayTrigger
           placement="auto-start"
           delay={{ show: 250, hide: 400 }}
-          trigger={"hover"}
+          trigger={"focus"}
           overlay={renderInvalidEmailMessage}
         >
           <FormControl
