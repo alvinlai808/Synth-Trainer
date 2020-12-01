@@ -22,7 +22,6 @@ import {
 import { useContext } from "react";
 import {
   addInProgressModules,
-  getInProgressModules,
   getModuleRef,
   removeInProgressModule,
 } from "../../firebase";
@@ -43,7 +42,7 @@ const MainWaveformTest = () => {
     };
 
     loadData();
-  }, []);
+  }, [user]);
 
   let waveform = "";
 

@@ -26,7 +26,7 @@ const HomePage = () => {
     };
 
     fetchData();
-  }, []);
+  }, [user]);
 
   const handleButton = async (event) => {
     const { name, id } = event.currentTarget;
@@ -37,6 +37,7 @@ const HomePage = () => {
         break;
       case "goToButton":
         navigate(id);
+        break;
       default:
         break;
     }
@@ -92,6 +93,8 @@ const HomePage = () => {
               </Card.Body>
             </Card>
           );
+        } else {
+          return <div>Loading...</div>;
         }
       })}
       <h2>All Modules</h2>
@@ -120,6 +123,8 @@ const HomePage = () => {
               </Card.Body>
             </Card>
           );
+        } else {
+          return <div>Loading...</div>;
         }
       })}
     </div>

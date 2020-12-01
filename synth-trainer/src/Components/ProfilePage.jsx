@@ -10,11 +10,18 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Input,
 } from "@material-ui/core";
 import default_picture from "../Images/default_profile_picture.png";
 import EmailForm from "./EmailForm";
-import { auth, changeEmail, changeDisplayName, changeUserEmail, signOut, storageRef, changeProfilePic } from "../firebase";
+import {
+  auth,
+  changeEmail,
+  changeDisplayName,
+  changeUserEmail,
+  signOut,
+  storageRef,
+  changeProfilePic,
+} from "../firebase";
 import { Form } from "react-bootstrap";
 import { navigate } from "@reach/router";
 
@@ -29,8 +36,8 @@ const ProfilePage = () => {
   const [currentEmail, setCurrentEmail] = useState(email);
   const [newUsername, setNewUsername] = useState("");
   const [currentUsername, setCurrentUsername] = useState(displayName);
-  const [imageAsFile, setImageAsFile] = useState('')
-  const [imageAsUrl, setImageAsUrl] = useState(photoURL)
+  const [imageAsFile, setImageAsFile] = useState("");
+  const [imageAsUrl, setImageAsUrl] = useState(photoURL);
 
   const useStyles = makeStyles({
     root: {
@@ -47,12 +54,12 @@ const ProfilePage = () => {
   const handleForm = (event) => {
     const { name, value } = event.currentTarget;
     if (name === "username") {
-      setNewUsername(value)
+      setNewUsername(value);
     }
-  }
-  
+  };
+
   const handleButton = async (event) => {
-    const { name, files } = event.currentTarget;
+    const { name } = event.currentTarget;
     if (name === "changeEmailButton") {
       setEmailDialogOpen(true);
     }
@@ -68,9 +75,9 @@ const ProfilePage = () => {
       setProfilePicDialogOpen(false);
     }
     if (name === "emailSubmit") {
-      if (await changeUserEmail(newEmail) === "auth/requires-recent-login") {
+      if ((await changeUserEmail(newEmail)) === "auth/requires-recent-login") {
         signOut();
-        navigate("/")
+        navigate("/");
       }
       changeEmail(auth.currentUser.uid, newEmail);
       setEmailDialogOpen(false);
@@ -82,34 +89,42 @@ const ProfilePage = () => {
       setCurrentUsername(newUsername);
     }
     if (name === "profilePicSubmit") {
-      console.log('start of upload')
+      console.log("start of upload");
       // async magic goes here...
-      if(imageAsFile === '') {
-        console.error(`not an image, the image file is a ${typeof(imageAsFile)}`)
+      if (imageAsFile === "") {
+        console.error(
+          `not an image, the image file is a ${typeof imageAsFile}`
+        );
       }
-      const uploadTask = storageRef.child(`/${user.uid}/images/${imageAsFile.name}`).put(imageAsFile)
-      //initiates the firebase side uploading 
-      uploadTask.on('state_changed',
-      (snapShot) => {
-      }, (err) => {
-        //catches the errors
-        console.log(err)
-      },
-      () => {
-        storageRef.child(`/${user.uid}/images/${imageAsFile.name}`).getDownloadURL()
-         .then(fireBaseUrl => {
-            changeProfilePic(fireBaseUrl)
-            setImageAsUrl(fireBaseUrl)
-            setProfilePicDialogOpen(false)
-        })
-      })
+      const uploadTask = storageRef
+        .child(`/${user.uid}/images/${imageAsFile.name}`)
+        .put(imageAsFile);
+      //initiates the firebase side uploading
+      uploadTask.on(
+        "state_changed",
+        (snapShot) => {},
+        (err) => {
+          //catches the errors
+          console.log(err);
+        },
+        () => {
+          storageRef
+            .child(`/${user.uid}/images/${imageAsFile.name}`)
+            .getDownloadURL()
+            .then((fireBaseUrl) => {
+              changeProfilePic(fireBaseUrl);
+              setImageAsUrl(fireBaseUrl);
+              setProfilePicDialogOpen(false);
+            });
+        }
+      );
     }
   };
 
   const handleImageAsFile = (event) => {
-    const image = event.currentTarget.files[0]
-    setImageAsFile(imageFile => (image))
-  }
+    const image = event.currentTarget.files[0];
+    setImageAsFile((imageFile) => image);
+  };
 
   return (
     <div>
@@ -142,7 +157,7 @@ const ProfilePage = () => {
       <Dialog open={profilePicDialogOpen}>
         <DialogTitle>Change Profile Picture</DialogTitle>
         <DialogContent>
-          <input type="file" onChange={handleImageAsFile} accept="image/*"/>
+          <input type="file" onChange={handleImageAsFile} accept="image/*" />
         </DialogContent>
         <DialogActions>
           <Button name="cancel" onClick={handleButton}>

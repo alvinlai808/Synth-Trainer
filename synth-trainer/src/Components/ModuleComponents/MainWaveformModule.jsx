@@ -6,7 +6,6 @@ import { navigate } from "@reach/router";
 import { useEffect } from "react";
 import { addInProgressModules, getModuleRef } from "../../firebase";
 import { UserContext } from "../../providers/UserProvider";
-import { connectSeries } from "tone";
 
 const MainWaveformModule = (props) => {
   const user = useContext(UserContext);
@@ -20,7 +19,7 @@ const MainWaveformModule = (props) => {
     };
 
     initializeData();
-  }, []);
+  }, [user]);
 
   const [moduleRef, setModuleRef] = useState(null);
   //Oscillator Parameters

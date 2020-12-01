@@ -1,4 +1,4 @@
-import { navigate, Link } from "@reach/router";
+import { navigate } from "@reach/router";
 import React from "react";
 import { useContext } from "react";
 import { Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
