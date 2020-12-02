@@ -65,9 +65,9 @@ const Sandbox = () => {
   };
 
   //Instantiating Synth Object
-  const polySynth = new Tone.PolySynth(Tone.FMSynth, synthSettings).chain(
-    filter
-  );
+  const polySynth = new Tone.Synth(synthSettings).chain(filter).toDestination();
+
+  console.log(polySynth);
 
   //Handles generating notes
   const playTone = (noteFrequency) => {
@@ -98,6 +98,7 @@ const Sandbox = () => {
 
   //Turns Vibrato on or off. Depends on vibratoEnabled
   useEffect(() => {
+    Tone.start();
     if (vibratoEnabled) {
       polySynth.chain(filter, vibrato, Tone.Destination);
     } else {
@@ -135,7 +136,6 @@ const Sandbox = () => {
         container
         alignItems="center"
         alignContent="center"
-        xs={12}
         justify="center"
         spacing={2}
         direction="row"
@@ -171,13 +171,7 @@ const Sandbox = () => {
                     spacing={2}
                     direction="row"
                   >
-                    <Grid
-                      item
-                      xs={2}
-                      justify="center"
-                      alignItems="center"
-                      direction="column"
-                    >
+                    <Grid item xs={2}>
                       <OscillatorCard
                         waveform={mainWaveform}
                         oscillatorTitle={"Oscillator 1"}
@@ -200,13 +194,7 @@ const Sandbox = () => {
                         frequencyStuff={[filterFrequency, setFilterFrequency]}
                       />
                     </Grid>
-                    <Grid
-                      item
-                      xs={3}
-                      justify="center"
-                      alignItems="center"
-                      direction="column"
-                    >
+                    <Grid item xs={3}>
                       <Card id="volumeControlCard" bg="light">
                         <VolumeControl volume={volume} setVolume={setVolume} />
                       </Card>
