@@ -109,27 +109,6 @@ const Sandbox = () => {
     }
   }, [vibratoEnabled, filter, polySynth, vibrato]);
 
-  //Handles event from all knobs
-  const knobHandler = (event) => {
-    const { name, value } = event.target;
-    console.log(event);
-    if (name === "Attack") {
-      setAttackValue(value.ariaValueNow / 1000);
-    }
-    if (name === "Decay") {
-      setDecayValue(value.ariaValueNow / 1000);
-    }
-    if (name === "Sustain") {
-      setSustainValue(value.ariaValueNow / 1000);
-    }
-    if (name === "Release") {
-      setReleaseValue(value.ariaValueNow / 1000);
-    }
-    if (name === "Frequency") {
-      setFilterFrequency(value.ariaValueNow);
-    }
-  };
-
   return (
     <div className="background">
       <Grid
@@ -207,10 +186,10 @@ const Sandbox = () => {
                         <FilterCard
                           filterType={filterType}
                           //knobHandler={knobHandler}
-                          filterFrequency = {filterFrequency} 
-                          setFilterFrequency = {setFilterFrequency}
+                          filterFrequency={filterFrequency}
+                          setFilterFrequency={setFilterFrequency}
                           filterHandler={filterHandler}
-                          id = "FilterSlider"
+                          id="FilterSlider"
                         />
                       </Card>
                       <Card id="vibratoCard" bg="light">
