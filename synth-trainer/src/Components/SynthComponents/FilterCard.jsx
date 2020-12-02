@@ -40,7 +40,7 @@ const FilterCard = ({ filterType, filterFrequency, setFilterFrequency, filterHan
     setValue(newValue);
   };
   const handleFilterCommitted = (event, newValue) => {
-    setFilterFrequency(newValue / 1000);
+    setFilterFrequency(newValue);
   };
 
   return (

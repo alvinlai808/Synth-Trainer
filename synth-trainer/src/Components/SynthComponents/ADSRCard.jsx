@@ -18,8 +18,6 @@ const ADSRCard = ({
   let setSustainValue = sustainStuff[1];
   let releaseValue = releaseStuff[0];
   let setReleaseValue = releaseStuff[1];
-  // let frequencyValue = frequencyStuff[0]
-  // let setFrequencyValue = frequencyStuff[1]
 
   return (
     <Card
