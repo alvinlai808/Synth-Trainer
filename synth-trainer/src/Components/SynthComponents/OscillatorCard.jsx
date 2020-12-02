@@ -7,45 +7,45 @@ const OscillatorCard = ({
   oscillatorID,
   oscillatorHandler,
 }) => {
-  const [sawtoothColor, setSawtoothColor] = useState("red")
-  const [squareColor, setSquareColor] = useState("blue")
-  const [sineColor, setSineColor] = useState("blue")
-  const [triangleColor, setTriangleColor] = useState("blue")
+  const [sawtoothColor, setSawtoothColor] = useState("black")
+  const [squareColor, setSquareColor] = useState("dimgray")
+  const [sineColor, setSineColor] = useState("dimgray")
+  const [triangleColor, setTriangleColor] = useState("dimgray")
 
   const handlebuttonclick = (event) => {
     const { style, name } = event.currentTarget
+    
     if(name === "square" && style.backgroundColor === squareColor){
-      setSquareColor("red")
-      setSawtoothColor("blue")
-      setSineColor("blue")
-      setTriangleColor("blue")
+      setSquareColor("black")
+      setSawtoothColor("dimgray")
+      setSineColor("dimgray")
+      setTriangleColor("dimgray")
     }
     if(name === "sawtooth" && style.backgroundColor === sawtoothColor){
-      setSquareColor("blue")
-      setSawtoothColor("red")
-      setSineColor("blue")
-      setTriangleColor("blue")
+      setSquareColor("dimgray")
+      setSawtoothColor("black")
+      setSineColor("dimgray")
+      setTriangleColor("dimgray")
     }
     if(name === "sine" && style.backgroundColor === sineColor){
-      setSquareColor("blue")
-      setSawtoothColor("blue")
-      setSineColor("red")
-      setTriangleColor("blue")
+      setSquareColor("dimgray")
+      setSawtoothColor("dimgray")
+      setSineColor("black")
+      setTriangleColor("dimgray")
     }
     if(name === "triangle" && style.backgroundColor === triangleColor){
-      setSquareColor("blue")
-      setSawtoothColor("blue")
-      setSineColor("blue")
-      setTriangleColor("red")
+      setSquareColor("dimgray")
+      setSawtoothColor("dimgray")
+      setSineColor("dimgray")
+      setTriangleColor("black")
     }
   };
   
   return (
-    <Card id="oscillator-card" className="text-center" bg="info">
+    <Card id="oscillator-card" className="text-center" style={{backgroundColor:'white'}}>
       <Card.Title id="oscillator-label">{oscillatorTitle}</Card.Title>
       <Form>
         <Button
-          //variant={waveform === "sine" ? "success" : "primary"}
           style={{backgroundColor:squareColor}}
           name="square"
           onClick={(event) => {oscillatorHandler(event, oscillatorID); handlebuttonclick(event)}}
@@ -53,7 +53,6 @@ const OscillatorCard = ({
           Square
         </Button>
         <Button
-          //variant={waveform === "sine" ? "success" : "primary"}
           style={{backgroundColor:sawtoothColor}}
           name="sawtooth"
           onClick={(event) => {oscillatorHandler(event, oscillatorID); handlebuttonclick(event)}}
@@ -61,7 +60,6 @@ const OscillatorCard = ({
           Saw
         </Button>
         <Button
-          //variant={waveform === "sine" ? "success" : "primary"}
           style={{backgroundColor:sineColor}}
           name="sine"
           onClick={(event) => {oscillatorHandler(event, oscillatorID); handlebuttonclick(event)}}
@@ -69,7 +67,6 @@ const OscillatorCard = ({
           Sine
         </Button>
         <Button
-          //variant={waveform === "sine" ? "success" : "primary"}
           style={{backgroundColor:triangleColor}}
           name="triangle"
           onClick={(event) => {oscillatorHandler(event, oscillatorID); handlebuttonclick(event)}}
@@ -83,4 +80,3 @@ const OscillatorCard = ({
 
 export default OscillatorCard;
 
-//variant={waveform === "sine" ? "success" : "primary"}

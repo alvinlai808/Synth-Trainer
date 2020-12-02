@@ -8,6 +8,7 @@ import OscillatorCard from "./SynthComponents/OscillatorCard";
 import ADSRCard from "./SynthComponents/ADSRCard";
 import FilterCard from "./SynthComponents/FilterCard";
 import VibratoCard from "./SynthComponents/VibratoCard";
+import "./Sandbox.css";
 
 const Sandbox = () => {
   //Oscillator Parameters
@@ -46,10 +47,10 @@ const Sandbox = () => {
       type: mainWaveform,
     },
     envelope: {
-      attack: attackValue,
-      decay: decayValue,
-      sustain: sustainValue,
-      release: releaseValue,
+      attack: attackValue / 1000,
+      decay: decayValue / 1000,
+      sustain: sustainValue / 1000,
+      release: releaseValue / 1000,
     },
     modulation: {
       type: modulationWaveform,
@@ -109,44 +110,29 @@ const Sandbox = () => {
 
   //Handles event from all knobs
   const knobHandler = (event) => {
-    const { name, value } = event.currentTarget;
+    const { name, value } = event.target;
+    console.log(event)
     if (name === "Attack") {
-      setAttackValue(value / 1000);
+      setAttackValue(value.ariaValueNow / 1000);
     }
     if (name === "Decay") {
-      setDecayValue(value / 1000);
+      setDecayValue(value.ariaValueNow / 1000);
     }
     if (name === "Sustain") {
-      setSustainValue(value / 1000);
+      setSustainValue(value.ariaValueNow / 1000);
     }
     if (name === "Release") {
-      setReleaseValue(value / 1000);
+      setReleaseValue(value.ariaValueNow / 1000);
     }
     if (name === "Frequency") {
-      setFilterFrequency(value);
+      setFilterFrequency(value.ariaValueNow);
     }
-  };
+  }
 
-  // function knobHandler() {
-  //   const { name, value } = this;
-  //   if (name === "Attack") {
-  //     setAttackValue(value / 1000);
-  //   }
-  //   if (name === "Decay") {
-  //     setDecayValue(value / 1000);
-  //   }
-  //   if (name === "Sustain") {
-  //     setSustainValue(value / 1000);
-  //   }
-  //   if (name === "Release") {
-  //     setReleaseValue(value / 1000);
-  //   }
-  //   if (name === "Frequency") {
-  //     setFilterFrequency(value);
-  //   }
-  // }
+
 
   return (
+  <div className = "background">
     <Grid
       container
       alignItems="center"
@@ -164,74 +150,79 @@ const Sandbox = () => {
           Sandbox
         </h1>
       </Grid>
-      <Grid item xs={12}>
-        <Grid
-          container
-          alignItems="center"
-          alignContent="center"
-          xs={12}
-          justify="center"
-          spacing={2}
-          direction="row"
-        >
-          <Grid
-            item
-            xs={2}
-            justify="center"
-            alignItems="center"
-            direction="column"
-          >
-            <OscillatorCard
-              waveform={mainWaveform}
-              oscillatorTitle={"Oscillator 1"}
-              oscillatorID={1}
-              oscillatorHandler={oscillatorHandler}
-            />
-            <OscillatorCard
-              waveform={modulationWaveform}
-              oscillatorTitle={"Oscillator 2"}
-              oscillatorID={2}
-              oscillatorHandler={oscillatorHandler}
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <ADSRCard knobHandler={knobHandler} />
-          </Grid>
-          <Grid
-            item
-            xs={2}
-            justify="center"
-            alignItems="center"
-            direction="column"
-          >
-            <Card id="volumeControlCard" bg="info">
-              <VolumeControl volume={volume} setVolume={setVolume} />
-            </Card>
-            <Card id="filterCard" bg="info">
-              <FilterCard
-                filterType={filterType}
-                knobHandler={knobHandler}
-                filterHandler={filterHandler}
-              />
-            </Card>
-            <Card id="vibratoCard" bg="info">
-              <VibratoCard vibratoHandler={vibratoHandler} />
-            </Card>
-          </Grid>
-        </Grid>
-      </Grid>
+      
       {/*Keyboard*/}
       <Grid item>
         <Grid container alignItems="center">
           <Grid item xs={12}>
             <Card
               id="keyboard-card"
-              className="text-center"
-              bg="info"
-              style={{ width: Keyboard.keyboardWidth }}
+              className="text-center keyboard-color"
+              style={{ width: Keyboard.keyboardWidth}}
             >
-              <Card.Title id="envelope-label">Keyboard</Card.Title>
+              <Card.Title id="envelope-label" style={{ color: "white" }}>Keyboard</Card.Title>
+              <Grid item xs={12}>
+                <Grid
+                  container
+                  alignItems="center"
+                  alignContent="center"
+                  xs={12}
+                  justify="center"
+                  spacing={2}
+                  direction="row"
+                >
+                  <Grid
+                    item
+                    xs={2}
+                    justify="center"
+                    alignItems="center"
+                    direction="column"
+                  >
+                    <OscillatorCard
+                      waveform={mainWaveform}
+                      oscillatorTitle={"Oscillator 1"}
+                      oscillatorID={1}
+                      oscillatorHandler={oscillatorHandler}
+                    />
+                    <OscillatorCard
+                      waveform={modulationWaveform}
+                      oscillatorTitle={"Oscillator 2"}
+                      oscillatorID={2}
+                      oscillatorHandler={oscillatorHandler}
+                    />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <ADSRCard attackStuff={[attackValue, setAttackValue]}
+                              decayStuff = {[decayValue, setDecayValue]} 
+                              sustainStuff = {[sustainValue, setSustainValue]} 
+                              releaseStuff = {[releaseValue, setReleaseValue]}
+                              frequencyStuff = {[filterFrequency, setFilterFrequency]} />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={3}
+                    justify="center"
+                    alignItems="center"
+                    direction="column"
+                  >
+                    <Card id="volumeControlCard" bg="light">
+                      <VolumeControl volume={volume} setVolume={setVolume} /> 
+                    </Card>
+                    <Card id="filterCard" bg ="light">
+                      <FilterCard
+                        filterType={filterType}
+                        knobHandler={knobHandler}
+                        filterHandler={filterHandler}
+                      />
+                    </Card>
+                    <Card id="vibratoCard" bg="light">
+                      <VibratoCard vibratoHandler={vibratoHandler} />
+                    </Card>
+                  </Grid>
+                </Grid>
+              </Grid>
               <Form>
+                <br />
                 <Keyboard playTone={playTone} />
               </Form>
             </Card>
@@ -239,6 +230,7 @@ const Sandbox = () => {
         </Grid>
       </Grid>
     </Grid>
+    </div>
   );
 };
 

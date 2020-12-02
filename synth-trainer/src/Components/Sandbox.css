@@ -1,0 +1,12 @@
+/* body {
+  background-image: url("../Images/Sandbox_Background.jpg");
+} */
+
+.background {
+  background-image: url("../Images/Sandbox_Background.jpg");
+  height: 100%;
+}
+
+.keyboard-color {
+  background-image: url("../Images/Keyboard-Color.jpg");
+}

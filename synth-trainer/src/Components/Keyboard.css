@@ -1,25 +1,25 @@
 /* PianoDarkTheme */
 
 .PianoDarkTheme .ReactPiano__Key--accidental {
-  background: #025d7d;
+  background: #030303;
   border: 1px solid #888;
   margin: 0 auto;
   width: 50%;
 }
 .PianoDarkTheme .ReactPiano__Key--natural {
-  background: #013243;
+  background: #ffffff;
   border: 1px solid #888;
   margin-right: 0;
   margin: 0 auto;
   width: 50%;
 }
 .PianoDarkTheme .ReactPiano__Key--active.ReactPiano__Key--accidental {
-  background: #0396ca;
+  background: #1f1e1e;
   margin: 0 auto;
   width: 50%;
 }
 .PianoDarkTheme .ReactPiano__Key--active.ReactPiano__Key--natural {
-  background: #0396ca;
+  background: #bfc1c2;
   margin: 0 auto;
   width: 50%;
 }

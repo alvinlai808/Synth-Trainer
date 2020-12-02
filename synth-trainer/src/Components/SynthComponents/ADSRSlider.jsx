@@ -4,40 +4,36 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
     root: {
-      height: 100,
+      height: 100
     },
   });
 
 export const ADSRSLIDER = props => {
     const classes = useStyles();
-    const [value, setValue] = useState(0);
+    const [value, setValue] = useState(props.value);
 
     const handleSliderChange = (event, newValue) => {
         setValue(newValue);
     };
 
-    
-
-
-    //let { onChange, ...rest } = this.props; //renaming value so it doesn't conflict with the state named value(above) 
-
-
-    //https://material-ui.com/components/slider/#range-slider
-    //https://material-ui.com/api/slider/
+    const handleADSRCommitted = (event, newValue) => {
+        props.setValue(newValue)
+    }
     return (
-        <div> 
+        <div style={{ color: "dimgray" }}> 
             {value.toFixed(0)} ms
             <div className={classes.root}>
                 <Slider
                     name = {props.name}
                     value = {value}
                     onChange = {handleSliderChange}
-                    onChangeCommitted = {props.onChangeCommitted}
+                    onChangeCommitted={handleADSRCommitted}
                     orientation="vertical"
                     aria-labelledby="vertical-slider"
-                    color = 'secondary'
+                    color = "secondary"
                     min = {0}
                     max = {1000}
+                    id = {props.id}
                     
                     // {...rest}
                 />

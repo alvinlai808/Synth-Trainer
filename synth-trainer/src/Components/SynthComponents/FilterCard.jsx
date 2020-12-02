@@ -4,31 +4,31 @@ import LimitedKnob from "./LimitedKnob";
 import Grid from "@material-ui/core/Grid";
 
 const FilterCard = ({ filterType, knobHandler, filterHandler }) => {
-  const [lowpassColor, setLowpassColor] = useState("blue")
-  const [highpassColor, setHighpassColor] = useState("red")
-  const [bandpassColor, setBandpassColor] = useState("blue")
+  const [lowpassColor, setLowpassColor] = useState("dimgray")
+  const [highpassColor, setHighpassColor] = useState("black")
+  const [bandpassColor, setBandpassColor] = useState("dimgray")
 
   const handlebuttonclick = (event) => {
   const { style, name } = event.currentTarget
   if(name === "lowpass" && style.backgroundColor === lowpassColor){
-    setLowpassColor("red")
-    setHighpassColor("blue")
-    setBandpassColor("blue")
+    setLowpassColor("black")
+    setHighpassColor("dimgray")
+    setBandpassColor("dimgray")
   }
   if(name === "highpass" && style.backgroundColor === highpassColor){
-    setLowpassColor("blue")
-    setHighpassColor("red")
-    setBandpassColor("blue")
+    setLowpassColor("dimgray")
+    setHighpassColor("black")
+    setBandpassColor("dimgray")
   }
   if(name === "bandpass" && style.backgroundColor === bandpassColor){
-    setLowpassColor("blue")
-    setHighpassColor("blue")
-    setBandpassColor("red")
+    setLowpassColor("dimgray")
+    setHighpassColor("dimgray")
+    setBandpassColor("black")
   }
   };
 
   return (
-    <Card id="envelope-card" className="text-center" bg="info">
+    <Card id="envelope-card" className="text-center" bg="light">
       <Card.Title id="envelope-label">Filter</Card.Title>
       <Grid
         container
