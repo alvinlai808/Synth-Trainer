@@ -1,9 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "@reach/router";
-import {
-  auth,
-  generateUserDocument,
-} from "../firebase";
+import { Link, navigate } from "@reach/router";
+import { auth, generateUserDocument } from "../firebase";
 import {
   Alert,
   Button,
@@ -62,6 +59,7 @@ const SignUp = () => {
         password
       );
       generateUserDocument(user, { displayName });
+      navigate("/");
     } catch (caughtError) {
       setError(error.concat(caughtError.message));
       setIsError(true);

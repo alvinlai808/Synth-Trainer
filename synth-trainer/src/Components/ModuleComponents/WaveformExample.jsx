@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Card, Form } from "react-bootstrap";
 import PlayArrow from "@material-ui/icons/PlayArrow";
 import VolumeControl from "../SynthComponents/VolumeControl";
