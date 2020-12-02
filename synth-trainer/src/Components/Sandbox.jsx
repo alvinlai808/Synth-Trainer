@@ -17,7 +17,7 @@ const Sandbox = () => {
   //Volume
   const [volume, setVolume] = useState(100);
   //ADSR Parameters
-  const [attackValue, setAttackValue] = useState(0);
+  const [attackValue, setAttackValue] = useState(0.5);
   const [decayValue, setDecayValue] = useState(0);
   const [sustainValue, setSustainValue] = useState(1.0);
   const [releaseValue, setReleaseValue] = useState(1.0);
@@ -47,10 +47,10 @@ const Sandbox = () => {
       type: mainWaveform,
     },
     envelope: {
-      attack: attackValue / 1000,
-      decay: decayValue / 1000,
-      sustain: sustainValue / 1000,
-      release: releaseValue / 1000,
+      attack: attackValue,
+      decay: decayValue,
+      sustain: sustainValue,
+      release: releaseValue,
     },
     modulation: {
       type: modulationWaveform,
@@ -65,7 +65,9 @@ const Sandbox = () => {
   };
 
   //Instantiating Synth Object
-  const polySynth = new Tone.Synth(synthSettings).chain(filter).toDestination();
+  const polySynth = new Tone.PolySynth(Tone.FMSynth, synthSettings).chain(
+    filter
+  );
 
   //Handles generating notes
   const playTone = (noteFrequency) => {
