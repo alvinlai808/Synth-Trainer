@@ -17,7 +17,7 @@ const Sandbox = () => {
   //Volume
   const [volume, setVolume] = useState(100);
   //ADSR Parameters
-  const [attackValue, setAttackValue] = useState(0);
+  const [attackValue, setAttackValue] = useState(0.5);
   const [decayValue, setDecayValue] = useState(0);
   const [sustainValue, setSustainValue] = useState(1.0);
   const [releaseValue, setReleaseValue] = useState(1.0);
@@ -47,10 +47,10 @@ const Sandbox = () => {
       type: mainWaveform,
     },
     envelope: {
-      attack: attackValue / 1000,
-      decay: decayValue / 1000,
-      sustain: sustainValue / 1000,
-      release: releaseValue / 1000,
+      attack: attackValue,
+      decay: decayValue,
+      sustain: sustainValue,
+      release: releaseValue,
     },
     modulation: {
       type: modulationWaveform,
@@ -98,6 +98,7 @@ const Sandbox = () => {
 
   //Turns Vibrato on or off. Depends on vibratoEnabled
   useEffect(() => {
+    Tone.start();
     if (vibratoEnabled) {
       polySynth.chain(filter, vibrato, Tone.Destination);
     } else {
@@ -135,7 +136,6 @@ const Sandbox = () => {
         container
         alignItems="center"
         alignContent="center"
-        xs={12}
         justify="center"
         spacing={2}
         direction="row"
@@ -171,13 +171,7 @@ const Sandbox = () => {
                     spacing={2}
                     direction="row"
                   >
-                    <Grid
-                      item
-                      xs={2}
-                      justify="center"
-                      alignItems="center"
-                      direction="column"
-                    >
+                    <Grid item xs={2}>
                       <OscillatorCard
                         waveform={mainWaveform}
                         oscillatorTitle={"Oscillator 1"}
@@ -200,13 +194,7 @@ const Sandbox = () => {
                         frequencyStuff={[filterFrequency, setFilterFrequency]}
                       />
                     </Grid>
-                    <Grid
-                      item
-                      xs={3}
-                      justify="center"
-                      alignItems="center"
-                      direction="column"
-                    >
+                    <Grid item xs={3}>
                       <Card id="volumeControlCard" bg="light">
                         <VolumeControl volume={volume} setVolume={setVolume} />
                       </Card>

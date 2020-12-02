@@ -79,7 +79,7 @@ const FilterCard = ({ filterType, knobHandler, filterHandler }) => {
             Bandpass
           </Button>
         </Grid>
-        <Grid item xs={6} alignItems="center" direction="row">
+        <Grid item xs={6}>
           <h5 className="text-3xl font-bold">Frequency</h5>
           <LimitedKnob
             name="Frequency"
