@@ -30,7 +30,7 @@ import { useEffect } from "react";
 import { navigate } from "@reach/router";
 import VolumeControl from "../SynthComponents/VolumeControl";
 
-const waveforms = ["sine", "square", "sawtooth"];
+const waveforms = ["sine", "square", "sawtooth", "triangle"];
 
 const MainWaveformTest = () => {
   const user = useContext(UserContext);
@@ -74,7 +74,6 @@ const MainWaveformTest = () => {
     };
     polySynth.set(synthSettings);
   };
-  //Instantiating Synth Object
 
   //Handles generating notes
   const playTone = (noteFrequency) => {
@@ -234,6 +233,26 @@ const MainWaveformTest = () => {
                 }
               >
                 Square
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                variant={
+                  userGuess[0] && waveformHook === "triangle"
+                    ? "success"
+                    : userGuess[0] &&
+                      userGuess[1] === "triangle" &&
+                      waveformHook !== "triangle"
+                    ? "danger"
+                    : "primary"
+                }
+                name="triangle"
+                onClick={handleButton}
+                disabled={
+                  canPlayNewSound || (currentTest === 10 && userGuess[0])
+                }
+              >
+                Triangle
               </Button>
             </Grid>
           </Grid>

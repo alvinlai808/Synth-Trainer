@@ -5,7 +5,7 @@ import "react-piano/dist/styles.css";
 import "../Keyboard.css";
 
 const Keyboard = ({ playTone }) => {
-  const keyboardWidth = 1000;
+  const keyboardWidth = 1100;
   const firstNote = MidiNumbers.fromNote("c3");
   const lastNote = MidiNumbers.fromNote("f4");
   const keyboardShortcuts = KeyboardShortcuts.create({
@@ -16,6 +16,7 @@ const Keyboard = ({ playTone }) => {
   return (
     <Piano
       className="PianoDarkTheme"
+      keyWidthToHeight = {.3}
       noteRange={{ first: firstNote, last: lastNote }}
       width={keyboardWidth}
       keyboardShortcuts={keyboardShortcuts}
