@@ -25,7 +25,7 @@ export default function VolumeControl({ volume, setVolume }) {
   const [previousVolume, setPreviousVolume] = React.useState(
     (volume - 100) * 4
   );
-  const [value, setValue] = React.useState((volume - 100) * 4);
+  const [value, setValue] = React.useState((volume - 75) * 4);
 
   const toggleMute = () => {
     if (volume === 0) {
