@@ -10,8 +10,7 @@ const OscillatorCard = ({
   const [sawtoothColor, setSawtoothColor] = useState("red")
   const [squareColor, setSquareColor] = useState("blue")
   const [sineColor, setSineColor] = useState("blue")
-
-  
+  const [triangleColor, setTriangleColor] = useState("blue")
 
   const handlebuttonclick = (event) => {
     const { style, name } = event.currentTarget
@@ -19,18 +18,28 @@ const OscillatorCard = ({
       setSquareColor("red")
       setSawtoothColor("blue")
       setSineColor("blue")
+      setTriangleColor("blue")
     }
     if(name === "sawtooth" && style.backgroundColor === sawtoothColor){
       setSquareColor("blue")
       setSawtoothColor("red")
       setSineColor("blue")
+      setTriangleColor("blue")
     }
     if(name === "sine" && style.backgroundColor === sineColor){
       setSquareColor("blue")
       setSawtoothColor("blue")
       setSineColor("red")
+      setTriangleColor("blue")
+    }
+    if(name === "triangle" && style.backgroundColor === triangleColor){
+      setSquareColor("blue")
+      setSawtoothColor("blue")
+      setSineColor("blue")
+      setTriangleColor("red")
     }
   };
+  
   return (
     <Card id="oscillator-card" className="text-center" bg="info">
       <Card.Title id="oscillator-label">{oscillatorTitle}</Card.Title>
@@ -58,6 +67,14 @@ const OscillatorCard = ({
           onClick={(event) => {oscillatorHandler(event, oscillatorID); handlebuttonclick(event)}}
         >
           Sine
+        </Button>
+        <Button
+          //variant={waveform === "sine" ? "success" : "primary"}
+          style={{backgroundColor:triangleColor}}
+          name="triangle"
+          onClick={(event) => {oscillatorHandler(event, oscillatorID); handlebuttonclick(event)}}
+        >
+          Triangle
         </Button>
       </Form>
     </Card>

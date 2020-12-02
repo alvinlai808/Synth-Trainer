@@ -49,8 +49,12 @@ const HomePage = () => {
 
   return (
     <div>
-      <h1>UNDER CONSTRUCTION</h1>
-      <h2>Modules In Progress</h2>
+      <h1 style={{ color: "white" }} className="text-3xl text-center font-bold">
+        UNDER CONSTRUCTION
+      </h1>
+      <h2 style={{ color: "white" }} className="text-3xl text-left font-bold">
+        Modules In Progress
+      </h2>
       {inProgressModules.map((module) => {
         if (module.name !== undefined && allModules.length > 0) {
           return (
@@ -97,7 +101,9 @@ const HomePage = () => {
           return <div>Loading...</div>;
         }
       })}
-      <h2>All Modules</h2>
+      <h2 style={{ color: "white" }} className="text-3xl text-left font-bold">
+        All Modules
+      </h2>
       {allModules.map((module) => {
         if (allModules.length > 0) {
           return (

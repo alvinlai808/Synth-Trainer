@@ -18,7 +18,6 @@ const MainWaveformModule = (props) => {
 
       setModuleRef(result);
     };
-
     initializeData();
   }, [user]);
 
@@ -45,7 +44,6 @@ const MainWaveformModule = (props) => {
     };
     polySynth.set(synthSettings);
   };
-  //Instantiating Synth Object
 
   //Handles generating notes
   const playTone = (noteFrequency) => {
@@ -66,6 +64,7 @@ const MainWaveformModule = (props) => {
     createSynth();
     playTone("C4");
   };
+  
   if (moduleRef === undefined) {
     return <p>Loading</p>;
   }
@@ -83,7 +82,7 @@ const MainWaveformModule = (props) => {
           style={{ color: "white" }}
           className="text-3xl text-center font-bold"
         >
-          Intro
+          Intro: Basic Waveforms
         </h2>
         <h2 
           style={{ color: "white" }}
@@ -93,7 +92,23 @@ const MainWaveformModule = (props) => {
         </h2>
         <WaveformExample
           waveform="sine"
-          message="Click the button to hear a C3 note with a sine waveform"
+          message="A sine wave is the simplest waveform with no harmonics or overtones. 
+          It generates a smooth, clean sound, much like the way the waveform looks."
+          volume={volume}
+          setVolume={setVolume}
+          buttonHandler={buttonHandler}
+        />
+        <h2 
+          style={{ color: "white" }}
+          className="text-3xl text-center font-bold"
+        >
+          Triangle Wave
+        </h2>
+        <WaveformExample
+          waveform="triangle"
+          message="Rather than a smooth, curvy waveform, the triangle wave consists of
+          repeating upward and downward slopes that generate a slightly brighter tone than
+          sine waves."
           volume={volume}
           setVolume={setVolume}
           buttonHandler={buttonHandler}
@@ -106,7 +121,8 @@ const MainWaveformModule = (props) => {
         </h2>
         <WaveformExample
           waveform="square"
-          message="Click the button to hear a C3 note with a square waveform"
+          message="A square wave generates a buzzier tone than a sine wave due to its
+          instant changes in amplitude. It introduces harmonics."
           volume={volume}
           setVolume={setVolume}
           buttonHandler={buttonHandler}
@@ -119,7 +135,9 @@ const MainWaveformModule = (props) => {
         </h2>
         <WaveformExample
           waveform="sawtooth"
-          message="Click the button to hear a C3 note with a sawtooth waveform"
+          message="Sawtooth waves generate the richest tones of the 4 common waveforms.
+          Its waveform consists of linear rises followed by the instant amplitude change,
+          much like the square wave."
           volume={volume}
           setVolume={setVolume}
           buttonHandler={buttonHandler}
