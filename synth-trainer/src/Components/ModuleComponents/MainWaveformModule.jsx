@@ -25,7 +25,7 @@ const MainWaveformModule = (props) => {
   //Oscillator Parameters
   let mainWaveform = "";
   //Volume
-  const [volume, setVolume] = useState(125);
+  const [volume, setVolume] = useState(100);
 
   let playingSound = false;
   const PLAYING_TIME = 1;
