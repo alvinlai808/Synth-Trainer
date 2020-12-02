@@ -25,7 +25,7 @@ const MainWaveformModule = (props) => {
   //Oscillator Parameters
   let mainWaveform = "";
   //Volume
-  const [volume, setVolume] = useState(100);
+  const [volume, setVolume] = useState(125);
 
   let playingSound = false;
   const PLAYING_TIME = 1;
@@ -68,7 +68,7 @@ const MainWaveformModule = (props) => {
   if (moduleRef === undefined) {
     return <p>Loading</p>;
   }
-  
+
   return (
     <div>
       <Grid
@@ -79,13 +79,22 @@ const MainWaveformModule = (props) => {
         alignContent="center"
         direction="column"
       >
-        <h2 
+        <h2
           style={{ color: "white" }}
           className="text-3xl text-center font-bold"
         >
           Intro: Basic Waveforms
         </h2>
-        <h2 
+        <p
+          style={{ color: "white" }}
+          className="text-3xl text-center font-bold"
+        >
+          Oscillators are the fundamental building blocks of a synths. The word
+          “oscillator” sounds complicated, but it’s a fancy word with a simple
+          meaning. An oscillator creates a sound.
+        </p>
+        <p></p>
+        <h2
           style={{ color: "white" }}
           className="text-3xl text-center font-bold"
         >
@@ -99,7 +108,7 @@ const MainWaveformModule = (props) => {
           setVolume={setVolume}
           buttonHandler={buttonHandler}
         />
-        <h2 
+        <h2
           style={{ color: "white" }}
           className="text-3xl text-center font-bold"
         >
@@ -114,7 +123,7 @@ const MainWaveformModule = (props) => {
           setVolume={setVolume}
           buttonHandler={buttonHandler}
         />
-        <h2 
+        <h2
           style={{ color: "white" }}
           className="text-3xl text-center font-bold"
         >
@@ -128,7 +137,7 @@ const MainWaveformModule = (props) => {
           setVolume={setVolume}
           buttonHandler={buttonHandler}
         />
-        <h2 
+        <h2
           style={{ color: "white" }}
           className="text-3xl text-center font-bold"
         >

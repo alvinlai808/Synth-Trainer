@@ -22,15 +22,19 @@ const useStyles = makeStyles({
 
 export default function VolumeControl({ volume, setVolume }) {
   const classes = useStyles();
-  const [previousVolume, setPreviousVolume] = React.useState(volume);
+  const [previousVolume, setPreviousVolume] = React.useState(
+    (volume - 100) * 4
+  );
+  const [value, setValue] = React.useState((volume - 100) * 4);
 
   const toggleMute = () => {
-    if (volume === 75) {
-      setVolume(previousVolume);
+    if (volume === 0) {
+      setValue(previousVolume);
+      setVolume(previousVolume / 4 + 75);
     } else {
-      setPreviousVolume(volume);
-      setVolume(75);
-      console.log(volume);
+      setPreviousVolume(value);
+      setVolume(0);
+      setValue(0);
     }
   };
 
@@ -42,16 +46,21 @@ export default function VolumeControl({ volume, setVolume }) {
   };
 
   const handleSliderChange = (event, newValue) => {
-    setVolume(newValue / 4 + 75);
+    setValue(newValue);
   };
 
   const handleInputChange = (event) => {
-    setVolume(event.target.value / 4 + 75);
+    setValue(event.target.value);
+    setVolume(
+      event.target.value === 0
+        ? event.target.value
+        : event.target.value / 4 + 75
+    );
   };
 
   const handleBlur = () => {
     if (volume < 75) {
-      setVolume(75);
+      setVolume(0);
     } else if (volume > 100) {
       setVolume(125);
     }
@@ -61,6 +70,11 @@ export default function VolumeControl({ volume, setVolume }) {
     if (key === "m") {
       toggleMute();
     }
+  };
+
+  const handleSliderCommit = (event, newValue) => {
+    setValue(newValue);
+    setVolume(newValue === 0 ? newValue : newValue / 4 + 75);
   };
 
   useEffect(() => {
@@ -78,21 +92,22 @@ export default function VolumeControl({ volume, setVolume }) {
       <Grid container spacing={2} alignItems="center">
         <Grid item>
           <Button name="muteButton" onClick={handleButton} outlined="true">
-            {volume === 0 ? <VolumeOff /> : <VolumeUp />}
+            {value === 0 ? <VolumeOff /> : <VolumeUp />}
           </Button>
         </Grid>
         <Grid item xs>
           <Slider
-            value={typeof volume === "number" ? (volume - 75) * 4 : 0}
+            value={value}
             onChange={handleSliderChange}
+            onChangeCommitted={handleSliderCommit}
             aria-labelledby="input-slider"
-            color = "secondary"
+            color="secondary"
           />
         </Grid>
         <Grid item>
           <Input
             className={classes.input}
-            value={(volume - 75) * 4}
+            value={value}
             margin="dense"
             onChange={handleInputChange}
             onBlur={handleBlur}
