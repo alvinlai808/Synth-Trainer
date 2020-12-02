@@ -24,7 +24,7 @@ const Sandbox = () => {
   //Filter Parameters
   const [filterFrequency, setFilterFrequency] = useState(0);
   const [filterType, setFilterType] = useState("highpass");
-  const [rollOff, setRollOff] = useState(-12);
+  const [rollOff /*setRollOff*/] = useState(-12);
   //Vibrato Parameters
   const [vibratoEnabled, setVibratoEnabled] = useState(false);
 
@@ -106,12 +106,12 @@ const Sandbox = () => {
       //so we have to reconnect the ones we want manually
       polySynth.connect(filter); // <- reconnecting filter
     }
-  }, [vibratoEnabled]);
+  }, [vibratoEnabled, filter, polySynth, vibrato]);
 
   //Handles event from all knobs
   const knobHandler = (event) => {
     const { name, value } = event.target;
-    console.log(event)
+    console.log(event);
     if (name === "Attack") {
       setAttackValue(value.ariaValueNow / 1000);
     }
@@ -127,109 +127,111 @@ const Sandbox = () => {
     if (name === "Frequency") {
       setFilterFrequency(value.ariaValueNow);
     }
-  }
-
-
+  };
 
   return (
-  <div className = "background">
-    <Grid
-      container
-      alignItems="center"
-      alignContent="center"
-      xs={12}
-      justify="center"
-      spacing={2}
-      direction="row"
-    >
-      <Grid item xs={12}>
-        <h1
-          style={{ color: "white" }}
-          className="text-3xl text-center font-bold"
-        >
-          Sandbox
-        </h1>
-      </Grid>
-      
-      {/*Keyboard*/}
-      <Grid item>
-        <Grid container alignItems="center">
-          <Grid item xs={12}>
-            <Card
-              id="keyboard-card"
-              className="text-center keyboard-color"
-              style={{ width: Keyboard.keyboardWidth}}
-            >
-              <Card.Title id="envelope-label" style={{ color: "white" }}>Keyboard</Card.Title>
-              <Grid item xs={12}>
-                <Grid
-                  container
-                  alignItems="center"
-                  alignContent="center"
-                  xs={12}
-                  justify="center"
-                  spacing={2}
-                  direction="row"
-                >
+    <div className="background">
+      <Grid
+        container
+        alignItems="center"
+        alignContent="center"
+        xs={12}
+        justify="center"
+        spacing={2}
+        direction="row"
+      >
+        <Grid item xs={12}>
+          <h1
+            style={{ color: "white" }}
+            className="text-3xl text-center font-bold"
+          >
+            Sandbox
+          </h1>
+        </Grid>
+
+        {/*Keyboard*/}
+        <Grid item>
+          <Grid container alignItems="center">
+            <Grid item xs={12}>
+              <Card
+                id="keyboard-card"
+                className="text-center keyboard-color"
+                style={{ width: Keyboard.keyboardWidth }}
+              >
+                <Card.Title id="envelope-label" style={{ color: "white" }}>
+                  Keyboard
+                </Card.Title>
+                <Grid item xs={12}>
                   <Grid
-                    item
-                    xs={2}
-                    justify="center"
+                    container
                     alignItems="center"
-                    direction="column"
-                  >
-                    <OscillatorCard
-                      waveform={mainWaveform}
-                      oscillatorTitle={"Oscillator 1"}
-                      oscillatorID={1}
-                      oscillatorHandler={oscillatorHandler}
-                    />
-                    <OscillatorCard
-                      waveform={modulationWaveform}
-                      oscillatorTitle={"Oscillator 2"}
-                      oscillatorID={2}
-                      oscillatorHandler={oscillatorHandler}
-                    />
-                  </Grid>
-                  <Grid item xs={4}>
-                    <ADSRCard attackStuff={[attackValue, setAttackValue]}
-                              decayStuff = {[decayValue, setDecayValue]} 
-                              sustainStuff = {[sustainValue, setSustainValue]} 
-                              releaseStuff = {[releaseValue, setReleaseValue]}
-                              frequencyStuff = {[filterFrequency, setFilterFrequency]} />
-                  </Grid>
-                  <Grid
-                    item
-                    xs={3}
+                    alignContent="center"
+                    xs={12}
                     justify="center"
-                    alignItems="center"
-                    direction="column"
+                    spacing={2}
+                    direction="row"
                   >
-                    <Card id="volumeControlCard" bg="light">
-                      <VolumeControl volume={volume} setVolume={setVolume} /> 
-                    </Card>
-                    <Card id="filterCard" bg ="light">
-                      <FilterCard
-                        filterType={filterType}
-                        knobHandler={knobHandler}
-                        filterHandler={filterHandler}
+                    <Grid
+                      item
+                      xs={2}
+                      justify="center"
+                      alignItems="center"
+                      direction="column"
+                    >
+                      <OscillatorCard
+                        waveform={mainWaveform}
+                        oscillatorTitle={"Oscillator 1"}
+                        oscillatorID={1}
+                        oscillatorHandler={oscillatorHandler}
                       />
-                    </Card>
-                    <Card id="vibratoCard" bg="light">
-                      <VibratoCard vibratoHandler={vibratoHandler} />
-                    </Card>
+                      <OscillatorCard
+                        waveform={modulationWaveform}
+                        oscillatorTitle={"Oscillator 2"}
+                        oscillatorID={2}
+                        oscillatorHandler={oscillatorHandler}
+                      />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <ADSRCard
+                        attackStuff={[attackValue, setAttackValue]}
+                        decayStuff={[decayValue, setDecayValue]}
+                        sustainStuff={[sustainValue, setSustainValue]}
+                        releaseStuff={[releaseValue, setReleaseValue]}
+                        frequencyStuff={[filterFrequency, setFilterFrequency]}
+                      />
+                    </Grid>
+                    <Grid
+                      item
+                      xs={3}
+                      justify="center"
+                      alignItems="center"
+                      direction="column"
+                    >
+                      <Card id="volumeControlCard" bg="light">
+                        <VolumeControl volume={volume} setVolume={setVolume} />
+                      </Card>
+                      <Card id="filterCard" bg="light">
+                        <FilterCard
+                          filterType={filterType}
+                          knobHandler={knobHandler}
+                          filterHandler={filterHandler}
+                        />
+                      </Card>
+                      <Card id="vibratoCard" bg="light">
+                        <VibratoCard vibratoHandler={vibratoHandler} />
+                      </Card>
+                    </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
-              <Form>
-                <br />
-                <Keyboard playTone={playTone} />
-              </Form>
-            </Card>
+                <Form>
+                  <br />
+                  <Keyboard playTone={playTone} />
+                </Form>
+              </Card>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
-    </Grid>
     </div>
   );
 };
