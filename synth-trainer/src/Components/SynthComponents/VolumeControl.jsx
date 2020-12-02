@@ -86,6 +86,7 @@ export default function VolumeControl({ volume, setVolume }) {
             value={typeof volume === "number" ? (volume - 75) * 4 : 0}
             onChange={handleSliderChange}
             aria-labelledby="input-slider"
+            color = "secondary"
           />
         </Grid>
         <Grid item>
