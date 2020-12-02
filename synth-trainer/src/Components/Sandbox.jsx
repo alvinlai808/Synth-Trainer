@@ -67,8 +67,6 @@ const Sandbox = () => {
   //Instantiating Synth Object
   const polySynth = new Tone.Synth(synthSettings).chain(filter).toDestination();
 
-  console.log(polySynth);
-
   //Handles generating notes
   const playTone = (noteFrequency) => {
     polySynth.triggerAttackRelease(noteFrequency, attackValue + 0.01);
