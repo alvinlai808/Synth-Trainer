@@ -64,10 +64,11 @@ const MainWaveformModule = (props) => {
     createSynth();
     playTone("C4");
   };
-  
+
   if (moduleRef === undefined) {
     return <p>Loading</p>;
   }
+  
   return (
     <div>
       <Grid

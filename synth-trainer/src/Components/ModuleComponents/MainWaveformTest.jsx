@@ -30,6 +30,7 @@ import { useEffect } from "react";
 import { navigate } from "@reach/router";
 import VolumeControl from "../SynthComponents/VolumeControl";
 
+//TODO: add triangle to test
 const waveforms = ["sine", "square", "sawtooth"];
 
 const MainWaveformTest = () => {
