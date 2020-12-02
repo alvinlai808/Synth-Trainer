@@ -78,7 +78,7 @@ const SignUp = () => {
   }, [password, secondPassword, error]);
 
   return (
-    <div>
+    <div className = "behindPic">
       <h1 className="text-3xl mb-2 bg-secondary text-center font-bold">
         Sign Up
       </h1>

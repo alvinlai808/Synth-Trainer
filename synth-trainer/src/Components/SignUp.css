@@ -8,6 +8,11 @@
 html {
   height: 100vh;
 }
-body {
+
+.behindPic {
   background-image: url("../Images/SynthBackgroundPic.jpg");
+  height: 100%;
 }
+/* body {
+  background-image: url("../Images/SynthBackgroundPic.jpg");
+} */

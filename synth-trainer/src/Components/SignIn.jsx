@@ -48,7 +48,7 @@ const SignIn = () => {
   };
 
   return (
-    <div>
+    <div className = "behindPic">
       <Alert show={isError} variant="danger" className="text-center">
         {error}
       </Alert>
