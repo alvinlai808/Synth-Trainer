@@ -6,6 +6,7 @@ import { navigate } from "@reach/router";
 import { useEffect } from "react";
 import { addInProgressModules, getModuleRef } from "../../firebase";
 import { UserContext } from "../../providers/UserProvider";
+import Grid from "@material-ui/core/Grid";
 
 const MainWaveformModule = (props) => {
   const user = useContext(UserContext);
@@ -70,34 +71,63 @@ const MainWaveformModule = (props) => {
   }
   return (
     <div>
-      <h2>Intro</h2>
-      <h2>Sine Wave</h2>
-      <WaveformExample
-        waveform="sine"
-        message="Click the button to hear a C3 note with a sine waveform"
-        volume={volume}
-        setVolume={setVolume}
-        buttonHandler={buttonHandler}
-      />
-      <h2>Square Wave</h2>
-      <WaveformExample
-        waveform="square"
-        message="Click the button to hear a C3 note with a square waveform"
-        volume={volume}
-        setVolume={setVolume}
-        buttonHandler={buttonHandler}
-      />
-      <h2>Sawtooth Wave</h2>
-      <WaveformExample
-        waveform="sawtooth"
-        message="Click the button to hear a C3 note with a sawtooth waveform"
-        volume={volume}
-        setVolume={setVolume}
-        buttonHandler={buttonHandler}
-      />
-      <Button onClick={buttonHandler} name="next">
-        Take the Test!
-      </Button>
+      <Grid
+        container
+        md={4}
+        justify="center"
+        alignItems="center"
+        alignContent="center"
+        direction="column"
+      >
+        <h2 
+          style={{ color: "white" }}
+          className="text-3xl text-center font-bold"
+        >
+          Intro
+        </h2>
+        <h2 
+          style={{ color: "white" }}
+          className="text-3xl text-center font-bold"
+        >
+          Sine Wave
+        </h2>
+        <WaveformExample
+          waveform="sine"
+          message="Click the button to hear a C3 note with a sine waveform"
+          volume={volume}
+          setVolume={setVolume}
+          buttonHandler={buttonHandler}
+        />
+        <h2 
+          style={{ color: "white" }}
+          className="text-3xl text-center font-bold"
+        >
+          Square Wave
+        </h2>
+        <WaveformExample
+          waveform="square"
+          message="Click the button to hear a C3 note with a square waveform"
+          volume={volume}
+          setVolume={setVolume}
+          buttonHandler={buttonHandler}
+        />
+        <h2 
+          style={{ color: "white" }}
+          className="text-3xl text-center font-bold"
+        >
+          Sawtooth Wave
+        </h2>
+        <WaveformExample
+          waveform="sawtooth"
+          message="Click the button to hear a C3 note with a sawtooth waveform"
+          volume={volume}
+          setVolume={setVolume}
+          buttonHandler={buttonHandler}
+        />
+        <Button onClick={buttonHandler} name="next">
+          Take the Test!
+        </Button>
+      </Grid>
     </div>
   );
 };
