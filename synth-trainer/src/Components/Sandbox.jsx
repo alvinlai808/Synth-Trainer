@@ -199,10 +199,18 @@ const Sandbox = () => {
                         <VolumeControl volume={volume} setVolume={setVolume} />
                       </Card>
                       <Card id="filterCard" bg="light">
-                        <FilterCard
+                        {/* <FilterCard
                           filterType={filterType}
                           knobHandler={knobHandler}
                           filterHandler={filterHandler}
+                        /> */}
+                        <FilterCard
+                          filterType={filterType}
+                          //knobHandler={knobHandler}
+                          filterFrequency = {filterFrequency} 
+                          setFilterFrequency = {setFilterFrequency}
+                          filterHandler={filterHandler}
+                          id = "FilterSlider"
                         />
                       </Card>
                       <Card id="vibratoCard" bg="light">

@@ -6,7 +6,7 @@ const useStyles = makeStyles({
   root: {
     height: 100,
   },
-});
+}); 
 
 export const ADSRSLIDER = (props) => {
   const classes = useStyles();

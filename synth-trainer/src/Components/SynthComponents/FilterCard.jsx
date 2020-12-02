@@ -1,12 +1,21 @@
 import React, { useState } from "react";
 import { Button, Card } from "react-bootstrap";
-import LimitedKnob from "./LimitedKnob";
+import { Slider } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
+import { makeStyles } from "@material-ui/core/styles";
 
-const FilterCard = ({ filterType, knobHandler, filterHandler }) => {
+const useStyles = makeStyles({
+  root: {
+    height: 50,
+  },
+}); 
+
+const FilterCard = ({ filterType, filterFrequency, setFilterFrequency, filterHandler, id }) => {
+  const classes = useStyles();
   const [lowpassColor, setLowpassColor] = useState("dimgray");
   const [highpassColor, setHighpassColor] = useState("black");
   const [bandpassColor, setBandpassColor] = useState("dimgray");
+  const [value, setValue] = useState(filterFrequency);
 
   const handlebuttonclick = (event) => {
     const { style, name } = event.currentTarget;
@@ -25,6 +34,13 @@ const FilterCard = ({ filterType, knobHandler, filterHandler }) => {
       setHighpassColor("dimgray");
       setBandpassColor("black");
     }
+  };
+
+  const handleSliderChange = (event, newValue) => {
+    setValue(newValue);
+  };
+  const handleFilterCommitted = (event, newValue) => {
+    setFilterFrequency(newValue);
   };
 
   return (
@@ -81,7 +97,7 @@ const FilterCard = ({ filterType, knobHandler, filterHandler }) => {
         </Grid>
         <Grid item xs={6}>
           <h5 className="text-3xl font-bold">Frequency</h5>
-          <LimitedKnob
+          {/* <LimitedKnob
             name="Frequency"
             value={100}
             style={{ display: "inline-block" }}
@@ -92,7 +108,25 @@ const FilterCard = ({ filterType, knobHandler, filterHandler }) => {
             onEnd={knobHandler}
             width={200}
             height={200}
+          /> */}
+          {value.toFixed(0)} ms
+          <div className={classes.root}>
+            <Slider
+            name="Frequency"
+            value={value}
+            onChange={handleSliderChange}
+            onChangeCommitted={handleFilterCommitted}
+            orientation="vertical"
+            aria-labelledby="vertical-slider"
+            color="secondary"
+            min={0}
+            max={5000}
+            id={id}
+
+            // {...rest}
           />
+        </div>
+        <br />
         </Grid>
       </Grid>
     </Card>
