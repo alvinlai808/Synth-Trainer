@@ -150,7 +150,7 @@ const Sandbox = () => {
                     spacing={2}
                     direction="row"
                   >
-                    <Grid item xs={2}>
+                    <Grid item xs={3}>
                       <OscillatorCard
                         waveform={mainWaveform}
                         oscillatorTitle={"Oscillator 1"}
