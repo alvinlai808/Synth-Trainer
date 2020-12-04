@@ -85,40 +85,40 @@ const MainWaveformModule = (props) => {
           direction="row" 
           spacing={2}
           alignItems="center"
-          >
-            
+        >
           <Grid 
             item 
             xs={12} 
             sm={6} 
             md={5}
           > 
-            <WaveformExample
-              waveform="sine"
-              message="A sine wave is the simplest waveform with no harmonics or overtones. 
-              It generates a smooth, clean sound, much like the way the waveform looks."
-              volume={volume}
-              setVolume={setVolume}
-              buttonHandler={buttonHandler}
-            />
-          </Grid>
-          <Grid 
-            item 
-            xs={12} 
-            sm={6} 
-            md={5}
-          >
           <WaveformExample
-            waveform="triangle"
-            message="Rather than a smooth, curvy waveform, the triangle wave consists of
-            repeating upward and downward slopes that generate a slightly brighter tone than
-            sine waves."
+            waveform="sine"
+            message="A sine wave is the simplest waveform with no harmonics or overtones. 
+            It generates a smooth, clean sound, much like the way the waveform looks."
             volume={volume}
             setVolume={setVolume}
             buttonHandler={buttonHandler}
           />
           </Grid>
+            <Grid 
+              item 
+              xs={12} 
+              sm={6} 
+              md={5}
+            >
+            <WaveformExample
+              waveform="triangle"
+              message="Rather than a smooth, curvy waveform, the triangle wave consists of
+              repeating upward and downward slopes that generate a slightly brighter tone than
+              sine waves."
+              volume={volume}
+              setVolume={setVolume}
+              buttonHandler={buttonHandler}
+            />
+          </Grid>
         </Grid>
+        <br />
         {/* in between */}
         <Grid 
           item 
@@ -158,8 +158,8 @@ const MainWaveformModule = (props) => {
               buttonHandler={buttonHandler}
             />
           </Grid>
-          
         </Grid>
+        <br />
         <Button onClick={buttonHandler} name="next">
             Take the Test!
         </Button>
