@@ -76,31 +76,63 @@ This page will be known as the Login Page.
 **5.3.2.7** - A third GUI subsection shall list the available modules the user can attempt.<br>
 This page will be known as the Modules Page. 
 
+**5.3.2.7.1** - The Module Page shall provide a button to enter the module.
+
+**5.3.2.7.2** - The Module Page shall provide a button to enter the module test.
+
+**5.3.2.7.2.1** - The Module Page shall display a progression bar for each test.
+
+**5.3.2.7.2.2** - The Module Page shall display the user's score.
+
+**5.3.2.7.2.3** - The Module Page shall provide a button to return to the module.
+
+**5.3.2.7.3** - The Module Page shall provide buttons to play module related sounds.
+
+**5.3.2.7.4** - The Module Page shall provide a slider to modify the master volume.
+
+**5.3.2.7.5** - The Module Page shall provide a button to return to the modules list.
+
 **5.3.2.8** - A fourth GUI subsection shall present the user with a full synthesizer.<br>
 This page will be known as the Sandbox Page.
 
 **5.3.2.8.1** - The Sandbox Page shall provide waveform oscillators.
 
-**5.3.2.8.1.1** - The Sandbox Page shall provide a knob to select between various waveforms.
+**5.3.2.8.1.1** - The Sandbox Page shall provide buttons to select between various waveforms.
 
 **5.3.2.8.1.2** - The Sandbox Page shall provide a button to mute the oscillator.
 
 **5.3.2.8.2** - The Sandbox Page shall provide an amplitude envelope.
 
-**5.3.2.8.2.1** - The Sandbox Page shall provide a knob to modify the attack time.
+**5.3.2.8.2.1** - The Sandbox Page shall provide a slider to modify the attack time.
 
-**5.3.2.8.2.2** - The Sandbox Page shall provide a knob to modify the decay time.
+**5.3.2.8.2.2** - The Sandbox Page shall provide a slider to modify the decay time.
 
-**5.3.2.8.2.3** - The Sandbox Page shall provide a knob to modify the sustain time.
+**5.3.2.8.2.3** - The Sandbox Page shall provide a slider to modify the sustain time.
 
-**5.3.2.8.2.4** - The Sandbox Page shall provide a knob to modify the release time.
+**5.3.2.8.2.4** - The Sandbox Page shall provide a slider to modify the release time.
   
 **5.3.2.8.3** - The Sandbox Page shall provide a 22 key keyboard.
+
+**5.3.2.8.4** - The Sandbox Page shall provide a slider to modify the volume
+
+**5.3.2.8.5** - The Sandbox Page shall provide a frequency filter.
+
+**5.3.2.8.5.1** - The Sandbox Page shall provide buttons to select between various frequency ranges.
+
+**5.3.2.8.5.2** - The Sandbox Page shall provide a knob to make fine adjustments to the filter frequency.
+
+**5.3.2.8.6** - The Sandbox Page shall provide button to toggle vibrato.
       
 **5.3.2.9** - A fifth GUI subsection shall present the user with their account information.<br>
 This page will be known as the Profile Page.
 
 **5.3.2.9.1** - The Profile Page shall list account information.
+
+**5.3.2.9.1.1** - The Profile Page shall provide a button to change the user's profile picture.
+
+**5.3.2.9.1.2** - The Profile Page shall provide a button to change the user's username.
+
+**5.3.2.9.1.3** - The Profile Page shall provide a button to change the user's email.
 
 **5.3.2.9.2** - The Profile Page shall display a progress bar which informs the user how many modules he/she has completed.
 
@@ -109,6 +141,10 @@ This page will be known as the Profile Page.
 ### **5.3.3** - Server section
 
 **5.3.3.1** - The server section shall examine user textboxes to ensure valid data.
+
+**5.3.3.1.1** - The server section shall verify valid email addresses.
+
+**5.3.3.1.2** - The server section shall provide feedback when the user input's a password.
 
 **5.3.3.2** - The server section shall notify the user if incorrect data is input.
 

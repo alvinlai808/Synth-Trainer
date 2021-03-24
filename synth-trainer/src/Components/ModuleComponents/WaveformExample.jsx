@@ -15,7 +15,7 @@ const WaveformExample = ({
     <Card
       id={waveform + "-example"}
       className="text-left"
-      bg="info"
+      bg="light"
       width="10px"
     >
       <Card.Title>

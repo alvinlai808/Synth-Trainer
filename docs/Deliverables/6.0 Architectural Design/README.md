@@ -39,8 +39,7 @@ The human interfaces include the user's computer, keyboard, mouse, and audio sys
     - Header CSU - This is a fixed header that the user can use to navigate the application once the user is no longer on the Main Menu. The header will consist of a Homepage, Profile and Logout button.
     - Modules CSU - This page will be comprised of a list of modules that the user can choose to attempt, as well as the specific synth components that will be taught in each respective module.
     - Synth Interface CSU - This is how the synth will appear to the user. It will have two different appearances: one for Match/Module Mode, and one for Sandbox Mode.
-    - Sandbox Mode CSU - This will consist of the synth interface, as well as a drop down menu for selecting saved sound presets.
-    - 
+    - Sandbox Mode CSU - This will consist of the synth interface.
 - Server  CSC
   
   Since the project is developed with React, the server CSC and the GUI client CSC work closely together. This CSC provides the functionality needed to produce sounds, naviagate the user, and package and unpackage data from the database
