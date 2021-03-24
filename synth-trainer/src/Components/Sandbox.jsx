@@ -17,7 +17,7 @@ const Sandbox = () => {
   //Volume
   const [volume, setVolume] = useState(100);
   //ADSR Parameters
-  const [attackValue, setAttackValue] = useState(0.5);
+  const [attackValue, setAttackValue] = useState(0.1);
   const [decayValue, setDecayValue] = useState(0);
   const [sustainValue, setSustainValue] = useState(1.0);
   const [releaseValue, setReleaseValue] = useState(1.0);
